@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-raster',
   templateUrl: './raster.component.html',
-  styleUrls: ['./raster.component.css']
+  styleUrls: ['./raster.component.scss']
 })
 export class RasterComponent implements OnInit {
 

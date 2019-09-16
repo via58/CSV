@@ -4,7 +4,7 @@ import {GetcrosssectionsService} from '../../services/getcrosssections.service';
 @Component({
   selector: 'app-opencsv',
   templateUrl: './opencsv.component.html',
-  styleUrls: ['./opencsv.component.css']
+  styleUrls: ['./opencsv.component.scss']
 })
 export class OpencsvComponent implements OnInit {
 

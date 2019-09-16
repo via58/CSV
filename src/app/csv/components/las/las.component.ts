@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-las',
   templateUrl: './las.component.html',
-  styleUrls: ['./las.component.css']
+  styleUrls: ['./las.component.scss']
 })
 export class LasComponent implements OnInit {
 

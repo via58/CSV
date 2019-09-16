@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: "SourceSansPro-Regular";
+    src: url(assets/fonts/SourceSansPro-Regular.ttf);
+}
+@font-face {
+    font-family: "SourceSansPro-Semibold";
+    src: url(assets/fonts/SourceSansPro-Semibold.ttf);
+}
+@font-face {
+    font-family: "SourceSansPro-bold";
+    src: url(assets/fonts/SourceSansPro-Bold.ttf);
+}
+body{
+    font-family: "SourceSansPro-Regular" !important;
+}
+.csv-app.container-fluid{
+        padding-left:0px;
+        padding-right: 0px;
+}
