@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input, AfterViewInit, OnChanges } from '@angular/core';
+//import {CsvdataService} from '../../services/csvdata.service';
 
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-csvheader',
   templateUrl: './csvheader.component.html',
@@ -7,11 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CsvheaderComponent implements OnInit {
   wellCount:any  = 0;
-  constructor() { }
-
+  subscription: Subscription;
+  constructor(){}//private CsvdataService: CsvdataService) { }
+  @Input() wellCount1: Number;
   ngOnInit() {
-    this.wellCount = 2
+    
+   // this.CsvdataService.setState(2);
+    
   }
 
-   titlename = "csv header components";
 }

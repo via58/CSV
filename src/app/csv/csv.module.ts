@@ -8,7 +8,9 @@ import { CsvloaderComponent } from './components/csvloader/csvloader.component';
 import { CsvtoolsComponent } from './components/csvtools/csvtools.component';
 import { OpencsvComponent } from './components/opencsv/opencsv.component';
 
-import {GetcrosssectionsService} from './services/getcrosssections.service';
+//import {GetcrosssectionsService} from './services/getcrosssections.service';
+import {GetCrossSectionDetailsService} from './services/get-cross-section-details.service';
+//import {CsvdataService} from './services/csvdata.service';
 import { CsvlayoutComponent } from './components/csvlayout/csvlayout.component'
 
 
@@ -27,7 +29,7 @@ import { CsvlayoutComponent } from './components/csvlayout/csvlayout.component'
   imports: [
     CommonModule
   ],
-  providers: [GetcrosssectionsService],
+  providers: [GetCrossSectionDetailsService],
   exports:[
     CsvheaderComponent, 
     WellmetadataComponent, 

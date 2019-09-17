@@ -6,7 +6,7 @@
     border:none;
 }
 .cst-card-body{
-    padding-top: 5px;
+    padding-top: 0px;
     padding-left: 0px;
     padding-right: 0px;
     padding-bottom: 5px;
@@ -14,39 +14,9 @@
 .cst-card-body-container{
     width: calc(100%);
     overflow-y:auto;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 85px);
     position: relative;
     padding-left: 20px;
     padding-right: 20px;
     background-color: #ccc;
-
-    .scrolling-wrapper {
-        overflow-x: scroll;
-        overflow-y: hidden;
-        white-space: nowrap;
-        margin-top: 10px;
-        width: calc(100%);
-        height: calc(100vh - 120px);
-
-        svg{
-            width: calc(100%);
-            overflow-y:auto;
-            height: calc(100%);
-
-            .card {
-                display: inline-block;
-                background-color: #fff;
-                width: 300px;
-                height: calc(100vh - 130px);
-                border-radius: 5px;
-                margin-right: 10px;
-                position: relative;
-                :last-child{
-                    margin-right: 0px;
-                }
-              }
-        }
-      
-        
-      }
 }

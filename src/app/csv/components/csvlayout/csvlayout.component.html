@@ -1,5 +1,5 @@
 <div class="card cst-card">
-        <app-csvheader></app-csvheader>
+        <app-csvheader [wellCount1]= wellCount></app-csvheader>
     <div class="card-body cst-card-body">
         <div class="cst-card-body-container">
                 <!-- <app-csvloader></app-csvloader>
@@ -7,28 +7,15 @@
                 <!-- <app-opencsv></app-opencsv>
                 <app-raster></app-raster>
                 <app-wellmetadata></app-wellmetadata> -->
-                <svg class="scrolling-wrapper">
-
-                        <g class="card">
-                            <rect width="300" height="450" fill="white"></rect>
-                        </g>
-                        <g class="card">
-                            <rect width="300" height="450" fill="white" x="320"></rect>
-                        </g>
-                        <g class="card">
-                                <rect width="300" height="450" fill="white" x="640"></rect>
-                        </g>
-                        <g class="card">
-                                <rect width="300" height="450" fill="white" x="960"></rect>
-                        </g>
-                        <g class="card">
-                                <rect width="300" height="450" fill="white" x="1280"></rect>
-                        </g>
-                        <g class="card"></g>
-                        <g class="card"></g>
-                        <g class="card"></g>
-                        <g class="card"></g>
-                </svg>
+                <app-wellmetadata  
+                [wellCount2]= wellCount 
+                [wellinfo]=wellnames 
+                [wellnumber]=wellnumber 
+                [UWI]=UWI
+                [trackorder]=trackorder 
+                [wellOrder]=wellOrder>
+                
+               </app-wellmetadata>
         </div>
         <app-csvtools></app-csvtools>
     </div>

@@ -1,0 +1,145 @@
+.scrolling-wrapper {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    margin-top: 10px;
+    width: calc(100%);
+    height: calc(100vh - 100px);
+
+    svg{
+        width: calc(100%);
+        overflow-y:auto;
+        height: calc(100%);
+
+    }
+  
+    .maingroup{
+        .uniq:first-child{
+            .well-info-name{
+                .well-title{
+                    display: block;
+                    float: left;
+                }
+                .float-right{
+                 .one {
+                    float: left;
+                    display: block;
+                    i{
+                      margin-top: 15px;
+                    }
+                }
+                .two{
+                    float: left;
+                    display: none;
+                    }
+                }
+
+            }
+    }
+        .uniq{
+            .well-info-name{
+                height: 40px;
+                .well-title{
+                    display: none;
+                    float: left;
+                }
+                .float-right{
+                    .one {
+                        float: left;
+                        display: none;
+                }
+                .two{
+                    float: left;
+                    display: block;
+                }
+                }
+            }
+    }
+        
+        .well-info-product{
+            margin-top: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+           
+            .mat-radio-button{
+                margin-right:10px;
+            }
+            .mat-radio-outer-circle {
+                border-color: #00AAAB;
+            }
+            .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+                border-color: #00AAAB;
+            }
+            .mat-radio-inner-circle{
+                background-color: #00AAAB;
+            }
+
+            .custom-control-input:checked ~ .custom-control-label::before {
+                color: #fff;
+                border-color: #00AAAB;
+                background-color: #00AAAB;
+            }
+             .custom-control-input ~ .custom-control-label::before {
+                color: #fff;
+                border-color: #00AAAB;
+            }
+             .lasdropdown{
+              margin-top:10px;
+            }
+            .form-group{
+                margin-top:10px;
+            }
+            
+        }
+        .well-info-product{
+            margin-top: 5px !important;
+            .form-group{
+                margin-top: -10px !important;
+                select{
+                    padding-top: 0px;
+                }
+            }
+        }
+    }
+    .wellgroup{
+        background-color: #fff;
+        border-radius: 5px;
+    }
+    .well-info-name{
+        font-size: 16px;
+        font-weight: bold;
+        border-bottom: solid 1px #cecaca;
+        line-height: 40px;
+        padding-left: 10px;
+        i{
+        padding-left: 15px;
+        font-size: 15px;
+        cursor: pointer;
+        color: #00AAAB;
+        }
+        .float-right{
+           padding-right: 10px;
+        }
+    }
+    .dropdown-toggle::after {
+        display: none;
+    }
+    .dropdown-menu{
+        left:-125px !important;
+        padding-top:0px;
+        padding-bottom:0px;
+        li{
+        padding-left:10px;
+        height: 30px;
+        line-height: 25px;
+        border-bottom: solid 1px #ccc;
+        font-family:"SourceSansPro-Regular";
+        font-size: 16px;
+        font-weight: normal;
+        cursor: pointer;
+        }
+        li:last-child{
+            border-bottom:none;
+        }
+    }
+  }

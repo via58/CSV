@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class GetCrossSectionDetailsService {
 
   private getcsvdetails = { 
@@ -72,5 +71,10 @@ export class GetCrossSectionDetailsService {
   
  }
 
-  constructor() { }
+  constructor(private http:HttpClient) { 
+     
+  }
+  getConfig(){
+   return this.getcsvdetails;
+  }
 }
