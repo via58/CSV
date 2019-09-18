@@ -1,23 +1,20 @@
 <div class="card cst-card">
-        <app-csvheader [wellCount1]= wellCount></app-csvheader>
+    <app-csvheader [wellCount1]=wellCount></app-csvheader>
     <div class="card-body cst-card-body">
         <div class="cst-card-body-container">
-                <!-- <app-csvloader></app-csvloader>
+            <!-- <app-csvloader></app-csvloader>
                 <app-las></app-las> -->
-                <!-- <app-opencsv></app-opencsv>
+            <!-- <app-opencsv></app-opencsv>
                 <app-raster></app-raster>
                 <app-wellmetadata></app-wellmetadata> -->
-                <app-wellmetadata  
-                [wellCount2]= wellCount 
-                [wellinfo]=wellnames 
-                [wellnumber]=wellnumber 
-                [UWI]=UWI
-                [trackorder]=trackorder 
-                [wellOrder]=wellOrder>
-                
-               </app-wellmetadata>
+
+            <app-wellmetadata *ngIf="loadDataTag" [wellCount2]=wellCount [wellinfo]=wellnames [wellnumber]=wellnumber
+                [UWI]=UWI [trackorder]=trackorder [wellOrder]=wellOrder [curveListData]=curveList1
+                [lasRasterFlag]=lasRasterFlag [SelectedCurveList]=SelectedCurveList>
+            </app-wellmetadata>
+
         </div>
-        <app-csvtools></app-csvtools>
+        <app-csvtools (LoadCross)="getData($event)"></app-csvtools>
     </div>
 </div>
 <!-- 
