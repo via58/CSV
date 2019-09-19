@@ -7,31 +7,14 @@ import { ICrossSection } from '../interfaces/crosssection';
 @Injectable()
 export class GetcrosssectionsService {
 
-   localhost = "http://localhost:8080/"
+   localhost = "http://localhost:9900/"
    crossSectionUrl = "getCrossSection/getCrossSections";
    crossSectionByIdUrl = "getCrossSection/getCrossSectionDetails?crossSectionId=";
    lasUrl = "getLas/getLasData?uwid=";
    curveNameUrl = "&curveName=";
    rasterUrl = "getRaster/getRasterData?uwid=";
 
-   private getcsv = [
-      {
-         "crossSectionId": 1,
-         "crossSectionName": "crossSection1",
-         "wellCount": 3
-      },
-      {
-         "crossSectionId": 2,
-         "crossSectionName": "crossSection2",
-         "wellCount": 3
-      },
-      {
-         "crossSectionId": 3,
-         "crossSectionName": "crossSection3",
-         "wellCount": 2
-      }
-   ];
-
+   
    constructor(private http: HttpClient) { }
 
    getConfig(): Observable<ICrossSection[]> {

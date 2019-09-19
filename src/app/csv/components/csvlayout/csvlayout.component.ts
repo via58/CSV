@@ -70,7 +70,7 @@ export class CsvlayoutComponent implements OnInit {
       trackOrder.push(cs.crossSectionInformations.length);
       cs.crossSectionInformations.forEach(function (st: any) {
         curveList.push(st.curveList);
-        lasRaster.push(st.rasterLasFlag);
+        lasRaster.push(st.productType);
         _selectedCurveList.push(st.curveName);
       })
     })
