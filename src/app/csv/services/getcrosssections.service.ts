@@ -48,4 +48,7 @@ export class GetcrosssectionsService {
       return this.http.get(this.localhost + this.crossSectionByIdUrl + uwid)
    }
 
+   
+
+
 }

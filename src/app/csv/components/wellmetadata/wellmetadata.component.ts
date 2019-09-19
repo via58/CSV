@@ -6431,10 +6431,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
     ]
   }
 
-  constructor(private _dataService: GetcrosssectionsService) {
-
-  }
-
+  constructor(private _dataService: GetcrosssectionsService) { }
   ngOnInit() {
 
     for (let i = 0; i < this.lasRasterFlag.length; i++) {
@@ -6496,8 +6493,8 @@ export class WellmetadataComponent implements OnInit, OnChanges {
         this.wellmetainfo(this.wellinfo[i], this.wellOrder[i].toString(), this.wellOrder[i].toString() + j, this.UWI[i]);
         this.wellproduct(this.wellinfo[i], this.wellOrder[i].toString() + j, this.UWI[i]);
         this.wellproject(this.wellinfo[i], this.wellOrder[i].toString() + j, this.UWI[i], this.lasCurve[i], this.rasterCurve[i], this.lasRasterFlag[i]);
-        this.createLasChartOnLoad(this.wellinfo[i], this.wellOrder[i].toString() + j,
-          this.selectedLas[i], this.selectedRaster[i], this.UWI[i]);
+        this.createLasChartOnLoad(this.wellOrder[i].toString() + j,
+          this.selectedLas[i], this.UWI[i]);
         this.createRasterChartOnLoad(this.UWI[i], this.wellOrder[i].toString() + j)
       }
 
@@ -6621,10 +6618,18 @@ export class WellmetadataComponent implements OnInit, OnChanges {
       .attr("value", function (d) { return d })
       .text(function (d) { return d })
 
-    LasDropDown.on('change', function (d) {
-      // WellmetadataComponent.call(this.createchartOnChange)
+    // LasDropDown.on('change', function (d) {
+    //   console.log(d3.select(this))
+    //   WellmetadataComponent.createChartOnchange(this.value, trackorder);
 
-    })
+    // })
+
+    LasDropDown.on('change', function () {
+      console.log(`.lasdropdown${trackorder}   `+(d3.select('.lasdropdown'+trackorder).node().value))
+      this.createChartOnchange(this.value);
+
+    }.bind(this))
+
 
     const RasterDropDown = WellInfoproductDiv.append('div')
       .attr('class', 'form-group')
@@ -6639,6 +6644,9 @@ export class WellmetadataComponent implements OnInit, OnChanges {
       .text(function (d) { return d })
 
 
+  }
+   createChartOnchange(value: any) {
+    alert(value)
   }
 
   trackaction(wellorder, trackorder) {
@@ -6664,12 +6672,10 @@ export class WellmetadataComponent implements OnInit, OnChanges {
 
 
 
-  createChartOnchange(event) {
-    alert(event)
-  }
 
 
-  createLasChartOnLoad(wellorder, trackorder, lasCurve, rasterCurve, wellId) {
+
+  createLasChartOnLoad(trackorder, lasCurve, wellId) {
     // well meta information
     const element = this.chartContainer.nativeElement;
     this.width = element.offsetWidth - this.margin.left - this.margin.right;
@@ -6691,7 +6697,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
         .y(function (d) { return yScale(d[1]) })
         .curve(d3.curveCardinal) // Cardinal graph generater
       const grp = d3.select('.uniq' + trackorder + ' g');
-      console.log(`.mainGrp${wellorder}`);
+      //console.log(`.mainGrp${trackorder}`);
       const chartGroup = grp.append('g').attr('class', 'chartGrp chartGrp' + trackorder).attr('transform', 'translate(30 ,160)')
         .style('display', 'none');
       // const cgrp = d3.select('chartGrp' +uwid + curveName);
@@ -6720,6 +6726,8 @@ export class WellmetadataComponent implements OnInit, OnChanges {
 
 
   }
+
+
 
 
   createRasterChartOnLoad(wellId, trackorder) {
