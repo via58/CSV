@@ -1,12 +1,12 @@
 import { Component, OnInit, OnChanges, ViewChild, ElementRef, Input, ViewEncapsulation } from '@angular/core';
-import {GetCrossSectionDetailsService} from '../../services/get-cross-section-details.service';
+import { GetCrossSectionDetailsService } from '../../services/get-cross-section-details.service';
 
 
 @Component({
   selector: 'app-csvlayout',
   templateUrl: './csvlayout.component.html',
   styleUrls: ['./csvlayout.component.scss']
-  
+
 })
 export class CsvlayoutComponent implements OnInit {
   Getcsvdetails: any;

@@ -8,68 +8,69 @@
             <!-- The inside div eliminates the 'jumping' animation. -->
           
             <div class="collapse" id="bar">
-            <div class="toolpanel">
-                <div class="row">
-                    <div class="col-md-7">
-                        <h3>Interpretation tools</h3>
-                        <div class="row">
-                            <div class="col-md-7">
-                                <h2>Hang Wells</h2>
-                                <div class="btn-group toolpanel-btn-group toolpanel-group" role="group"
-                                    aria-label="Basic example">
-                                    <button type="button" class="btn btn-secondary">Hang from top</button>
-                                    <button type="button" class="btn btn-secondary active">Hang from fixed
-                                        depth</button>
+                <div class="toolpanel">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <h3>Interpretation tools</h3>
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <h2>Hang Wells</h2>
+                                    <div class="btn-group toolpanel-btn-group toolpanel-group" role="group"
+                                        aria-label="Basic example">
+                                        <button type="button" class="btn btn-secondary">Hang from top</button>
+                                        <button type="button" class="btn btn-secondary active">Hang from fixed
+                                            depth</button>
+                                    </div>
+                                    <div class="toolpanel-group">
+                                        <select>
+                                            <option>-----</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="toolpanel-group">
-                                    <select>
-                                        <option>-----</option>
-                                    </select>
+                                <div class="col-md-3">
+                                    <h2>Top tools</h2>
+                                    <ul class="toolpanel-group-list">
+                                        <li>Add New</li>
+                                        <li>Load Tops</li>
+                                    </ul>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <h2>Top tools</h2>
-                                <ul class="toolpanel-group-list">
-                                    <li>Add New</li>
-                                    <li>Load Tops</li>
-                                </ul>
-                            </div>
-                            <div class="col-md-2">
-                                <h2>Grid Tools</h2>
-                                <ul class="toolpanel-group-list">
-                                    <li>Generate</li>
-                                </ul>
+                                <div class="col-md-2">
+                                    <h2>Grid Tools</h2>
+                                    <ul class="toolpanel-group-list">
+                                        <li>Generate</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-5">
-                        <h3>Display / Navigation</h3>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <h2>Add Curve</h2>
-                                <div class="toolpanel-group">
-                                    <select>
-                                        <option>-----</option>
-                                    </select>
+                        <div class="col-md-5">
+                            <h3>Display / Navigation</h3>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h2>Add Curve</h2>
+                                    <div class="toolpanel-group">
+                                        <select>
+                                            <option>-----</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <h2>Curve Color</h2>
-                                <div class="toolpanel-group">
-                                    <select>
-                                        <option>-----</option>
-                                    </select>
+                                <div class="col-md-4">
+                                    <h2>Curve Color</h2>
+                                    <div class="toolpanel-group">
+                                        <select>
+                                            <option>-----</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <h2>Thickness</h2>
-                                <div class="toolpanel-group">
-                                    <select>
-                                        <option>-----</option>
-                                    </select>
+                                <div class="col-md-4">
+                                    <h2>Thickness</h2>
+                                    <div class="toolpanel-group">
+                                        <select>
+                                            <option>-----</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -80,10 +81,49 @@
                             <button type="button" class="btn btn-secondary active">Save Cross Section</button>
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
+    </div>
+
+
+    <div id="modal-Xloader" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Select
+                        CrossSection</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-light">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Select</th>
+                                <th>CrossSection Name</th>
+                                <th>Well Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor='let x of CrossSectionList'>
+                                <td>
+                                    <input class="btn btn-primary" type="radio" name="CrossSection"
+                                        (click)="enableLoadButton()" value="{{x.crossSectionId}}">
+                                </td>
+                                <td>{{x.crossSectionName}}</td>
+                                <td>{{x.wellCount}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <input class="form-control btn btn-secondary active" style="background-color: #00aaab;border-color:#00aaab" type="submit" name="Load" value="Load" data-dismiss='modal'
+                        disabled='{{disableLoadButton}}' (click)="LoadCrossSection()">
+                </div>
+            </div>
         </div>
     </div>
     <div id="modal-Xloader" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">

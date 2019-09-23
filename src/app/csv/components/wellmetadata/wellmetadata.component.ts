@@ -127,7 +127,6 @@ export class WellmetadataComponent implements OnInit, OnChanges {
     const element = this.chartContainer.nativeElement;
     this.width = element.offsetWidth - this.margin.left - this.margin.right;
     this.height = element.offsetHeight - this.margin.top - this.margin.bottom;
-
     const formgrp = d3.select('.uniq' + trackorder).append('g');
     const formgrpcontainer = formgrp.append('foreignObject')
       .attr('class', 'wellgroup wellgroup')
@@ -384,5 +383,44 @@ export class WellmetadataComponent implements OnInit, OnChanges {
 
 
 
+
+
+
+  createRasterChartOnLoad(wellId, trackorder) {
+    //this._dataService.getRasterData(wellId).subscribe(rasterData => {
+
+
+    const rasterGroup = d3.select('.uniq' + trackorder + ' g').append('g').attr('class', 'rasterGrp rasterGrp' + trackorder).attr('transform', 'translate(0,150)');
+
+    //       const tooltipInfo = `WellName : ${rasterData.wellName} 
+    // UwId : ${wellId}
+    // Selected Curve : ${rasterData.curveName}`
+
+
+    var rasterImg = rasterGroup.append('foreignObject')
+      .attr('width', '250')
+      .attr('height', '380')
+    const rasterDiv = rasterImg.append('xhtml:div')
+      .attr('class', 'rastergrp imggrp')
+      // .attr('title', tooltipInfo)
+      .append('img')
+      .attr('src', 'http://localhost:8080/getTiffFile?tiffFileName=us50089200010000_4629856')
+      .attr('class', 'imgsize')
+
+    //Yscale for raster Image start
+    var data = [794, 14804];
+    const yscale = d3.scaleLinear().domain([700, d3.max(data)]).range([0, 300]);
+    const yAxis = d3.axisLeft(yscale).ticks(5); // Y axis    
+    rasterGroup.append('g')
+      .attr('transform', 'translate(45,0)')
+      .attr('class', 'axisred')
+      .call(yAxis);
+    //Yscale for raster Image End
+
+    //})
+
+
+
+  }
 
 }
