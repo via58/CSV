@@ -1,87 +1,87 @@
 /* You can add global styles to this file, and also import other style files */
 @font-face {
-    font-family: "SourceSansPro-Regular";
-    src: url(assets/fonts/SourceSansPro-Regular.ttf);
+  font-family: "SourceSansPro-Regular";
+  src: url(assets/fonts/SourceSansPro-Regular.ttf);
 }
 @font-face {
-    font-family: "SourceSansPro-Semibold";
-    src: url(assets/fonts/SourceSansPro-Semibold.ttf);
+  font-family: "SourceSansPro-Semibold";
+  src: url(assets/fonts/SourceSansPro-Semibold.ttf);
 }
 @font-face {
-    font-family: "SourceSansPro-bold";
-    src: url(assets/fonts/SourceSansPro-Bold.ttf);
+  font-family: "SourceSansPro-bold";
+  src: url(assets/fonts/SourceSansPro-Bold.ttf);
 }
 body{
-    font-family: "SourceSansPro-Regular" !important;
+  font-family: "SourceSansPro-Regular" !important;
 }
 .csv-app.container-fluid{
-        padding-left:0px;
-        padding-right: 0px;
+      padding-left:0px;
+      padding-right: 0px;
 }
 ::-webkit-scrollbar {
-    width: 10px;
-    height:11px;
-    background-color: #F5F5F5;
-  }
-  ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    border-radius: 8px;
-    background-color: #F5F5F5;
-  }
-  ::-webkit-scrollbar-thumb {
-    border-radius: 8px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-    background-color: #00aaab;
-  }
-  ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    border-radius: 10px;
-    background-color: #F5F5F5;
+  width: 10px;
+  height:11px;
+  background-color: #F5F5F5;
+}
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 8px;
+  background-color: #F5F5F5;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #00aaab;
+}
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 10px;
+  background-color: #F5F5F5;
 }
 .csv-modal-header{
-  padding-top:5px !important;
-  padding-bottom:5px !important;
-  font-family: "SourceSansPro-Semibold";
-  h5{
-      font-size: 18px !important;
-      font-weight: bold !important;
-      color: #F9A01B;
-  }
+padding-top:5px !important;
+padding-bottom:5px !important;
+font-family: "SourceSansPro-Semibold";
+h5{
+    font-size: 18px !important;
+    font-weight: bold !important;
+    color: #F9A01B;
+}
 }
 
 .csv-dialog-body{
-  font-size:16px;
+font-size:16px;
 }
 .csv-modal-body{
-  font-size:16px;
-  height: 250px;
-  overflow-y:scroll;
-  table {
-    th{
-      background-color:#3E3E3E;
-    }
-    th, td{
-      padding-top:6px;
-      padding-bottom:6px;
-    }
+font-size:16px;
+height: 250px;
+overflow-y:scroll;
+table {
+  th{
+    background-color:#3E3E3E;
   }
+  th, td{
+    padding-top:6px;
+    padding-bottom:6px;
+  }
+}
 }
 .csv-modal-footer{
-  
-  .float-right:last-child{
-    input{
-      margin-left:10px;
-      background-color: #00aaab;
-      border-color:#00aaab;
-    }
 
+.float-right:last-child{
+  input{
+    margin-left:10px;
+    background-color: #00aaab;
+    border-color:#00aaab;
   }
-  button:last-child{
-      margin-left:10px;
-      background-color: #00aaab;
-      border-color:#00aaab;
-  }
+
+}
+button:last-child{
+    margin-left:10px;
+    background-color: #00aaab;
+    border-color:#00aaab;
+}
 }
 
 
-  
+
