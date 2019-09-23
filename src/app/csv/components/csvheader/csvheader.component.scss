@@ -20,4 +20,13 @@
             font-size: 20px;
             cursor: pointer;
         }
+        .header-toggle{
+            position: relative;
+            top:-7px;
+            .activebtn{
+                margin-right:1px;
+                border-right: solid 1px #fff;
+            }
+        }
     }
+    

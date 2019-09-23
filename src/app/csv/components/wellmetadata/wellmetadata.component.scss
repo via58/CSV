@@ -7,7 +7,7 @@
     height: calc(100vh - 100px);
 
     svg{
-        width: calc(100%);
+       /* width: calc(100%);*/
         overflow-y:auto;
         height: calc(100%);
 
@@ -56,50 +56,27 @@
             }
     }
         
-        .well-info-product{
-            margin-top: 10px;
-            padding-left: 10px;
-            padding-right: 10px;
-           
-            .mat-radio-button{
-                margin-right:10px;
-            }
-            .mat-radio-outer-circle {
-                border-color: #00AAAB;
-            }
-            .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-                border-color: #00AAAB;
-            }
-            .mat-radio-inner-circle{
-                background-color: #00AAAB;
-            }
-
-            .custom-control-input:checked ~ .custom-control-label::before {
-                color: #fff;
-                border-color: #00AAAB;
-                background-color: #00AAAB;
-            }
-             .custom-control-input ~ .custom-control-label::before {
-                color: #fff;
-                border-color: #00AAAB;
-            }
-             .lasdropdown{
-              margin-top:10px;
-            }
-            .form-group{
-                margin-top:10px;
-            }
-            
-        }
-        .well-info-product{
-            margin-top: 5px !important;
-            .form-group{
-                margin-top: -10px !important;
-                select{
-                    padding-top: 0px;
-                }
+    .well-info-product{
+        margin-top: 5px !important;
+        padding-left: 10px;
+        padding-right: 10px;
+        .form-group{
+            select{
+                padding-top: 0px;
             }
         }
+    }
+    .well-info-project{
+        margin-top: 5px !important;
+        padding-left: 10px;
+        padding-right: 10px;
+        .form-group{
+            select{
+                padding-top: 0px;
+            }
+        }
+    }
+       
     }
     .wellgroup{
         background-color: #fff;

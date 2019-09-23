@@ -13,7 +13,7 @@ import {CsvModule} from './csv/csv.module';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    CsvModule
+    CsvModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

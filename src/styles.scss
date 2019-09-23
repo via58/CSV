@@ -38,5 +38,50 @@ body{
     border-radius: 10px;
     background-color: #F5F5F5;
 }
+.csv-modal-header{
+  padding-top:5px !important;
+  padding-bottom:5px !important;
+  font-family: "SourceSansPro-Semibold";
+  h5{
+      font-size: 18px !important;
+      font-weight: bold !important;
+      color: #F9A01B;
+  }
+}
+
+.csv-dialog-body{
+  font-size:16px;
+}
+.csv-modal-body{
+  font-size:16px;
+  height: 250px;
+  overflow-y:scroll;
+  table {
+    th{
+      background-color:#3E3E3E;
+    }
+    th, td{
+      padding-top:6px;
+      padding-bottom:6px;
+    }
+  }
+}
+.csv-modal-footer{
+  
+  .float-right:last-child{
+    input{
+      margin-left:10px;
+      background-color: #00aaab;
+      border-color:#00aaab;
+    }
+
+  }
+  button:last-child{
+      margin-left:10px;
+      background-color: #00aaab;
+      border-color:#00aaab;
+  }
+}
+
 
   

@@ -1,24 +1,26 @@
 <div class="card cst-card">
-        <app-csvheader [wellCount1]= wellCount></app-csvheader>
-    <div class="card-body cst-card-body">
-        <div class="cst-card-body-container">
-                <!-- <app-csvloader></app-csvloader>
+        <app-csvheader [wellCount1]=wellCount></app-csvheader>
+        <div class="card-body cst-card-body">
+              
+                <div  class="cst-card-body-container">
+                        <!-- <app-csvloader></app-csvloader>
                 <app-las></app-las> -->
-                <!-- <app-opencsv></app-opencsv>
+                        <!-- <app-opencsv></app-opencsv>
                 <app-raster></app-raster>
                 <app-wellmetadata></app-wellmetadata> -->
-                <app-wellmetadata  
-                [wellCount2]= wellCount 
-                [wellinfo]=wellnames 
-                [wellnumber]=wellnumber 
-                [UWI]=UWI
-                [trackorder]=trackorder 
-                [wellOrder]=wellOrder>
-                
-               </app-wellmetadata>
+                <div id="map-section" class="map-section">
+                                <app-csvmap></app-csvmap>
+                        </div>
+                        <div id="csv-section" class="csv-section" style="display:none">
+                                        <app-wellmetadata *ngIf="loadDataTag" [wellCount2]=wellCount [wellinfo]=wellnames [wellnumber]=wellnumber
+                                        [UWI]=UWI [trackCount]=trackCount [wellOrder]=wellOrder [curveListData]=curveList1
+                                        [lasRasterFlag]=lasRasterFlag [SelectedCurveList]=SelectedCurveList 
+                                        [trackAndSelectedCurve]=trackAndSelectedCurve >
+                                    </app-wellmetadata>
+                        </div>
+                </div>
+                <app-csvtools (LoadCross)="getData($event)"></app-csvtools>
         </div>
-        <app-csvtools></app-csvtools>
-    </div>
 </div>
 <!-- 
 <app-csvheader></app-csvheader>

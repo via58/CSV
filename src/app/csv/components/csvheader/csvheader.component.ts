@@ -15,7 +15,17 @@ export class CsvheaderComponent implements OnInit {
   ngOnInit() {
     
    // this.CsvdataService.setState(2);
-    
-  }
 
+  }
+  onChooseview($event){    
+   const viewSection = $event.srcElement.innerHTML;
+   if(viewSection == "MAP"){
+     document.getElementById('map-section').style.display = "block";
+     document.getElementById('csv-section').style.display = "none";
+   }
+   else{
+    document.getElementById('map-section').style.display = "none";
+    document.getElementById('csv-section').style.display = "block";
+   }
+  } 
 }
