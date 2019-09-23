@@ -5,6 +5,10 @@ import * as d3 from 'd3';
 import { GetcrosssectionsService } from '../../services/getcrosssections.service';
 import { RasterComponent } from '../raster/raster.component';
 import { LasComponent } from '../las/las.component';
+import { createTokenForExternalReference } from '@angular/compiler/src/identifiers';
+import { CsvloaderComponent } from '../csvloader/csvloader.component'
+
+
 
 @Component({
   selector: 'app-wellmetadata',
@@ -16,6 +20,8 @@ export class WellmetadataComponent implements OnInit, OnChanges {
   @ViewChild('chart', { static: true }) chartContainer: ElementRef;
   @ViewChild(RasterComponent, { static: true }) rastercomp;
   @ViewChild(LasComponent, { static: true }) lascomp;
+  @ViewChild(CsvloaderComponent, { static: true }) loadercomp;
+
   @Input() wellCount2: Number;
   @Input() wellinfo: any;
   @Input() wellnumber: any;
@@ -36,7 +42,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
   private selectedRaster: any = [];
   private lasData: any;
   private lasCurveData: any = [];
-
+  private trackId: any;
 
   constructor(private _dataService: GetcrosssectionsService) { }
   message: any;
@@ -163,11 +169,13 @@ export class WellmetadataComponent implements OnInit, OnChanges {
 
     track2.append('i')
       .attr('class', "fa fa-times")
-      .attr('data-toggle',"modal")
-      .attr('data-target',"#deletemodal")
+      .attr('data-toggle', "modal")
+      .attr('data-target', "#deletemodal")
+      .attr('data-id', 'uniq' + trackorder)
       .attr("id", 'uniq' + trackorder).on('click', function () {
-        const dropname = trackorder;
-        this.managedeletrack(dropname);
+        const dropname = 'uniq' + trackorder;
+        //this.managedeletrack(dropname);
+        this.trackId = dropname;
         //d3.select('.' + dropname).remove();
       }.bind(this));
 
@@ -214,11 +222,11 @@ export class WellmetadataComponent implements OnInit, OnChanges {
           d3.select(`.rasterdropdown${trackorder}`).style('display', 'none');
 
         }
-        else{
+        else {
           d3.select(`.lasdropdown${trackorder}`).style('display', 'none');
           d3.select(`.rasterdropdown${trackorder}`).style('display', 'none');
         }
-        
+
 
       }
     })
@@ -237,15 +245,15 @@ export class WellmetadataComponent implements OnInit, OnChanges {
       } else if (dropval == "LAS_STD") {
         const tracknum = `${trackorder}`;
         const trackcurveval = { "selectedCurve": "" };
-        
+
         //trackcurveval.selectedCurve = d3.select(this).node().value;
         d3.select(`.chartGrp${tracknum}`).remove();
         d3.select(`.rasterGrp${tracknum}`).remove();
-         
-        
-       
-       
-       // d3.selectAll(`.lasdropdown${trackorder}` + '> option[value *= "'+sIndex+'"').attr('selected', true);
+
+
+
+
+        // d3.selectAll(`.lasdropdown${trackorder}` + '> option[value *= "'+sIndex+'"').attr('selected', true);
         d3.select(`.lasdropdown${trackorder}`).style('display', 'block');
         d3.select(`.rasterdropdown${trackorder}`).style('display', 'none');
         this.lascomp.createLasChartOnLoad(tracknum, trackcurveval, uwi);
@@ -312,7 +320,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
     }
 
 
-    
+
 
     LasDropDown.on('change', function () {
       const tracknum = `${trackorder}`;
@@ -323,6 +331,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
       console.log(`.lasdropdown${trackorder}   ` + (d3.select('.lasdropdown' + trackorder).node().value))
       //this.createChartOnchange(this.value);
       d3.select(`.chartGrp${tracknum}`).remove();
+      this.loadercomp.getcsvLoader(tracknum)
       this.lascomp.createLasChartOnLoad(tracknum, trackcurveval, uwi)
 
     }.bind(this))
@@ -342,16 +351,17 @@ export class WellmetadataComponent implements OnInit, OnChanges {
   }
 
   managedeletrack($event, trackorder) {
-    const tracknum = trackorder;
-    this.deletrack($event,tracknum)
+    //const tracknum = trackorder;
+    this.trackId = $event;
+    //this.deletrack($event)
+    console.log($event);
   }
 
-  deletrack($event,tracknum) {
-    
-    
-   // d3.select('.uniq'+tracknum).remove();
-    console.log($event,tracknum);
-  
+  deletrack(track) {
+
+    // d3.select(`.${track}`).remove();
+    console.log(track);
+
   }
 
   trackaction(wellorder, trackorder) {

@@ -1,10 +1,11 @@
 <div class="scrolling-wrapper" #chart>
         <app-raster></app-raster>
         <app-las></app-las>
+        <app-csvloader></app-csvloader>
 
 
  </div>
- <div class="modal fade" id="deletemodal"  tabindex="-1" role="dialog">
+ <div class="modal fade {{trackId}}" id="deletemodal"tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header csv-modal-header">
@@ -18,7 +19,7 @@
         </div>
         <div class="modal-footer csv-modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)='deletrack(wellorder,trackorder)'>Save changes</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)='deletrack($event)'>Save changes</button>
         </div>
       </div>
     </div>
