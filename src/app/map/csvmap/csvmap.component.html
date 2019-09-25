@@ -1,3 +1,12 @@
-<div id="map" class="map" style="position: relative;">
-    <!-- <div id="HomeButton"></div> -->
+<div id="map" class="map" style="background: gray;width:100%;height:520px;border:solid 1px red;">
+
+    <div id="topbar" style="position: absolute;z-index: 999;right:40px;margin-top:20px;">
+        <div id="HomeButton"></div>
+        <button class="action-button esri-icon-polygon" id="polygonButton" type="button" title="Draw polygon"
+            (click)="initPolygonDraw()" style="margin-top:5px;">
+        </button>
+        <button class="action-button remove-btn esri-icon-trash" id="resetBtn" type="button" title="Clear graphics"
+            ng-click="$ctrl.removePolygonFromMap()" style="margin-top:5px;">
+        </button>
+    </div>
 </div>

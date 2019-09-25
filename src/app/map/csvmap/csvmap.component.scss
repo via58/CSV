@@ -1,8 +1,6 @@
-#HomeButton {
-    position: absolute;
-    left: 20px;
-    z-index: 150;
-  }
-.map{
-    height: calc(100vh - 85px);
-}  
+@import url('https://js.arcgis.com/4.7/esri/css/main.css');
+
+.esri-view {
+  height: 500px;
+  width: 400px;
+}

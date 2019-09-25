@@ -33,7 +33,7 @@ export class GetcrosssectionsService {
    }
 
    getProductTypes(uwid){
-      return this.http.get(this.localhost +'getCrossSection/getProductTypeList')
+      return this.http.get(this.localhost +'getCrossSection/getProductTypes')
    }
 
 

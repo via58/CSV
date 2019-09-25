@@ -8,10 +8,10 @@
                         <!-- <app-opencsv></app-opencsv>
                 <app-raster></app-raster>
                 <app-wellmetadata></app-wellmetadata> -->
-                <div id="map-section" class="map-section">
+                <div id="map-section" class="map-section" style="display:none">
                                 <app-csvmap></app-csvmap>
                         </div>
-                        <div id="csv-section" class="csv-section" style="display:none">
+                        <div id="csv-section" class="csv-section" >
                                         <app-wellmetadata *ngIf="loadDataTag" [wellCount2]=wellCount [wellinfo]=wellnames [wellnumber]=wellnumber
                                         [UWI]=UWI [trackCount]=trackCount [wellOrder]=wellOrder [curveListData]=curveList1
                                         [lasRasterFlag]=lasRasterFlag [SelectedCurveList]=SelectedCurveList 

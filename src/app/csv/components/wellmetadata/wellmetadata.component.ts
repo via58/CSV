@@ -1,11 +1,10 @@
 import { Component, OnInit, OnChanges, ViewChild, AfterViewInit, ElementRef, Input, ViewEncapsulation } from '@angular/core';
-import 'bootstrap';
+//import 'bootstrap';
 import * as $ from 'jquery';
 import * as d3 from 'd3';
 import { GetcrosssectionsService } from '../../services/getcrosssections.service';
 import { RasterComponent } from '../raster/raster.component';
 import { LasComponent } from '../las/las.component';
-import { createTokenForExternalReference } from '@angular/compiler/src/identifiers';
 import { CsvloaderComponent } from '../csvloader/csvloader.component'
 
 
@@ -43,6 +42,8 @@ export class WellmetadataComponent implements OnInit, OnChanges {
   private lasData: any;
   private lasCurveData: any = [];
   private trackId: any;
+  private wellId: any;
+  private addTrack: any;
 
   constructor(private _dataService: GetcrosssectionsService) { }
   message: any;
@@ -74,7 +75,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
   }
 
   ngAfterViewInit() {
-    $('[data-toggle="tooltip"]').tooltip();
+    // $('[data-toggle="tooltip"]').tooltip();
   }
 
   buildSVG() {
@@ -93,8 +94,9 @@ export class WellmetadataComponent implements OnInit, OnChanges {
     for (var i = 0; i < this.wellCount2; i++) {
       this.chart = svg.append('g')
         .attr('class', 'maingroup maingroup' + this.wellOrder[i])
-      if (i == 0) { this.chart.attr('transform', `translate(${((i * 250) * trackcnt) + ((i) * gutter)}, 0)`); }
-      else { this.chart.attr('transform', `translate(${((i * 250) * trackcnt) + ((i) * gutter + (40 * i))}, 0)`); }
+        .attr('uwi', this.UWI[i])
+      if (i == 0) { this.chart.attr('transform', `translate(${((i * 250) * trackcnt) + ((i) * gutter) + 10}, 10)`); }
+      else { this.chart.attr('transform', `translate(${((i * 250) * trackcnt) + ((i) * gutter + (40 * i) + 10)}, 10)`); }
 
       for (var j = startpnt; j < startpnt + this.trackCount[i]; j++) {
 
@@ -104,9 +106,10 @@ export class WellmetadataComponent implements OnInit, OnChanges {
           .append('g')
           .attr('class', 'uniq uniq' + this.wellOrder[i].toString() + j)
           .attr('transform', `translate(${((xcounter * 250)) + (xcounter * gutter)}, 0)`);
-        this.wellmetainfo(this.wellinfo[i], this.wellOrder[i].toString(), this.wellOrder[i].toString() + j, this.UWI[i], this.trackAndSelectedCurve[j]);
-        this.wellproduct(this.wellinfo[i], this.wellOrder[i].toString() + j, this.UWI[i], this.trackAndSelectedCurve[j]);
-        this.wellproject(this.wellinfo[i], this.wellOrder[i].toString() + j, this.UWI[i], this.trackAndSelectedCurve[j], this.lasRasterFlag[j]);
+        //this.wellmetainfo(this.wellinfo[i], this.wellOrder[i].toString(), this.wellOrder[i].toString() + j, this.UWI[i], this.trackAndSelectedCurve[j]);
+        this.wellmetainfo(this.wellinfo[i], this.wellOrder[i].toString(), this.wellOrder[i].toString() + j, this.UWI[i]);
+        this.wellproduct(this.wellOrder[i].toString() + j, this.UWI[i], this.trackAndSelectedCurve[j]);
+        this.wellproject(this.wellOrder[i].toString() + j, this.UWI[i], this.trackAndSelectedCurve[j], this.lasRasterFlag[j], "OPEN");
         if (this.trackAndSelectedCurve[j].productType == "SMART_RASTER") {
           this.rastercomp.createRasterChartOnLoad(this.UWI[i], this.trackAndSelectedCurve[j], this.wellOrder[i].toString() + j);
           d3.select(`.chartGrp${this.wellOrder[i].toString() + j}`).style('display', 'none');
@@ -128,7 +131,56 @@ export class WellmetadataComponent implements OnInit, OnChanges {
 
   }
 
-  wellmetainfo(wellname, wellorder, trackorder, uwi, Curve) {
+  trackaction(trackId, drop1, drop2, TrackInformation) {
+    // var dropdatatext = d3.select(trackId).node().innerText;
+    console.log("drop1 list :" + drop1);
+    console.log("drop1 list :" + drop2);
+    console.log(TrackInformation);
+    var dropdatatext = $('li.' + trackId + ':first').text();
+
+    //var dropdatatext = d3.select(trackId);
+    //alert(trackId);
+    if (dropdatatext == "Delete") {
+      //const dropclass = d3.select(trackId)
+      //const dropname = d3.select(dropclass).attr('class');
+      this.wellId = trackId;
+    }
+    else if (dropdatatext == "Add Track") {
+
+      var currentMainGroup = document.querySelector("." + trackId).parentElement.classList[1];
+      var TotalTracks = document.querySelectorAll(`.${currentMainGroup} .uniq`);
+      if (TotalTracks.length < 5) {
+        var translateX = TotalTracks.length * 20;
+        const randomNum = Math.ceil(Math.random() * 100);
+        // TrackInformation.trackOrder=randomNum;
+        for (var i = 0; i < TotalTracks.length; i++) {
+          translateX = parseInt((TotalTracks[i].getBoundingClientRect().width.toString()), 10) + translateX;
+        }
+
+        d3.select('.' + currentMainGroup).append('g')
+          .attr('transform', `translate(${translateX}, 0)`)
+          .attr('class', 'uniq uniq' + randomNum);
+        var WellOrder = TotalTracks.length + 1
+        //this.wellmetainfo("", "", randomNum, "", "");
+        const currentUwId = d3.select('.' + currentMainGroup).attr('uwi');
+        //console.log(trackObject) 
+        this.wellmetainfo("", WellOrder, randomNum, currentUwId)
+        //        wellmetainfo(wellname, wellorder, trackorder, uwi) {
+        this.wellproduct(randomNum, currentUwId, TrackInformation);
+        this.wellproject(randomNum, currentUwId, TrackInformation, TrackInformation.productType, "ADD");
+        this.translateGenerator();
+
+        //this.wellproduct("cook",1,"Asdasd",{});
+        //this.wellproject(this.wellinfo[i], this.wellOrder[i].toString() + j, this.UWI[i], this.trackAndSelectedCurve[j], this.lasRasterFlag[j]);
+      } else {
+        alert("Maximum Tracks Exceeded ");
+      }
+
+    }
+  }
+
+  //wellmetainfo(wellname, wellorder, trackorder, uwi, Curve) {
+  wellmetainfo(wellname, wellorder, trackorder, uwi) {
     // well meta information
     const element = this.chartContainer.nativeElement;
     this.width = element.offsetWidth - this.margin.left - this.margin.right;
@@ -137,35 +189,90 @@ export class WellmetadataComponent implements OnInit, OnChanges {
     const formgrpcontainer = formgrp.append('foreignObject')
       .attr('class', 'wellgroup wellgroup')
       .attr('id', 'foreignObject' + trackorder)
-      .style('height', element.offsetHeight - 20)
+      .style('height', element.offsetHeight - 70)
       .style('width', '250');
-    const tooltipwn = `WellName : ${wellname}`
-    const tooltipuwi = `UwId : ${uwi}`
-    const tooltipscn = `Selected Curve : ${Curve.selectedCurve}`
+    const tooltipwn = `WellName : ${wellname}`;
+    const tooltipuwi =  ` UwId : ${uwi}`
+    //  const tooltipscn = `Selected Curve : ${Curve.selectedCurve}`
     // UwId : ${uwi}
     // Selected Curve : ${Curve.selectedCurve}`
     const WellNameDiv = formgrpcontainer.append('xhtml:div')
-      .attr('class', 'well-info-name')
-      .attr('data-toggle', 'tooltip')
-      .attr('data-placement', 'bottom')
-      .attr('data-html', "true")
-      .attr('title', '<p>' + tooltipwn + '</p>' + '<p>' + tooltipuwi + '</p>' + '<p>' + tooltipscn + '</p>')
-      .html("<span class='well-title'>" + wellname + "</span>");
+      .attr('class', 'well-info-name  tooltip-bottom')
+      // .attr('data-toggle', 'tooltip')
+      // .attr('data-placement', 'bottom')
+      // .attr('data-html', "true")
+      
+      .attr('data-tooltip', tooltipwn +  tooltipuwi)
+      //.html(`<span class='well-title' data-toggle='tooltip' data-placement='bottom' data-html='true' title='<p>${tooltipwn}</p><p>${tooltipuwi} </p>' >${wellname}</span>`);
+      //.html(`<span class='well-title' title=${tooltipwn + tooltipuwi + tooltipscn}>${wellname}</span>`);
+      .html(`<span class='well-title'>${wellname}</span>`);
+
     const Welltrack = WellNameDiv
       .append('div')
       .attr('class', 'float-right dropdown');
     if (wellorder == 1) {
-      Welltrack.append('ul').attr('class', 'dropdown-menu').html("<li class='maingroup" + wellorder + "'>Add Track</li><li class='maingroup" + wellorder + "'>Delete</li>")
+      Welltrack.append('ul').attr('class', 'dropdown-menu').html("<li data-id='uniq" + trackorder + "'  class='uniq" + trackorder + "'>Add Track</li><li data-id='maingroup" + wellorder + "'  class='maingroup" + wellorder + "' data-toggle='modal' data-target='#deleteWellModal'>Delete</li>")
     }
     else {
-      Welltrack.append('ul').attr('class', 'dropdown-menu').html("<li class='maingroup" + wellorder + "'>Add Track</li><li class='maingroup" + wellorder + "'>Delete</li>")
+      Welltrack.append('ul').attr('class', 'dropdown-menu').html("<li data-id='uniq" + trackorder + "' class='uniq" + trackorder + "'>Add Track</li><li data-id='maingroup" + wellorder + "'  class='maingroup" + wellorder + "' data-toggle='modal' data-target='#deleteWellModal'>Delete</li>")
     }
     const track1 = Welltrack.append('span').attr('class', 'one dropdown-toggle').attr("data-toggle", "dropdown");
     const track2 = Welltrack.append('span').attr('class', 'two');
 
-    d3.selectAll('.dropdown-menu li').on('click', this.trackaction)
+    $('li.uniq' + trackorder).on('click',
+      function (e) {
+
+
+
+        ///New  Track Order 
+        var currentMainGroup = document.querySelector('.uniq' + trackorder).parentElement.classList[1];
+        var TotalTracks = document.querySelectorAll(`.${currentMainGroup} .uniq`);
+        TotalTracks.length + 1
+        ////
+
+
+        console.log($('.uniq' + trackorder + " .productType ").html())
+        var drop1list = $('.uniq' + trackorder + " .productType ").html();
+        var drop2list = $('.uniq' + trackorder + " .rasterdropdown ").html();
+        var drop3list = $('.uniq' + trackorder + " .lasdropdown ").text();
+        var laslist = [];
+        var rasterlist = [];
+
+        for (var i = 1; i <= $('.uniq' + trackorder + " .lasdropdown option").length; i++) {
+          laslist.push($('.uniq' + trackorder + " .lasdropdown option:nth-child(" + i + ")").text())
+        }
+        for (var i = 1; i <= $('.uniq' + trackorder + " .rasterdropdown option").length; i++) {
+          rasterlist.push($('.uniq' + trackorder + " .rasterdropdown option:nth-child(" + i + ")").text())
+        }
+
+        console.log(laslist);
+        console.log(drop3list);
+        // var drop2list  $('.uniq' + trackorder +" .productType ").html();
+        var TrackInformation = {
+          "curveList": $('.uniq' + trackorder + " .productType ").val() == "SMART_RASTER" ? rasterlist : laslist,
+          "productType": $('.uniq' + trackorder + " .productType ").val(),
+          "selectedCurve": $('.uniq' + trackorder + " .productType ").val() == "SMART_RASTER" ? $('.uniq' + trackorder + " .rasterdropdown ").val() : $('.uniq' + trackorder + " .lasdropdown ").val(),
+          "trackOrder": null,
+          "uwi": uwi
+        }
+        this.trackaction($('li.uniq' + trackorder).attr('data-id'), drop1list, drop2list, TrackInformation)
+
+
+      }.bind(this))
+    $('li.maingroup' + wellorder).on('click',
+      function (e) {
+
+        // alert($(this).attr('data-id'))
+        //  alert($('li.uniq' + trackorder ).attr('data-id'))
+
+        //   this.addTrack = 'uniq' + trackorder;
+
+        this.trackaction($('li.maingroup' + wellorder).attr('data-id'), "dfdf", "sdasd");
+
+
+      }.bind(this))
     track1.append('i')
-      .attr('class', 'fa fa-ellipsis-h');
+      .attr('class', 'fa fa-ellipsis-h').attr('data-target', 'dropdown');
 
     track2.append('i')
       .attr('class', "fa fa-times")
@@ -182,8 +289,9 @@ export class WellmetadataComponent implements OnInit, OnChanges {
 
   }
 
-  wellproduct(wellname, trackorder, uwi, TrackInformation) {
-    //console.log(TrackInformation);
+  wellproduct(trackorder, uwi, TrackInformation) {
+
+    console.log(TrackInformation);
     const WellInfoproductDiv = d3.select('#foreignObject' + trackorder).append('xhtml:div')
       .attr('class', 'well-info-product')
       .attr('id', 'well-info-product' + trackorder);
@@ -246,17 +354,20 @@ export class WellmetadataComponent implements OnInit, OnChanges {
         const tracknum = `${trackorder}`;
         const trackcurveval = { "selectedCurve": "" };
 
-        //trackcurveval.selectedCurve = d3.select(this).node().value;
+        trackcurveval.selectedCurve = "";
         d3.select(`.chartGrp${tracknum}`).remove();
         d3.select(`.rasterGrp${tracknum}`).remove();
 
 
-
-
+        console.log($(`.lasdropdown${trackorder} option:first`).text());
+        trackcurveval.selectedCurve = $(`.lasdropdown${trackorder} option:first`).text();
+        console.log(trackcurveval)
         // d3.selectAll(`.lasdropdown${trackorder}` + '> option[value *= "'+sIndex+'"').attr('selected', true);
         d3.select(`.lasdropdown${trackorder}`).style('display', 'block');
         d3.select(`.rasterdropdown${trackorder}`).style('display', 'none');
+
         this.lascomp.createLasChartOnLoad(tracknum, trackcurveval, uwi);
+
         d3.select(`.chartGrp${trackorder}`).style('display', 'block');
         d3.select(`.rasterGrp${trackorder}`).style('display', 'none');
 
@@ -264,7 +375,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
     }.bind(this))
   }
 
-  wellproject(wellname, trackorder, uwi, TrackInformation, Flag) {
+  wellproject(trackorder, uwi, TrackInformation, Flag, AddOrOpen) {
     //console.log(TrackInformation.curveList);
     const WellInfoproductDiv = d3.select('#foreignObject' + trackorder).append('xhtml:div')
       .attr('class', 'well-info-project')
@@ -283,9 +394,20 @@ export class WellmetadataComponent implements OnInit, OnChanges {
       LasDropDown.style('display', 'none');
       RasterDropDown.style('display', 'block');
       const rasterCurve: any = [];
+      if (AddOrOpen == "ADD") {
+        rasterCurve.push('Select Curve')
+        // .attr('value', "Select Curve")
+        // .text("Select Curve")
+      }
 
       rasterCurve.push(TrackInformation.curveList)
       if (rasterCurve != undefined) {
+        //RasterDropDown.append("option").attr("value", "Select").text("Select Curve")
+        // if (AddOrOpen == "ADD") {
+        //   RasterDropDown.append('option')
+        //     .attr('value', "Select Curve")
+        //     .text("Select Curve")
+        // }
         RasterDropDown.selectAll("option")
           .data(rasterCurve)
           .enter()
@@ -300,18 +422,24 @@ export class WellmetadataComponent implements OnInit, OnChanges {
 
     } else if (Flag == "LAS_STD") {
       const lasCurve: any = [];
+
       lasCurve.push(TrackInformation.curveList);
       console.log(lasCurve)
       console.log(lasCurve[0]);
       RasterDropDown.style('display', 'none');
       LasDropDown.style('display', 'block');
       if (lasCurve[0] != undefined) {
+        if (AddOrOpen == "ADD") {
+          LasDropDown.append('option')
+            .attr('value', "Select Curve")
+            .text("Select Curve")
+        }
         LasDropDown.selectAll("option")
           .data(lasCurve[0])
           .enter()
           .append("option")
-          .attr("value", function (d, i) { return lasCurve[0][i] })
-          .text(function (d, i) { return lasCurve[0][i] })
+          .attr("value", function (d, ) { return d })
+          .text(function (d, ) { return d })
       } else {
         LasDropDown.append("option")
           .attr("value", "No Raster Data Found")
@@ -328,24 +456,37 @@ export class WellmetadataComponent implements OnInit, OnChanges {
       trackcurveval.selectedCurve = d3.select('.lasdropdown' + trackorder).node().value;
       //this.lascomp.createLasChartOnLoad(tracknum, trackcurveval);
       //d3.select(`.chartGrp${this.wellOrder[i].toString() + j}`).style('display', 'block');
-      console.log(`.lasdropdown${trackorder}   ` + (d3.select('.lasdropdown' + trackorder).node().value))
-      //this.createChartOnchange(this.value);
-      d3.select(`.chartGrp${tracknum}`).remove();
-      this.loadercomp.getcsvLoader(tracknum)
-      this.lascomp.createLasChartOnLoad(tracknum, trackcurveval, uwi)
 
+      if (trackcurveval.selectedCurve !== "Select Curve") {
+        console.log(`.lasdropdown${trackorder}   ` + (d3.select('.lasdropdown' + trackorder).node().value))
+        //this.createChartOnchange(this.value);
+        d3.select(`.chartGrp${tracknum}`).remove();
+        this.loadercomp.getcsvLoader(tracknum)
+        this.lascomp.createLasChartOnLoad(tracknum, trackcurveval, uwi)
+      } else {
+        d3.select(`.chartGrp${tracknum}`).remove();
+      }
     }.bind(this))
 
 
+    RasterDropDown.on('change', function () {
+      const tracknum = `${trackorder}`;
+      const trackcurveval = { "selectedCurve": "" };
+      trackcurveval.selectedCurve = d3.select('.rasterdropdown' + trackorder).node().value;
+      //this.lascomp.createLasChartOnLoad(tracknum, trackcurveval);
+      //d3.select(`.chartGrp${this.wellOrder[i].toString() + j}`).style('display', 'block');
 
+      if (trackcurveval.selectedCurve !== "Select Curve") {
+        console.log(`.rasterdropdown${trackorder}   ` + (d3.select('.rasterdropdown' + trackorder).node().value))
+        //this.createChartOnchange(this.value);
+        d3.select(`.rasterGrp${tracknum}`).remove();
+        this.loadercomp.getcsvLoader(tracknum)
+        this.rastercomp.createRasterChartOnLoad(uwi, trackcurveval, tracknum)
+      } else {
+        d3.select(`.rasterGrp${tracknum}`).remove();
+      }
+    }.bind(this))
 
-    // if (Flag == "SMART_RASTER") {
-    //   LasDropDown.style('display', 'none');
-    //   RasterDropDown.style('display', 'block');
-    // } else if (Flag == "LAS_STD") {
-    //   RasterDropDown.style('display', 'none');
-    //   LasDropDown.style('display', 'block');
-    // }
 
 
   }
@@ -357,34 +498,68 @@ export class WellmetadataComponent implements OnInit, OnChanges {
     console.log($event);
   }
 
-  deletrack(track) {
+  // deletrack() {
 
-    // d3.select(`.${track}`).remove();
-    console.log(track);
+  //   d3.select(`.${this.trackId}`).remove();
+  //   //console.log(this.trackId);
 
+  // }
+  deletrack() {
+    const _id = this.trackId;
+    var neigbour = document.querySelector("." + _id).nextElementSibling;
+
+    var currentMainGroup = document.querySelector("." + _id).parentElement.classList[1]
+    var listNums = [0];
+    d3.select(`.${_id}`).remove();
+
+    var listItem = document.querySelectorAll(`.${currentMainGroup} .uniq`);
+    for (var i = 0; i < listItem.length - 1; i++) {
+      listNums.push(parseInt((listItem[i].getBoundingClientRect().width.toString()), 10) + listNums[i]);
+    }
+
+    for (let i = 0; i < listItem.length; i++) {
+
+      if (i == 0) {
+        d3.select(`.${currentMainGroup} .uniq:nth-child(${i + 1})`).attr('transform', `translate(${listNums[i]},0)`)
+      }
+      else {
+        d3.select(`.${currentMainGroup} .uniq:nth-child(${i + 1})`).attr('transform', `translate(${listNums[i] + (i * 20)},0)`)
+
+      }
+    }
+
+    this.translateGenerator();
   }
+  delewell() {
+    var _id = this.wellId;
+    d3.select(`.${_id}`).remove();
+    this.translateGenerator();
+  }
+  translateGenerator() {
+    var listItem = document.querySelectorAll(".maingroup ");
 
-  trackaction(wellorder, trackorder) {
-    var dropdatatext = d3.select(this).node().innerText;
-    if (dropdatatext == "Delete") {
-      const dropclass = d3.select(this).node();
-      const dropname = d3.select(dropclass).attr('class');
-      d3.select('.' + dropname).remove();
+    var newNums = [0];
+
+    for (var i = 0; i < listItem.length - 1; i++) {
+      newNums.push(parseInt((listItem[i].getBoundingClientRect().width.toString()), 10) + newNums[i]);
+    }
+    console.log(newNums)
+    for (var i = 0; i < listItem.length; i++) {
+      if (i == 0) {
+        d3.select(`.maingroup:nth-child(${i + 1})`).attr('transform', `translate(${newNums[i] + 10},10)`)
+      } else {
+        d3.select(`.maingroup:nth-child(${i + 1})`).attr('transform', `translate(${newNums[i] + (i * 30)},10)`)
+
+      }
+
+      //d3.select(`.mainGrp:nth-child(${i + 1})`).attr('transform', `translate(${newNums[i - 1] + 40},10)`)
+
 
     }
-    else if (dropdatatext == "Add Track") {
-      const dropclass = d3.select(this).node();
-      const dropname = d3.select(dropclass).attr('class');
-      //alert(dropname);
-      const randomNum = Math.ceil(Math.random() * 100);
-      d3.select('.' + dropname).append('g').attr('class', 'uniq uniq' + randomNum);
 
 
-    }
+
   }
-
-
-
 
 
 

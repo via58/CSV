@@ -11,7 +11,6 @@ export class CsvloaderComponent implements OnInit {
 
   ngOnInit() {
   }
-  titlename1 = "Loader components";
   getcsvLoader(trackorder){
     const loaderGrp = d3.select('.uniq'+ trackorder + ' g').append('g').attr('class', 'loader').attr('transform', 'translate(30 ,160)');
     loaderGrp.append('foreignObject').attr('width', '250')
