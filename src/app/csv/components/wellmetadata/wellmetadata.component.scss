@@ -1,5 +1,5 @@
 .scrolling-wrapper {
-    overflow-x: scroll;
+    overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
     //margin-top: 10px;
@@ -7,7 +7,7 @@
     height: calc(100vh - 100px);
 
     svg{
-       /* width: calc(100%);*/
+        // width: calc(100%);
         overflow-y:auto;
         height: calc(100%);
 

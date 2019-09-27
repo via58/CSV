@@ -1,32 +1,26 @@
 <div class="card cst-card">
         <app-csvheader [wellCount1]=wellCount></app-csvheader>
         <div class="card-body cst-card-body">
-              
-                <div  class="cst-card-body-container">
-                        <!-- <app-csvloader></app-csvloader>
-                <app-las></app-las> -->
-                        <!-- <app-opencsv></app-opencsv>
-                <app-raster></app-raster>
-                <app-wellmetadata></app-wellmetadata> -->
-                <div id="map-section" class="map-section" style="display:none">
-                                <app-csvmap></app-csvmap>
-                        </div>
-                        <div id="csv-section" class="csv-section" >
-                                        <app-wellmetadata *ngIf="loadDataTag" [wellCount2]=wellCount [wellinfo]=wellnames [wellnumber]=wellnumber
-                                        [UWI]=UWI [trackCount]=trackCount [wellOrder]=wellOrder [curveListData]=curveList1
-                                        [lasRasterFlag]=lasRasterFlag [SelectedCurveList]=SelectedCurveList 
-                                        [trackAndSelectedCurve]=trackAndSelectedCurve >
-                                    </app-wellmetadata>
-                        </div>
+
+                <div class="cst-card-body-container csv-section" id="csv-section">
+                        <app-wellmetadata *ngIf="loadDataTag" [wellCount2]=wellCount [wellinfo]=wellnames
+                                [wellnumber]=wellnumber [UWI]=UWI [trackCount]=trackCount [wellOrder]=wellOrder
+                                [curveListData]=curveList1 [lasRasterFlag]=lasRasterFlag
+                                [SelectedCurveList]=SelectedCurveList [trackAndSelectedCurve]=trackAndSelectedCurve
+                                [SVGWidth]=SVGWidth>
+                        </app-wellmetadata>
+
                 </div>
                 <app-csvtools (LoadCross)="getData($event)"></app-csvtools>
         </div>
+        <div class="card-body cst-card-body map-section" id="map-section" style="display:none">
+
+                <div class="cst-card-body-container">
+                        <div class="map-section">
+                                <app-csvmap></app-csvmap>
+                        </div>
+
+                </div>
+
+        </div>
 </div>
-<!-- 
-<app-csvheader></app-csvheader>
-<app-csvloader></app-csvloader>
-<app-csvtools></app-csvtools>
-<app-las></app-las>
-<app-opencsv></app-opencsv>
-<app-raster></app-raster>
-<app-wellmetadata></app-wellmetadata> -->

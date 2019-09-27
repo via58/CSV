@@ -29,22 +29,26 @@ export class CsvtoolsComponent implements OnInit {
       )
     console.log(this.CrossSectionList)
   }
-  
+
 
   LoadCrossSection() {
     if (document.querySelector('input[name=CrossSection]:checked') != null) {
 
       this.selectedCrossSectionId = d3.select('input[name=CrossSection]:checked').property('value');
-
       this.crossSectionDetails.getCrossSectionData(this.selectedCrossSectionId).subscribe(
         data => {
-          this.LoadCross.emit(JSON.stringify(data));
-        
+          if (data) {
+            d3.select('.panel-heading').attr('class', ' panel-heading collapsed')
+            d3.select('#bar').attr('class', 'collapse');
+            d3.select('svg').remove();
+            this.LoadCross.emit(JSON.stringify(data));
+
+          }
         }
       )
 
     }
     console.log("Selected CrossSection " + this.selectedCrossSectionId)
   }
-  
+
 }

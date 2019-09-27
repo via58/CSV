@@ -8,6 +8,7 @@ import { GetcrosssectionsService } from '../../services/getcrosssections.service
 })
 export class LasComponent implements OnInit {
   private lasCurveData: any = [];
+  //trackHeight: any = document.querySelector('.chartGrp').getBoundingClientRect().height +document.querySelector('.wellgroup').getBoundingClientRect().height;
   constructor(private _dataService: GetcrosssectionsService) { }
 
   ngOnInit() {
@@ -20,7 +21,7 @@ export class LasComponent implements OnInit {
     console.log(selectedTrack.selectedCurve)
     var curvename = selectedTrack.selectedCurve;
 
-   
+
 
     if (this.lasCurveData.curveInformation == "") {
       //console.log(this.lasCurveData.curveInformation[1]);
@@ -53,7 +54,7 @@ export class LasComponent implements OnInit {
       console.log(this.lasCurveData.curves);
       var doption = [];
       doption.push("Select Curve");
-      for(var i = 0; i < this.lasCurveData.curveInformation.length; i ++){
+      for (var i = 0; i < this.lasCurveData.curveInformation.length; i++) {
         doption.push(this.lasCurveData.curveInformation[i]);
       }
 
@@ -63,10 +64,10 @@ export class LasComponent implements OnInit {
       // .text('Select Curve')
       var doption = [];
       doption.push("Select Curve");
-      for(var i = 0; i < this.lasCurveData.curveInformation.length; i ++){
+      for (var i = 0; i < this.lasCurveData.curveInformation.length; i++) {
         doption.push(this.lasCurveData.curveInformation[i]);
       }
-      
+
       console.log(doption)
 
       // if (curvename == "") {
@@ -80,28 +81,31 @@ export class LasComponent implements OnInit {
         .append("option")
         .attr("value", function (d, i) { return d })
         .text(function (d, i) { return d });
-
+      var lasHeight = (d3.select('svg').attr('height') - d3.select('.wellgroup').attr('height')) - 50;
       if (curvename != "") {
         if (Object.keys(data).length !== 0) {
           this.lasCurveData = data;
-          // this.lasCurveData = this.lasData.curves
-          console.log(this.lasCurveData);
-          // console.log(lasCurve + "AND" + wellId)
+          const xScale = d3.scaleLinear().domain(d3.extent(this.lasCurveData.curves, function (d) { return d[0] })).nice().range([0, 200]); // Xaxis Scale
+          const yScale = d3.scaleLinear().domain([d3.max(this.lasCurveData.curves, function (d) { return d[1] }), d3.min(this.lasCurveData.curves, function (d) { return d[1] })]).range([lasHeight-10, 0]); // Yaxis Scale
 
-          const xScale = d3.scaleLinear().domain(d3.extent(this.lasCurveData.curves, function (d) { return d[0] })).nice().range([0, 210]); // Xaxis Scale
-          const yScale = d3.scaleLinear().domain([d3.max(this.lasCurveData.curves, function (d) { return d[1] }), d3.min(this.lasCurveData.curves, function (d) { return d[1] })]).range([280, 0]); // Yaxis Scale
-
-          const xAxis = d3.axisTop(xScale).tickSize(-280).ticks(6); // Xaxis 
-          const yAxis = d3.axisLeft(yScale).tickSize(-210).ticks(6); // Y axis 
+          const xAxis = d3.axisTop(xScale).tickSize(-(lasHeight-10)).ticks(6); // Xaxis 
+          const yAxis = d3.axisLeft(yScale).tickSize(-200).ticks(6); // Y axis 
           const line = d3.line()
             .x(function (d) { return xScale(d[0]) })
             .y(function (d) { return yScale(d[1]) })
             .curve(d3.curveCardinal) // Cardinal graph generater
           const grp = d3.select('.uniq' + trackorder + ' g');
           //console.log(`.mainGrp${trackorder}`);
-          const chartGroup = grp.append('g').attr('class', 'chartGrp chartGrp' + trackorder).attr('transform', 'translate(30 ,160)');
+          const chartGroup1 = grp.append('rect')
+            .attr('height', lasHeight + 12)
+            .attr('width','250')
+            .style('fill', 'white')
+            .attr('transform', 'translate(0 ,148)');
+          const chartGroup= grp.append('g').attr('class', 'chartGrp chartGrp' + trackorder)
+            .attr('height', lasHeight -10)
+            .style('background-color', '#fff')
+            .attr('transform', 'translate(30 ,160)');
           // const cgrp = d3.select('chartGrp' +uwid + curveName);
-          //const rastergrp = grp.append('g').attr('class', 'rasterGrp' + _well[0].UWI.UWI + _well[0].UWI.curveName).attr('transform', 'translate(' + ((order * 290)) + ',100)');
           const grpXAxis = chartGroup.append('g').attr('class', 'axisred').attr('transform', 'translate(6,0)').transition()
           grpXAxis.call(xAxis);
           const grpYAxis = chartGroup.append('g').attr('class', 'axisred').attr('transform', 'translate(6,0)').transition()
@@ -109,8 +113,6 @@ export class LasComponent implements OnInit {
 
           d3.select(`.uniq${trackorder} .loader`).remove();
 
-
-          // d3.select(`.uniq${trackorder}  .loader`).style('display', 'none');
           /// Drawing Path by sending Data points 
           chartGroup.append("path")
             .transition()
@@ -120,10 +122,14 @@ export class LasComponent implements OnInit {
             .attr('fill', 'none')
             .attr('stroke-width', 1)
             .attr('stroke', this.lasCurveData.curveColor)
+          //console.log(document.querySelector('.wellgroup').getBoundingClientRect().height);
+
         }
       }
     })
 
 
   }
+
+
 }

@@ -31,6 +31,8 @@ export class WellmetadataComponent implements OnInit, OnChanges {
   @Input() lasRasterFlag: any;
   @Input() SelectedCurveList: any;
   @Input() trackAndSelectedCurve: any;
+  @Input() SVGWidth: any;
+
   private chart: any;
   private margin: any = { top: 20, bottom: 20, left: 20, right: 20 };
   private width: number;
@@ -49,33 +51,19 @@ export class WellmetadataComponent implements OnInit, OnChanges {
   message: any;
   ngOnInit() {
 
-    // for (let i = 0; i < this.lasRasterFlag.length; i++) {
-    //   if (this.lasRasterFlag[i] == "SMART_RASTER") {
-    //     this.rasterCurve.push(this.curveListData[i]);
-    //     this.selectedRaster.push(this.SelectedCurveList[i]);
-    //   } else {
-    //     this.lasCurve.push(this.curveListData[i]);
-    //     this.selectedLas.push(this.SelectedCurveList[i]);
-
-    //   }
-
-    // }
-
-
-    // console.log('las', this.selectedLas);
-    // console.log('selectedTrack', this.trackAndSelectedCurve)
-
-
-    this.buildSVG();
+    //  this.buildSVG();
 
   }
 
   ngOnChanges() {
     //   $('[data-toggle="tooltip"]').tooltip();
+
+    this.buildSVG();
   }
 
   ngAfterViewInit() {
     // $('[data-toggle="tooltip"]').tooltip();
+
   }
 
   buildSVG() {
@@ -84,7 +72,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
     this.width = element.offsetWidth - this.margin.left - this.margin.right;
     this.height = element.offsetHeight - this.margin.top - this.margin.bottom;
     const svg = d3.select(element).append('svg')
-      .attr('width', '2000')
+      .attr('width', this.SVGWidth)
       .attr('height', element.offsetHeight);
 
     // chart plot area
@@ -126,9 +114,6 @@ export class WellmetadataComponent implements OnInit, OnChanges {
       startpnt = startpnt + this.trackCount[i];
       xcounter = 0;
     }
-
-
-
   }
 
   trackaction(trackId, drop1, drop2, TrackInformation) {
@@ -151,29 +136,46 @@ export class WellmetadataComponent implements OnInit, OnChanges {
       var TotalTracks = document.querySelectorAll(`.${currentMainGroup} .uniq`);
       if (TotalTracks.length < 5) {
         var translateX = TotalTracks.length * 20;
-        const randomNum = Math.ceil(Math.random() * 100);
-        // TrackInformation.trackOrder=randomNum;
+        var listClass = document.querySelectorAll(`.${currentMainGroup} .uniq`);
+        var sliced = [];
+        listClass.forEach(element => {
+          var classes = element.classList[1];
+          sliced.push(parseInt(classes.substring(4, 6)));
+        });
+        for (let i = 0; i < sliced.length; i++) {
+          const element = sliced[i];
+        }
+        const newTrackNumber = (sliced[sliced.length - 1] + 1);
+        console.log(d3.select(`.${currentMainGroup} .uniq`).attr('class'));
         for (var i = 0; i < TotalTracks.length; i++) {
           translateX = parseInt((TotalTracks[i].getBoundingClientRect().width.toString()), 10) + translateX;
         }
 
         d3.select('.' + currentMainGroup).append('g')
-          .attr('transform', `translate(${translateX}, 0)`)
-          .attr('class', 'uniq uniq' + randomNum);
+          .attr('class', 'uniq uniq' + newTrackNumber)
+          .attr('transform', `translate(${translateX}, 0)`);
+
         var WellOrder = TotalTracks.length + 1
         //this.wellmetainfo("", "", randomNum, "", "");
         const currentUwId = d3.select('.' + currentMainGroup).attr('uwi');
         //console.log(trackObject) 
-        this.wellmetainfo("", WellOrder, randomNum, currentUwId)
+        this.wellmetainfo("", WellOrder, newTrackNumber, currentUwId)
         //        wellmetainfo(wellname, wellorder, trackorder, uwi) {
-        this.wellproduct(randomNum, currentUwId, TrackInformation);
-        this.wellproject(randomNum, currentUwId, TrackInformation, TrackInformation.productType, "ADD");
+        this.wellproduct(newTrackNumber, currentUwId, TrackInformation);
+        this.wellproject(newTrackNumber, currentUwId, TrackInformation, TrackInformation.productType, "ADD");
+        //Add Space for New Incoming  Track
+        this.SVGWidth = this.SVGWidth + 270;
+        d3.select('svg').attr('width', this.SVGWidth)
+
         this.translateGenerator();
 
         //this.wellproduct("cook",1,"Asdasd",{});
         //this.wellproject(this.wellinfo[i], this.wellOrder[i].toString() + j, this.UWI[i], this.trackAndSelectedCurve[j], this.lasRasterFlag[j]);
       } else {
-        alert("Maximum Tracks Exceeded ");
+
+        $('#openModalMaxAlert').click();
+
+       // alert("Maximum Tracks Exceeded ");
       }
 
     }
@@ -189,10 +191,12 @@ export class WellmetadataComponent implements OnInit, OnChanges {
     const formgrpcontainer = formgrp.append('foreignObject')
       .attr('class', 'wellgroup wellgroup')
       .attr('id', 'foreignObject' + trackorder)
-      .style('height', element.offsetHeight - 70)
-      .style('width', '250');
+      //.style('height', this.lascomp.trackHeight)
+      //      .style('height', element.offsetHeight - 70)
+      .attr('height', '150')
+      .attr('width', '250');
     const tooltipwn = `WellName : ${wellname}`;
-    const tooltipuwi =  ` UwId : ${uwi}`
+    const tooltipuwi = ` UwId : ${uwi}`
     //  const tooltipscn = `Selected Curve : ${Curve.selectedCurve}`
     // UwId : ${uwi}
     // Selected Curve : ${Curve.selectedCurve}`
@@ -201,8 +205,8 @@ export class WellmetadataComponent implements OnInit, OnChanges {
       // .attr('data-toggle', 'tooltip')
       // .attr('data-placement', 'bottom')
       // .attr('data-html', "true")
-      
-      .attr('data-tooltip', tooltipwn +  tooltipuwi)
+
+      .attr('data-tooltip', tooltipwn + tooltipuwi)
       //.html(`<span class='well-title' data-toggle='tooltip' data-placement='bottom' data-html='true' title='<p>${tooltipwn}</p><p>${tooltipuwi} </p>' >${wellname}</span>`);
       //.html(`<span class='well-title' title=${tooltipwn + tooltipuwi + tooltipscn}>${wellname}</span>`);
       .html(`<span class='well-title'>${wellname}</span>`);
@@ -498,12 +502,6 @@ export class WellmetadataComponent implements OnInit, OnChanges {
     console.log($event);
   }
 
-  // deletrack() {
-
-  //   d3.select(`.${this.trackId}`).remove();
-  //   //console.log(this.trackId);
-
-  // }
   deletrack() {
     const _id = this.trackId;
     var neigbour = document.querySelector("." + _id).nextElementSibling;
@@ -527,10 +525,15 @@ export class WellmetadataComponent implements OnInit, OnChanges {
 
       }
     }
+    this.SVGWidth = this.SVGWidth - 270;
+    d3.select('svg').attr('width', this.SVGWidth)
 
     this.translateGenerator();
   }
   delewell() {
+    this.SVGWidth = this.SVGWidth - document.querySelector('.'+this.wellId).getBoundingClientRect().width
+    d3.select('svg').attr('width', this.SVGWidth)
+
     var _id = this.wellId;
     d3.select(`.${_id}`).remove();
     this.translateGenerator();
@@ -566,46 +569,50 @@ export class WellmetadataComponent implements OnInit, OnChanges {
 
 
 
-
-
-
-
-
-  createRasterChartOnLoad(wellId, trackorder) {
-    //this._dataService.getRasterData(wellId).subscribe(rasterData => {
-
-
-    const rasterGroup = d3.select('.uniq' + trackorder + ' g').append('g').attr('class', 'rasterGrp rasterGrp' + trackorder).attr('transform', 'translate(0,150)');
-
-    //       const tooltipInfo = `WellName : ${rasterData.wellName} 
-    // UwId : ${wellId}
-    // Selected Curve : ${rasterData.curveName}`
-
-
-    var rasterImg = rasterGroup.append('foreignObject')
-      .attr('width', '250')
-      .attr('height', '380')
-    const rasterDiv = rasterImg.append('xhtml:div')
-      .attr('class', 'rastergrp imggrp')
-      // .attr('title', tooltipInfo)
-      .append('img')
-      .attr('src', 'http://localhost:8080/getTiffFile?tiffFileName=us50089200010000_4629856')
-      .attr('class', 'imgsize')
-
-    //Yscale for raster Image start
-    var data = [794, 14804];
-    const yscale = d3.scaleLinear().domain([700, d3.max(data)]).range([0, 300]);
-    const yAxis = d3.axisLeft(yscale).ticks(5); // Y axis    
-    rasterGroup.append('g')
-      .attr('transform', 'translate(45,0)')
-      .attr('class', 'axisred')
-      .call(yAxis);
-    //Yscale for raster Image End
-
-    //})
-
-
-
+  Onresize(e){
+    d3.select('svg').remove();
+    this.buildSVG();
+    d3.select('svg').attr('width', this.SVGWidth)
   }
+
+
+
+
+  // createRasterChartOnLoad(wellId, trackorder) {
+  //   //this._dataService.getRasterData(wellId).subscribe(rasterData => {
+
+
+  //   const rasterGroup = d3.select('.uniq' + trackorder + ' g').append('g').attr('class', 'rasterGrp rasterGrp' + trackorder).attr('transform', 'translate(0,150)');
+
+  //   //       const tooltipInfo = `WellName : ${rasterData.wellName} 
+  //   // UwId : ${wellId}
+  //   // Selected Curve : ${rasterData.curveName}`
+
+
+  //   var rasterImg = rasterGroup.append('foreignObject')
+  //     .attr('width', '250')
+  //     .attr('height', '380')
+  //   const rasterDiv = rasterImg.append('xhtml:div')
+  //     .attr('class', 'rastergrp imggrp')
+  //     // .attr('title', tooltipInfo)
+  //     .append('img')
+  //     .attr('src', 'http://localhost:8080/getTiffFile?tiffFileName=us50089200010000_4629856')
+  //     .attr('class', 'imgsize')
+
+  //   //Yscale for raster Image start
+  //   var data = [794, 14804];
+  //   const yscale = d3.scaleLinear().domain([700, d3.max(data)]).range([0, 300]);
+  //   const yAxis = d3.axisLeft(yscale).ticks(5); // Y axis    
+  //   rasterGroup.append('g')
+  //     .attr('transform', 'translate(45,0)')
+  //     .attr('class', 'axisred')
+  //     .call(yAxis);
+  //   //Yscale for raster Image End
+
+  //   //})
+
+
+
+  // }
 
 }
