@@ -82,7 +82,9 @@ export class WellmetadataComponent implements OnInit, OnChanges {
     for (var i = 0; i < this.wellCount2; i++) {
       this.chart = svg.append('g')
         .attr('class', 'maingroup maingroup' + this.wellOrder[i])
-        .attr('uwi', this.UWI[i])
+        .attr('data-uwi', this.UWI[i])
+        .attr('data-wellName', this.wellinfo[i])
+        .attr('data-wellNumber', this.wellnumber[i])
       if (i == 0) { this.chart.attr('transform', `translate(${((i * 250) * trackcnt) + ((i) * gutter) + 10}, 10)`); }
       else { this.chart.attr('transform', `translate(${((i * 250) * trackcnt) + ((i) * gutter + (40 * i) + 10)}, 10)`); }
 
@@ -175,7 +177,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
 
         $('#openModalMaxAlert').click();
 
-       // alert("Maximum Tracks Exceeded ");
+        // alert("Maximum Tracks Exceeded ");
       }
 
     }
@@ -319,6 +321,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
           d3.select(`.lasdropdown${trackorder}`).style('display', 'none');
           d3.select(`.chartGrp${trackorder}`).style('display', 'none');
           d3.select(`.rasterGrp${trackorder}`).style('display', 'block');
+          d3.select(`#foreignObject${trackorder} .well-info-product`).attr('class','well-info-product '+TrackInformation.productType)
         }
         else if (TrackInformation.productType == "LAS_STD") {
           d3.selectAll('.LAS_STD > option[value *= "LAS_STD"').attr('selected', true);
@@ -327,11 +330,15 @@ export class WellmetadataComponent implements OnInit, OnChanges {
           d3.selectAll(`.lasdropdown${trackorder}` + ' > option[value *= "' + TrackInformation.selectedCurve + '"').attr('selected', true);
           d3.select(`.chartGrp${trackorder}`).style('display', 'block');
           d3.select(`.rasterGrp${trackorder}`).style('display', 'none');
+          d3.select(`#foreignObject${trackorder} .well-info-product`).attr('class','well-info-product '+TrackInformation.productType)
+
         }
         else if (TrackInformation.productType == "LAS_PLUS") {
           d3.selectAll('.LAS_PLUS > option[value *= "LAS_PLUS"').attr('selected', true);
           d3.select(`.lasdropdown${trackorder}`).style('display', 'none');
           d3.select(`.rasterdropdown${trackorder}`).style('display', 'none');
+          d3.select(` #foreignObject${trackorder} .well-info-product`).attr('class','well-info-product '+TrackInformation.productType)
+
 
         }
         else {
@@ -531,7 +538,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
     this.translateGenerator();
   }
   delewell() {
-    this.SVGWidth = this.SVGWidth - document.querySelector('.'+this.wellId).getBoundingClientRect().width
+    this.SVGWidth = this.SVGWidth - document.querySelector('.' + this.wellId).getBoundingClientRect().width
     d3.select('svg').attr('width', this.SVGWidth)
 
     var _id = this.wellId;
@@ -569,7 +576,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
 
 
 
-  Onresize(e){
+  Onresize(e) {
     d3.select('svg').remove();
     this.buildSVG();
     d3.select('svg').attr('width', this.SVGWidth)

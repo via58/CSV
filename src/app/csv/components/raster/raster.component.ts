@@ -45,7 +45,7 @@ export class RasterComponent implements OnInit {
           .attr('class', 'rastergrp imggrp')
           // .attr('title', tooltipInfo)
           .append('img')
-          .attr('src', 'http://localhost:9900/getRaster/getRasterImage?uwid=' + `${uwi}`)
+          .attr('src', 'http://localhost:8081/getRaster/getRasterImage?uwid=' + `${uwi}`)
           .attr('class', 'imgsize')
           .attr('height', rasterHeight)
         //.attr('')

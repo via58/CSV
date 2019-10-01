@@ -6,16 +6,17 @@ import { ICrossSection } from '../interfaces/crosssection';
 
 @Injectable()
 export class GetcrosssectionsService {
-   
-   localhost = "http://localhost:9900/"
+
+   localhost = "http://localhost:8081/"
    crossSectionUrl = "getCrossSection/getCrossSections";
    crossSectionByIdUrl = "getCrossSection/getCrossSectionDetails?crossSectionId=";
    lasUrl = "getLas/getLasData?uwid=";
    curveNameUrl = "&curveName=";
    rasterUrl = "getRaster/getRasterData?uwid=";
-               
+   saveCrossSectionUrl = "getCrossSection/saveCrossSection";
 
-   
+
+
    constructor(private http: HttpClient) { }
 
    getConfig(): Observable<ICrossSection[]> {
@@ -32,8 +33,13 @@ export class GetcrosssectionsService {
       return this.http.get(this.localhost + this.rasterUrl + uwid)
    }
 
-   getProductTypes(uwid){
-      return this.http.get(this.localhost +'getCrossSection/getProductTypes')
+   getProductTypes(uwid) {
+      return this.http.get(this.localhost + 'getCrossSection/getProductTypes')
+   }
+
+   saveCrossSection(data) {
+      return this.http.post(this.localhost + this.saveCrossSectionUrl, data)
+
    }
 
 
