@@ -1,4 +1,5 @@
 import { Component,OnInit } from '@angular/core';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { loadModules } from 'esri-loader';
 import { loadCss } from 'esri-loader';
 
@@ -17,11 +18,36 @@ var t;
   styleUrls: ['./csvmap.component.scss']
 })
 export class CsvmapComponent implements OnInit {
-
+  Wells = [
+    {SeqNo : 1 , Name :'Well - A' },
+    {SeqNo : 2 , Name :'Well - B' },
+    {SeqNo : 3 , Name :'Well - C' },
+    {SeqNo : 4 , Name :'Well - D' },
+    {SeqNo : 5 , Name :'Well - E' },
+    {SeqNo : 6 , Name :'Well - F' },
+    {SeqNo : 7 , Name :'Well - G' },
+    {SeqNo : 8 , Name :'Well - H' },
+    {SeqNo : 9 , Name :'Well - I' }
+     
+   ];
+ 
   constructor() { }
 
   ngOnInit() {
   }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.Wells, event.previousIndex, event.currentIndex);    
+    for(var i =0;i<5;i++)
+    this.Wells[i].SeqNo = i+1;
+  }
+  
+  deletewell(item){
+    this.Wells.splice((item.SeqNo) -1 ,1); 
+    for(var i =0;i<5;i++)
+    this.Wells[i].SeqNo = i+1;
+  }
+
 
   initPolygonDraw() {
 

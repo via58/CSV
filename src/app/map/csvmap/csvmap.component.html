@@ -9,4 +9,25 @@
             ng-click="$ctrl.removePolygonFromMap()" style="margin-top:5px;">
         </button>
     </div>
+
+
+    <div class="csv-modal-body example-list-box" cdkDrag style="position: absolute;top:100px;right:50px;z-index:100">
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Seaquence of selected wells</th>
+                </tr>
+            </thead>
+            <tbody cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+
+                <tr class="example-box" *ngFor="let Well of Wells" cdkDrag>
+                    <td>{{Well.SeqNo}}</td>
+                    <td>{{Well.Name}}</td>
+                    <td><a (click)="deletewell(Well)" style="border-bottom: solid 1px blue;cursor:pointer;color:blue;">Delete</a></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
 </div>

@@ -1,8 +1,8 @@
 <div class="card cst-card">
         <app-csvheader [wellCount1]=wellCount></app-csvheader>
-        <div class="card-body cst-card-body">
+        <div class="card-body cst-card-body"  id="csv-section">
 
-                <div class="cst-card-body-container csv-section" id="csv-section">
+                <div class="cst-card-body-container csv-section">
                         <app-wellmetadata *ngIf="loadDataTag" [wellCount2]=wellCount [wellinfo]=wellnames
                                 [wellnumber]=wellnumber [UWI]=UWI [trackCount]=trackCount [wellOrder]=wellOrder
                                 [curveListData]=curveList1 [lasRasterFlag]=lasRasterFlag
