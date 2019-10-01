@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, ViewChild, AfterViewInit, ElementRef, Input, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnChanges, ViewChild, AfterViewInit, ElementRef, Input, ViewEncapsulation, Output } from '@angular/core';
 //import 'bootstrap';
 import * as $ from 'jquery';
 import * as d3 from 'd3';
@@ -46,6 +46,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
   private trackId: any;
   private wellId: any;
   private addTrack: any;
+  
 
   constructor(private _dataService: GetcrosssectionsService) { }
   message: any;
@@ -120,8 +121,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
 
   trackaction(trackId, drop1, drop2, TrackInformation) {
     // var dropdatatext = d3.select(trackId).node().innerText;
-    console.log("drop1 list :" + drop1);
-    console.log("drop1 list :" + drop2);
+
     console.log(TrackInformation);
     var dropdatatext = $('li.' + trackId + ':first').text();
 
@@ -159,9 +159,13 @@ export class WellmetadataComponent implements OnInit, OnChanges {
 
         var WellOrder = TotalTracks.length + 1
         //this.wellmetainfo("", "", randomNum, "", "");
-        const currentUwId = d3.select('.' + currentMainGroup).attr('uwi');
+        const currentUwId = d3.select('.' + currentMainGroup)
+          .attr('data-uwi');
+          const currentWellName = d3.select('.' + currentMainGroup)
+          .attr('data-wellName');
+
         //console.log(trackObject) 
-        this.wellmetainfo("", WellOrder, newTrackNumber, currentUwId)
+        this.wellmetainfo(currentWellName, WellOrder, newTrackNumber, currentUwId)
         //        wellmetainfo(wellname, wellorder, trackorder, uwi) {
         this.wellproduct(newTrackNumber, currentUwId, TrackInformation);
         this.wellproject(newTrackNumber, currentUwId, TrackInformation, TrackInformation.productType, "ADD");
@@ -321,7 +325,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
           d3.select(`.lasdropdown${trackorder}`).style('display', 'none');
           d3.select(`.chartGrp${trackorder}`).style('display', 'none');
           d3.select(`.rasterGrp${trackorder}`).style('display', 'block');
-          d3.select(`#foreignObject${trackorder} .well-info-product`).attr('class','well-info-product '+TrackInformation.productType)
+          d3.select(`#foreignObject${trackorder} .well-info-product`).attr('class', 'well-info-product ' + TrackInformation.productType)
         }
         else if (TrackInformation.productType == "LAS_STD") {
           d3.selectAll('.LAS_STD > option[value *= "LAS_STD"').attr('selected', true);
@@ -330,14 +334,14 @@ export class WellmetadataComponent implements OnInit, OnChanges {
           d3.selectAll(`.lasdropdown${trackorder}` + ' > option[value *= "' + TrackInformation.selectedCurve + '"').attr('selected', true);
           d3.select(`.chartGrp${trackorder}`).style('display', 'block');
           d3.select(`.rasterGrp${trackorder}`).style('display', 'none');
-          d3.select(`#foreignObject${trackorder} .well-info-product`).attr('class','well-info-product '+TrackInformation.productType)
+          d3.select(`#foreignObject${trackorder} .well-info-product`).attr('class', 'well-info-product ' + TrackInformation.productType)
 
         }
         else if (TrackInformation.productType == "LAS_PLUS") {
           d3.selectAll('.LAS_PLUS > option[value *= "LAS_PLUS"').attr('selected', true);
           d3.select(`.lasdropdown${trackorder}`).style('display', 'none');
           d3.select(`.rasterdropdown${trackorder}`).style('display', 'none');
-          d3.select(` #foreignObject${trackorder} .well-info-product`).attr('class','well-info-product '+TrackInformation.productType)
+          d3.select(` #foreignObject${trackorder} .well-info-product`).attr('class', 'well-info-product ' + TrackInformation.productType)
 
 
         }
@@ -543,6 +547,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
 
     var _id = this.wellId;
     d3.select(`.${_id}`).remove();
+    d3.select('.cst-card-header-badge').text(document.querySelectorAll('.maingroup').length);
     this.translateGenerator();
   }
   translateGenerator() {

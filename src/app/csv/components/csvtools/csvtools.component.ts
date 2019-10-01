@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, ElementRef } from '@angular/core';
 import { GetcrosssectionsService } from '../../services/getcrosssections.service';
 import * as d3 from 'd3';
-import { Alert } from 'selenium-webdriver';
+import * as $ from 'jquery';
 
 
 @Component({
@@ -127,9 +127,9 @@ export class CsvtoolsComponent implements OnInit {
 
     console.log(dataObject)
 
-    this.crossSectionDetails.saveCrossSection(dataObject).subscribe(data=>{
+    this.crossSectionDetails.saveCrossSection(dataObject).subscribe(data => {
       console.log(data)
-
+     $('#openModalSaveCrossSection').click();
     })
 
 
