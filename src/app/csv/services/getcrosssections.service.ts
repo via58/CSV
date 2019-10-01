@@ -39,7 +39,6 @@ export class GetcrosssectionsService {
 
    saveCrossSection(data) {
       return this.http.post(this.localhost + this.saveCrossSectionUrl, data)
-
    }
 
 

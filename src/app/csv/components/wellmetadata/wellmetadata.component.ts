@@ -46,7 +46,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
   private trackId: any;
   private wellId: any;
   private addTrack: any;
-  
+
 
   constructor(private _dataService: GetcrosssectionsService) { }
   message: any;
@@ -161,10 +161,9 @@ export class WellmetadataComponent implements OnInit, OnChanges {
         //this.wellmetainfo("", "", randomNum, "", "");
         const currentUwId = d3.select('.' + currentMainGroup)
           .attr('data-uwi');
-          const currentWellName = d3.select('.' + currentMainGroup)
+        const currentWellName = d3.select('.' + currentMainGroup)
           .attr('data-wellName');
 
-        //console.log(trackObject) 
         this.wellmetainfo(currentWellName, WellOrder, newTrackNumber, currentUwId)
         //        wellmetainfo(wellname, wellorder, trackorder, uwi) {
         this.wellproduct(newTrackNumber, currentUwId, TrackInformation);
@@ -175,21 +174,18 @@ export class WellmetadataComponent implements OnInit, OnChanges {
 
         this.translateGenerator();
 
-        //this.wellproduct("cook",1,"Asdasd",{});
-        //this.wellproject(this.wellinfo[i], this.wellOrder[i].toString() + j, this.UWI[i], this.trackAndSelectedCurve[j], this.lasRasterFlag[j]);
       } else {
 
         $('#openModalMaxAlert').click();
 
-        // alert("Maximum Tracks Exceeded ");
+        // Maximum Tracks Exceeded
       }
 
     }
   }
-
-  //wellmetainfo(wellname, wellorder, trackorder, uwi, Curve) {
+  // well meta information
   wellmetainfo(wellname, wellorder, trackorder, uwi) {
-    // well meta information
+
     const element = this.chartContainer.nativeElement;
     this.width = element.offsetWidth - this.margin.left - this.margin.right;
     this.height = element.offsetHeight - this.margin.top - this.margin.bottom;
