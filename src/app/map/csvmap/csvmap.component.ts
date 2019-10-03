@@ -38,13 +38,13 @@ export class CsvmapComponent implements OnInit {
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.Wells, event.previousIndex, event.currentIndex);    
-    for(var i =0;i<5;i++)
+    for(var i =0;i<this.Wells.length;i++)
     this.Wells[i].SeqNo = i+1;
   }
   
   deletewell(item){
     this.Wells.splice((item.SeqNo) -1 ,1); 
-    for(var i =0;i<5;i++)
+    for(var i =0;i<this.Wells.length;i++)
     this.Wells[i].SeqNo = i+1;
   }
 
