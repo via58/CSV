@@ -1,0 +1,16 @@
+<div class="card-header cst-card-header">
+    Cross Section
+    <span class="badge badge-light cst-card-header-badge">{{wellCount1}}</span>
+   
+    <div class="float-right ">
+        <i class="fa fa-repeat" aria-hidden="true"></i>
+        <i class="fa fa-external-link" aria-hidden="true"></i>
+        <i class="fa fa-times" aria-hidden="true"></i>
+    </div>
+    <div class="float-right header-toggle">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" id ="mapbtn" class="btn btn-secondary activebtn" (click)="onChooseview($event)">MAP</button>
+                <button type="button" id ="csvbtn" class="btn btn-secondary" (click)="onChooseview($event)">CSV</button>
+            </div>
+        </div>
+</div>
