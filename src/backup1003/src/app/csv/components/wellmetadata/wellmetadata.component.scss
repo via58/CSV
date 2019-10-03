@@ -1,0 +1,126 @@
+.scrolling-wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    //margin-top: 10px;
+    width: calc(100%);
+    height: calc(100vh - 100px);
+
+    svg{
+        // width: calc(100%);
+        overflow-y:auto;
+        height: calc(100%);
+
+    }
+  
+    .maingroup{
+             outline: thin solid #F9A01F;
+             outline-width: 3px;
+    
+        .uniq:first-child{
+            .well-info-name{
+                .well-title{
+                    display: block;
+                    float: left;
+                }
+                .float-right{
+                 .one {
+                    float: left;
+                    display: block;
+                    i{
+                      margin-top: 15px;
+                    }
+                }
+                .two{
+                    float: left;
+                    display: none;
+                    }
+                }
+
+            }
+    }
+        .uniq{
+            .well-info-name{
+                height: 40px;
+                .well-title{
+                    display: none;
+                    float: left;
+                }
+                .float-right{
+                    .one {
+                        float: left;
+                        display: none;
+                }
+                .two{
+                    float: left;
+                    display: block;
+                }
+                }
+            }
+    }
+        
+    .well-info-product{
+        margin-top: 5px !important;
+        padding-left: 10px;
+        padding-right: 10px;
+        .form-group{
+            select{
+                padding-top: 0px;
+            }
+        }
+    }
+    .well-info-project{
+        margin-top: 5px !important;
+        padding-left: 10px;
+        padding-right: 10px;
+        .form-group{
+            select{
+                padding-top: 0px;
+            }
+        }
+    }
+       
+    }
+    .wellgroup{
+        background-color: #fff;
+        border-radius: 5px;
+    }
+    .well-info-name{
+        font-size: 16px;
+        font-weight: bold;
+        border-bottom: solid 1px #cecaca;
+        line-height: 40px;
+        padding-left: 10px;
+        i{
+        padding-left: 15px;
+        font-size: 15px;
+        cursor: pointer;
+        color: #00AAAB;
+        }
+        .float-right{
+           padding-right: 10px;
+        }
+    }
+    .dropdown-toggle::after {
+        display: none;
+    }
+    .dropdown-menu{
+        left:-125px !important;
+        padding-top:0px;
+        padding-bottom:0px;
+        z-index: 10000;
+        li{
+        padding-left:10px;
+        height: 30px;
+        line-height: 25px;
+        border-bottom: solid 1px #ccc;
+        font-family:"SourceSansPro-Regular";
+        font-size: 16px;
+        font-weight: normal;
+        cursor: pointer;
+        }
+        li:last-child{
+            border-bottom:none;
+        }
+    }
+  }

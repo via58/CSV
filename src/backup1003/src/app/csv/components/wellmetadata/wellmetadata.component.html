@@ -1,0 +1,67 @@
+<div class="scrolling-wrapper" #chart (window:resize)="Onresize($event)">
+        <app-raster></app-raster>
+        <app-las></app-las>
+        <app-csvloader></app-csvloader>
+
+
+ </div>
+ <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header csv-modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Delete Track</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body csv-dialog-body">
+            Are sure you want to delete track?
+        </div>
+        <div class="modal-footer csv-modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)='deletrack()'>Delete Track</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="deleteWellModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header csv-modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Delete Well</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body csv-dialog-body">
+            Are sure you want to delete this Well?
+        </div>
+        <div class="modal-footer csv-modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)='delewell()'>Delete Well</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="maximumTrackModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header csv-modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle"> Maximum Tracks Exceed</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body csv-dialog-body">
+            <p>You have exceeded your maximum tracks limit</p>
+            <p>Maximum tracks limit - 5</p>
+        </div>
+        <div class="modal-footer csv-modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button type="button" style="display: none" id="openModalMaxAlert" data-toggle="modal" data-target="#maximumTrackModal">Open Modal</button>
