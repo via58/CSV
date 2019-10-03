@@ -45,7 +45,11 @@ export class CsvtoolsComponent implements OnInit {
             d3.select('.panel-heading').attr('class', ' panel-heading collapsed')
             d3.select('#bar').attr('class', 'collapse');
             d3.select('svg').remove();
-            this.LoadCross.emit(JSON.stringify(data));
+            var dataSet = {
+              data: JSON.stringify(data),
+              flag: "LOAD"
+            }
+            this.LoadCross.emit(dataSet);
 
           }
         }
@@ -78,14 +82,17 @@ export class CsvtoolsComponent implements OnInit {
         var _curveThickness = 0;
         var _curveScale = 0;
         var _curveList = [];
+        var segmentNumber = 0;
 
         if (_productType == "SMART_RASTER") {
           var _selectedIndex = d3.select(`.${track} .rasterdropdown`).property("selectedIndex");
+          var _segmentSelectedIndex = d3.select(`.${track} .rastersegment`).property("selectedIndex");
           var options = document.querySelectorAll(`.${track} .rasterdropdown option`);
           options.forEach(element => {
             _curveList.push(element.textContent)
           })
           _curveName = _curveList[_selectedIndex];
+          segmentNumber = parseInt(_segmentSelectedIndex) + 1;
         } else {
           var _selectedIndex = d3.select(`.${track} .lasdropdown`).property("selectedIndex");
           var options = document.querySelectorAll(`.${track} .lasdropdown option`);
@@ -93,6 +100,7 @@ export class CsvtoolsComponent implements OnInit {
             _curveList.push(element.textContent)
           })
           _curveName = _curveList[_selectedIndex];
+          segmentNumber = null;
         }
 
         _crossSectionInformation.push({
@@ -102,12 +110,13 @@ export class CsvtoolsComponent implements OnInit {
           "curveColor": null,
           "curveThickness": _productType == "SMART_RASTER" ? 0 : 1,
           "curveScale": null,
-          "curveList": _curveList
+          "curveList": _curveList,
+          "segmentNumber": segmentNumber
         })
       }
       _crossSectionDetails.push({
         "crossSectionDetailsId": 0,
-        "crossSectionId": parseInt(this.selectedCrossSectionId),
+        "crossSectionId": parseInt(this.selectedCrossSectionId == undefined ? 0 : this.selectedCrossSectionId),
         "uwi": _uwi,
         "wellName": _wellName,
         "wellNumber": _wellNumber,
@@ -119,8 +128,8 @@ export class CsvtoolsComponent implements OnInit {
 
 
     var dataObject = {
-      "crossSectionId": parseInt(this.selectedCrossSectionId),
-      "crossSectionName": this.selectedCrossSectionName,
+      "crossSectionId": parseInt(this.selectedCrossSectionId == undefined ? parseInt(`10${Math.floor((Math.random() * 10) + 1)}`) : this.selectedCrossSectionId),
+      "crossSectionName": this.selectedCrossSectionName == undefined ? `crossSection10${Math.floor((Math.random() * 10) + 1)}` : this.selectedCrossSectionName,
       "wellCount": main.length,
       "crossSectionDetails": _crossSectionDetails
     }
@@ -129,7 +138,7 @@ export class CsvtoolsComponent implements OnInit {
 
     this.crossSectionDetails.saveCrossSection(dataObject).subscribe(data => {
       console.log(data)
-     $('#openModalSaveCrossSection').click();
+      $('#openModalSaveCrossSection').click();
     })
 
 

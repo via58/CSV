@@ -8,12 +8,15 @@ import {CsvModule} from './csv/csv.module';
 @NgModule({
   declarations: [
     AppComponent
+    
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    CsvModule,
+    CsvModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

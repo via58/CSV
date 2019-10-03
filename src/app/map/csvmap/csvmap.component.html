@@ -1,33 +1,65 @@
-<div id="map" class="map" style="background: gray;width:100%;height:520px;border:solid 1px red;">
+<div id="map" class="map">
 
-    <div id="topbar" style="position: absolute;z-index: 999;right:40px;margin-top:20px;">
-        <div id="HomeButton"></div>
-        <button class="action-button esri-icon-polygon" id="polygonButton" type="button" title="Draw polygon"
-            (click)="initPolygonDraw()" style="margin-top:5px;">
-        </button>
-        <button class="action-button remove-btn esri-icon-trash" id="resetBtn" type="button" title="Clear graphics"
-            ng-click="$ctrl.removePolygonFromMap()" style="margin-top:5px;">
-        </button>
-    </div>
+  <!-- <div id="HomeButton"></div> -->
+
+  <div>
+
+    <ul id="dynamic-list"
+      style="position: absolute;z-index: 999;background-color:cornflowerblue; top:200px; left:25px; border: black"></ul>
+
+  </div>
+
+  <div id="topbar" style="position: absolute;z-index: 999;">
+
+    <button class="action-button esri-icon-polyline" id="polygonButton" type="button" title="Select wells"
+      (click)="initWellSelection()">
+
+    </button>
+
+    <button class="action-button remove-btn esri-icon-trash" id="resetBtn" type="button" title="Remove all wells"
+      (click)="removeAllWells()">
+
+    </button>
+
+    <button id="btnUpdateWellOrder" style="height:20px; width:30px" type="button" title="Change Order"></button>
+
+  </div>
+
+  <div class="csv-modal-body example-list-box" cdkDrag style="position: absolute;top:100px;right:50px;z-index:100">
+
+    <table class="table table-striped table-bordered">
+
+      <thead class="thead-dark">
+
+        <tr>
+
+          <th>Seaquence of selected wells</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
 
 
-    <div class="csv-modal-body example-list-box" cdkDrag style="position: absolute;top:100px;right:50px;z-index:100">
-        <table class="table table-striped table-bordered">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Seaquence of selected wells</th>
-                </tr>
-            </thead>
-            <tbody cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
 
-                <tr class="example-box" *ngFor="let Well of Wells" cdkDrag>
-                    <td>{{Well.SeqNo}}</td>
-                    <td>{{Well.Name}}</td>
-                    <td><a (click)="deletewell(Well)" style="border-bottom: solid 1px blue;cursor:pointer;color:blue;">Delete</a></td>
-                </tr>
+        <tr class="example-box" *ngFor="let Well of Wells" cdkDrag>
 
-            </tbody>
-        </table>
-    </div>
+          <td>{{Well.SeqNo}}</td>
+
+          <td>{{Well.UWI}}</td>
+
+          <td><a (click)="deletewell(Well)" style="border-bottom: solid 1px blue;cursor:pointer;color:blue;">Delete</a>
+          </td>
+
+        </tr>
+
+
+
+      </tbody>
+
+    </table>
+
+  </div>
 
 </div>
