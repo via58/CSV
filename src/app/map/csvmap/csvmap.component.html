@@ -22,14 +22,15 @@
     </button>
 
     <button id="btnUpdateWellOrder" style="height:20px; width:30px" type="button" title="Change Order"></button>
-
+    <button id="btnSelectAllWells" style="height:20px;" type="button" title="Change Order">select ALL</button>
+    
   </div>
 
-  <div class="csv-modal-body example-list-box" cdkDrag style="position: absolute;top:100px;right:50px;z-index:100">
+  <div id="wellmappane" class="csv-modal-body example-list-box" cdkDrag style="position: absolute;top:100px;right:50px;z-index:100;display:none;">
 
     <table class="table table-striped table-bordered">
 
-      <thead class="thead-dark">
+      <thead class="thead-dark" >
 
         <tr>
 
@@ -49,7 +50,10 @@
 
           <td>{{Well.UWI}}</td>
 
-          <td><a (click)="deletewell(Well)" style="border-bottom: solid 1px blue;cursor:pointer;color:blue;">Delete</a>
+          <td>
+            <a (click)="deletewell(Well)" style="cursor:pointer;color:#00AAAB;">
+              <i _ngcontent-usn-c2="" aria-hidden="true" class="fa fa-times"></i>
+          </a>
           </td>
 
         </tr>

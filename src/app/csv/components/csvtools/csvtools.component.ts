@@ -116,7 +116,8 @@ export class CsvtoolsComponent implements OnInit {
       }
       _crossSectionDetails.push({
         "crossSectionDetailsId": 0,
-        "crossSectionId": parseInt(this.selectedCrossSectionId == undefined ? 0 : this.selectedCrossSectionId),
+        //"crossSectionId": parseInt(this.selectedCrossSectionId == undefined ? 0 : this.selectedCrossSectionId),
+        "crossSectionId": 0,
         "uwi": _uwi,
         "wellName": _wellName,
         "wellNumber": _wellNumber,
@@ -127,8 +128,15 @@ export class CsvtoolsComponent implements OnInit {
     }
 
 
+    // var dataObject = {
+    //   "crossSectionId": parseInt(this.selectedCrossSectionId == undefined ? parseInt(`10${Math.floor((Math.random() * 10) + 1)}`) : this.selectedCrossSectionId),
+    //   "crossSectionName": this.selectedCrossSectionName == undefined ? `crossSection10${Math.floor((Math.random() * 10) + 1)}` : this.selectedCrossSectionName,
+    //   "wellCount": main.length,
+    //   "crossSectionDetails": _crossSectionDetails
+    // }
+
     var dataObject = {
-      "crossSectionId": parseInt(this.selectedCrossSectionId == undefined ? parseInt(`10${Math.floor((Math.random() * 10) + 1)}`) : this.selectedCrossSectionId),
+      "crossSectionId": 0,
       "crossSectionName": this.selectedCrossSectionName == undefined ? `crossSection10${Math.floor((Math.random() * 10) + 1)}` : this.selectedCrossSectionName,
       "wellCount": main.length,
       "crossSectionDetails": _crossSectionDetails

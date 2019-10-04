@@ -17,6 +17,7 @@ export class CsvlayoutComponent implements OnInit {
   wellnumber: any;
   curveList1: any;
   lasRasterFlag: any;
+  csvflag: any;
   curveData: any = [];
   points: any = [];
   curveName: string = "";
@@ -58,7 +59,7 @@ export class CsvlayoutComponent implements OnInit {
     if (dataset.flag == "CREATE") {
       this.wellCount = this.Getcsvdetails.length;
       var _wellcount: any = this.wellCount;
-
+      this.csvflag = dataset.flag;
 
       this.Getcsvdetails.forEach(function (cs: any, $index) {
 
@@ -117,7 +118,7 @@ export class CsvlayoutComponent implements OnInit {
 
 
     } else if (dataset.flag == "LOAD") {
-
+      this.csvflag = dataset.flag;
       this.wellCount = this.Getcsvdetails.wellCount;
 
       this.Getcsvdetails.crossSectionDetails.forEach(function (cs: any) {

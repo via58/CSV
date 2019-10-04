@@ -1,36 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-
-
-
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-
-
-
 import { loadModules } from 'esri-loader';
-
-
-
 import { loadCss } from 'esri-loader';
-
-
-
-
 const options = { version: '3.28' };
-
-
-
 loadCss('3.28');
-
-
-
 var map;
-
-
-
 var lastState = null;
-
-
-
 var drawTool;
 
 
@@ -212,21 +187,10 @@ export class CsvmapComponent implements OnInit {
 
 
   initWellSelection() {
-
-
-
-    alert("Press 'Esc' to end selection mode");
-
-
-
+    document.getElementById("wellmappane").style.display = "block";
     document.getElementById("map_container").style.cursor = "crosshair";
 
-
-
     selectedWells = 0;
-
-
-
   }
 
 
@@ -968,62 +932,16 @@ export class CsvmapComponent implements OnInit {
       }
 
 
-
-
-      document.getElementById("btnUpdateWellOrder").onclick = function () {
-
-
-
-        //wellList = [];
-
-
-
-        //console.log(this.Wells)
-
-
-
-        // //Wells = [
-
-
-
-        // //17109238520000,17019218710000
-
-
-
-        // // { SeqNo: 1, Name: 'Well - A', UWI: 17109238520000 },
-
-
-
-        // //{ SeqNo: 2, Name: 'Well - B', UWI: 17019218710000 }
-
-
-
-        // wellList[0] = '17019217390100';
-
-
-
-        // wellList[1] = '17019218710000';
-
-
-
-        // wellList[2] = '17051208550000';
-
-
-
-        // wellList[3] = '17045210940100';
-
-
-
-        // wellList[4] = '17109238520000';
-
+      document.getElementById("btnSelectAllWells").onclick = function () {
+        selectAllWells();
         console.log(JSON.parse(localStorage.getItem('welllist')))
 
         updateWellsOrder(JSON.parse(localStorage.getItem('welllist')));
+      }
 
-
-
-
-
+      document.getElementById("btnUpdateWellOrder").onclick = function () {
+        console.log(JSON.parse(localStorage.getItem('welllist')))
+        updateWellsOrder(JSON.parse(localStorage.getItem('welllist')));
       }
 
 
@@ -1077,17 +995,31 @@ export class CsvmapComponent implements OnInit {
 
       }
 
+      function selectAllWells(){
+
+        selectedWellsGraphicLayer.clear();
+        wellLinesGraphicLayer.clear();
+
+       // var mapwellobj = { SeqNo: selectedWells, Name: 'Well - ' + selectedWells, UWI: uwi }
+        var graphicCnt = clusterGraphicLayer.graphics.length
+
+        for (var j = 0; j < graphicCnt; j++) {
+
+          var graphic = clusterGraphicLayer.graphics[j];
+          selectedWells = j;    
+
+          if (graphic.attributes["uwi"] != undefined) {
+            addWellToSelection(graphic.attributes["uwi"], graphic.geometry);
+          }
+          lastWell = graphic;
+        }
+
+      }
 
 
 
       function getWellgraphic(uwi) {
-
-
-
         var graphicCnt = clusterGraphicLayer.graphics.length
-
-
-
 
         for (var j = 0; j < graphicCnt; j++) {
 

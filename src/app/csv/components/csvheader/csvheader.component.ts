@@ -33,6 +33,7 @@ export class CsvheaderComponent implements OnInit {
       var mapdata = JSON.parse(localStorage.getItem('welllist'));
       console.log(mapdata);
       var wellList = [];
+      if(mapdata !==null){
       mapdata.forEach(well => {
         wellList.push(well.UWI);
       })
@@ -45,6 +46,7 @@ export class CsvheaderComponent implements OnInit {
         }
         this.CreateCross.emit(dataSet);
       })
+    }
       document.getElementById('map-section').style.display = "none";
       document.getElementById('csv-section').style.display = "block";
       d3.select('#csvbtn').attr('class', 'btn btn-secondary activebtn')
