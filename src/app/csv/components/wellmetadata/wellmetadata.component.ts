@@ -51,7 +51,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
 
 
   constructor(private _dataService: GetcrosssectionsService
-    ) { }
+  ) { }
   message: any;
   ngOnInit() {
 
@@ -107,20 +107,22 @@ export class WellmetadataComponent implements OnInit, OnChanges {
           .append('g')
           .attr('class', 'uniq uniq' + this.wellOrder[i].toString() + j)
           .attr('transform', `translate(${((xcounter * 250)) + (xcounter * gutter)}, 0)`);
-         // alert(this.csvflag)
+        // alert(this.csvflag)
         //this.wellmetainfo(this.wellinfo[i], this.wellOrder[i].toString(), this.wellOrder[i].toString() + j, this.UWI[i], this.trackAndSelectedCurve[j]);
-        if(this.csvflag == "LOAD"){
+        if (this.csvflag == "LOAD") {
           console.log(this.ProductTypeList[i]);
-          if(this.ProductTypeList[i] == undefined){
-            this.ProductTypeList[i] = ['SMART_RASTER', "LAS_STD"];
-          }
-        this.wellmetainfo(this.wellinfo[i], this.wellOrder[i].toString(), this.wellOrder[i].toString() + j, this.UWI[i], this.trackAndSelectedCurve[j]);
-        this.wellproduct(this.wellOrder[i].toString() + j, this.UWI[i],this.lasRasterFlag[i], this.ProductTypeList[i], this.trackAndSelectedCurve[j]);
+          // if (this.ProductTypeList[i] == undefined) {
+          //   this.ProductTypeList[i] = ['SMART_RASTER', "LAS_STD"];
+          // }
+          this.wellmetainfo(this.wellinfo[i], this.wellOrder[i].toString(), this.wellOrder[i].toString() + j, this.UWI[i], this.trackAndSelectedCurve[j]);
+          this.wellproduct(this.wellOrder[i].toString() + j, this.UWI[i], this.lasRasterFlag[i], this.ProductTypeList[i], this.trackAndSelectedCurve[j]);
+          // this.wellmetainfo(this.wellinfo[i], this.wellOrder[i].toString(), this.wellOrder[i].toString() + j, this.UWI[i], this.SelectedCurveList[j]);
+          // this.wellproduct(this.wellOrder[i].toString() + j, this.UWI[i], this.lasRasterFlag[i], this.ProductTypeList[i], this.SelectedCurveList[j]);
         }
-        else{
+        else {
           this.wellmetainfo(this.wellinfo[i], this.wellOrder[i].toString(), this.wellOrder[i].toString() + j, this.UWI[i], '');
           this.wellproduct(this.wellOrder[i].toString() + j, this.UWI[i],
-          this.lasRasterFlag[i], this.ProductTypeList[i], this.SelectedCurveList[i]);
+            this.lasRasterFlag[i], this.ProductTypeList[i], this.SelectedCurveList[i]);
         }
         //this.wellproduct(this.wellOrder[i].toString() + j, this.UWI[i], this.trackAndSelectedCurve[j]);
         // this.wellproduct(this.wellOrder[i].toString() + j, this.UWI[i],
@@ -188,13 +190,13 @@ export class WellmetadataComponent implements OnInit, OnChanges {
           .attr('data-wellName');
         const consolidateWellOrder = parseInt(newTrackNumber.toString().substring(0, 1)) - 1;
         //console.log(trackObject) 
-        this.wellmetainfo(currentWellName, WellOrder, newTrackNumber, currentUwId,'')
+        this.wellmetainfo(currentWellName, WellOrder, newTrackNumber, currentUwId, '')
         //        wellmetainfo(wellname, wellorder, trackorder, uwi) {
         //wellproduct(trackorder, uwi, productType, productList, curveList)this
-        if(this.csvflag == "CREATE"){
-        this.wellproduct(newTrackNumber, currentUwId, productType, this.ProductTypeList[consolidateWellOrder], this.SelectedCurveList[consolidateWellOrder]);
+        if (this.csvflag == "CREATE") {
+          this.wellproduct(newTrackNumber, currentUwId, productType, this.ProductTypeList[consolidateWellOrder], this.SelectedCurveList[consolidateWellOrder]);
         }
-        else if(this.csvflag == "LOAD"){
+        else if (this.csvflag == "LOAD") {
           this.wellproduct(newTrackNumber, currentUwId, productType, this.ProductTypeList[consolidateWellOrder], TrackInformation);
         }
         // this.wellproject(newTrackNumber, currentUwId, TrackInformation, TrackInformation.productType, "ADD");
@@ -229,25 +231,25 @@ export class WellmetadataComponent implements OnInit, OnChanges {
       .attr('width', '250');
     const tooltipwn = `WellName : ${wellname}`;
     const tooltipuwi = ` UwId : ${uwi}`;
-    if(this.csvflag == 'LOAD'){
-     var  tooltipscn = `Selected Curve : ${Curve.selectedCurve}`;
+    if (this.csvflag == 'LOAD') {
+      var tooltipscn = `Selected Curve : ${Curve.selectedCurve}`;
     }
     // UwId : ${uwi}
     // Selected Curve : ${Curve.selectedCurve}`
     const WellNameDiv = formgrpcontainer.append('xhtml:div')
       .attr('class', 'well-info-name  tooltip-bottom');
-      // .attr('data-toggle', 'tooltip')
-      // .attr('data-placement', 'bottom')
-      // .attr('data-html', "true")
-      if(this.csvflag == 'LOAD'){
-        WellNameDiv.attr('data-tooltip', tooltipwn + tooltipuwi + tooltipscn)
-      }
-      if(this.csvflag == 'CREATE'){
-        WellNameDiv.attr('data-tooltip', tooltipwn + tooltipuwi)
-      }
-      //.html(`<span class='well-title' data-toggle='tooltip' data-placement='bottom' data-html='true' title='<p>${tooltipwn}</p><p>${tooltipuwi} </p>' >${wellname}</span>`);
-      //.html(`<span class='well-title' title=${tooltipwn + tooltipuwi + tooltipscn}>${wellname}</span>`);
-      WellNameDiv.html(`<span class='well-title'>${wellname}</span>`);
+    // .attr('data-toggle', 'tooltip')
+    // .attr('data-placement', 'bottom')
+    // .attr('data-html', "true")
+    if (this.csvflag == 'LOAD') {
+      WellNameDiv.attr('data-tooltip', tooltipwn + tooltipuwi + tooltipscn)
+    }
+    if (this.csvflag == 'CREATE') {
+      WellNameDiv.attr('data-tooltip', tooltipwn + tooltipuwi)
+    }
+    //.html(`<span class='well-title' data-toggle='tooltip' data-placement='bottom' data-html='true' title='<p>${tooltipwn}</p><p>${tooltipuwi} </p>' >${wellname}</span>`);
+    //.html(`<span class='well-title' title=${tooltipwn + tooltipuwi + tooltipscn}>${wellname}</span>`);
+    WellNameDiv.html(`<span class='well-title'>${wellname}</span>`);
 
     const Welltrack = WellNameDiv
       .append('div')
@@ -444,24 +446,24 @@ export class WellmetadataComponent implements OnInit, OnChanges {
       .append('select')
       .attr('class', 'form-control rasterdropdown rasterdropdown' + trackorder)
 
-    
+
     productTypeDrp.selectAll('option')
       .data(productList)
       .enter()
       .append("option")
       .attr("value", function (d) { return d })
       .text(function (d) { return d })
-      if (productType == "SMART_RASTER") {
+    if (productType == "SMART_RASTER") {
       d3.selectAll('.SMART_RASTER > option[value *= "SMART_RASTER"').attr('selected', true);
       d3.select(`.rasterdropdown${trackorder}`).style('display', 'block');
       d3.select(`.lasdropdown${trackorder}`).style('display', 'none');
       d3.select(`.chartGrp${trackorder}`).style('display', 'none');
       d3.select(`.rasterGrp${trackorder}`).style('display', 'block');
       d3.select(`.rastersegment${trackorder}`).style('display', 'block');
-      if(this.csvflag == "CREATE"){
-      this.wellproject(trackorder, uwi, curveList[productType], productType, "OPEN")
+      if (this.csvflag == "CREATE") {
+        this.wellproject(trackorder, uwi, curveList[productType], productType, "OPEN")
       }
-      else{
+      else {
         this.wellproject(trackorder, uwi, curveList, productType, "OPEN")
       }
       //d3.select(`#foreignObject${trackorder} .well-info-product`).attr('class', 'well-info-product ' + TrackInformation.productType)
@@ -476,12 +478,12 @@ export class WellmetadataComponent implements OnInit, OnChanges {
       d3.select(`.chartGrp${trackorder}`).style('display', 'block');
       d3.select(`.rasterGrp${trackorder}`).style('display', 'none');
       //this.wellproject(trackorder, uwi, curveList[productType], productType, "OPEN")
-      if(this.csvflag == "CREATE"){
+      if (this.csvflag == "CREATE") {
         this.wellproject(trackorder, uwi, curveList[productType], productType, "OPEN")
-        }
-        else{
-          this.wellproject(trackorder, uwi, curveList, productType, "OPEN")
-        }
+      }
+      else {
+        this.wellproject(trackorder, uwi, curveList, productType, "OPEN")
+      }
       // d3.select(`#foreignObject${trackorder} .well-info-product`).attr('class', 'well-info-product ' + TrackInformation.productType)
 
     }
@@ -515,7 +517,12 @@ export class WellmetadataComponent implements OnInit, OnChanges {
         d3.select(`.lasdropdown${trackorder}`).style('display', 'none');
         d3.select(`.chartGrp${trackorder}`).style('display', 'none');
         d3.select(`.rasterGrp${trackorder}`).style('display', 'block');
-        this.wellproject(trackorder, uwi, curveList[dropval], dropval, "OPEN")
+        if (this.csvflag == 'LOAD') {
+          this.wellproject(trackorder, uwi, curveList, dropval, "OPEN")
+        }
+        else {
+          this.wellproject(trackorder, uwi, curveList[dropval], dropval, "OPEN")
+        }
         const selectedCurve = d3.select('.rasterdropdown' + trackorder).node().value;
 
         if (selectedCurve !== "") {
@@ -524,7 +531,8 @@ export class WellmetadataComponent implements OnInit, OnChanges {
           d3.select(`.rastersegment${trackorder}`).style('display', 'block');
         } else {
           d3.select(`.chartGrp${trackorder}`).remove();
-
+          d3.select(`.uniq${trackorder} .loader`).remove();
+          d3.select(`.rastersegment${trackorder}`).style('display', 'none');
         }
 
       } else if (dropval == "LAS_STD") {
@@ -532,8 +540,13 @@ export class WellmetadataComponent implements OnInit, OnChanges {
         d3.select(`.chartGrp${tracknum}`).remove();
         d3.select(`.rasterGrp${tracknum}`).remove();
         const selectedCurve = d3.select('.lasdropdown' + trackorder).node().value;
+        if (this.csvflag == 'LOAD') {
 
-        this.wellproject(trackorder, uwi, curveList[dropval], dropval, "OPEN")
+          this.wellproject(trackorder, uwi, curveList, dropval, "OPEN")
+        }
+        else {
+          this.wellproject(trackorder, uwi, curveList[dropval], dropval, "OPEN")
+        }
 
         if (selectedCurve !== "") {
           d3.select(`.chartGrp${tracknum}`).remove();
@@ -571,12 +584,12 @@ export class WellmetadataComponent implements OnInit, OnChanges {
       RasterDropDown.style('display', 'block');
       const rasterCurve: any = [];
 
-      if(this.csvflag == "CREATE"){
+      if (this.csvflag == "CREATE") {
         var rastercurveData = TrackInformation;
       }
-      else{
+      else {
         var rastercurveData = TrackInformation.curveList;
-        rastercurveData.unshift('Select Curve');
+        rastercurveData.unshift('--Select Curve--');
       }
       rasterCurve.push(TrackInformation)
       if (rasterCurve != undefined) {
@@ -597,12 +610,12 @@ export class WellmetadataComponent implements OnInit, OnChanges {
     } else if (Flag == "LAS_STD") {
       const lasCurve: any = [];
 
-      if(this.csvflag == "CREATE"){
+      if (this.csvflag == "CREATE") {
         var lascurveData = TrackInformation;
       }
-      else{
+      else {
         var lascurveData = TrackInformation.curveList;
-        lascurveData.unshift('Select Curve');
+        lascurveData.unshift('--Select Curve--');
       }
       lasCurve.push(TrackInformation);
       //console.log(lasCurve)
@@ -644,36 +657,39 @@ export class WellmetadataComponent implements OnInit, OnChanges {
       }
     }.bind(this))
 
-    if(this.csvflag == "LOAD"){
-      if(Flag == "SMART_RASTER"){
+    if (this.csvflag == "LOAD") {
+      if (Flag == "SMART_RASTER") {
         const tracknum = `${trackorder}`;
         d3.selectAll(`.rasterdropdown${trackorder}` + ' > option[value *= "' + TrackInformation.selectedCurve + '"').attr('selected', true);
         const selectedCurve = TrackInformation.selectedCurve;
         this.loadercomp.getcsvLoader(tracknum)
         this.rastercomp.createRasterChartOnLoad(tracknum, uwi, Flag, selectedCurve, "2")
       }
-      else if(Flag == "LAS_STD"){
+      else if (Flag == "LAS_STD") {
         const tracknum = `${trackorder}`;
         d3.selectAll(`.lasdropdown${trackorder}` + ' > option[value *= "' + TrackInformation.selectedCurve + '"').attr('selected', true);
         const selectedCurve = TrackInformation.selectedCurve;
         this.loadercomp.getcsvLoader(tracknum)
         this.lascomp.createLasChartOnLoad(tracknum, uwi, Flag, selectedCurve)
       }
-      
+
     }
 
     RasterDropDown.on('change', function () {
       const tracknum = `${trackorder}`;
       const selectedCurve = d3.select('.rasterdropdown' + trackorder).node().value;
 
-      if (selectedCurve !== "Select Curve") {
+      if (selectedCurve !== "--Select Curve--") {
         console.log(`.rasterdropdown${trackorder}   ` + (d3.select('.rasterdropdown' + trackorder).node().value))
+
         //this.createChartOnchange(this.value);
         d3.select(`.rasterGrp${tracknum}`).remove();
         this.loadercomp.getcsvLoader(tracknum)
         this.rastercomp.createRasterChartOnLoad(tracknum, uwi, Flag, selectedCurve, "2")
       } else {
         d3.select(`.rasterGrp${tracknum}`).remove();
+        d3.select(`.uniq${tracknum} .loader`).remove();
+        $(`.rastersegment${tracknum}`).parent('.form-group').remove();
       }
     }.bind(this))
 

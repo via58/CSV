@@ -11,7 +11,7 @@
                         </app-wellmetadata>
 
                 </div>
-                <app-csvtools (LoadCross)="getData($event,LOAD)"></app-csvtools>
+                <app-csvtools (LoadCross)="getData($event,LOAD)" [SelectedCurveList]=SelectedCurveList></app-csvtools>
         </div>
         <div class="card-body cst-card-body map-section" id="map-section" >
 

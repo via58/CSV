@@ -28,25 +28,27 @@ export class CsvheaderComponent implements OnInit {
       document.getElementById('csv-section').style.display = "none";
       d3.select('#mapbtn').attr('class', 'btn btn-secondary activebtn')
       d3.select('#csvbtn').attr('class', 'btn btn-secondary ')
+      // d3.select('svg').remove();
+      // localStorage.clear();
     }
     else {
       var mapdata = JSON.parse(localStorage.getItem('welllist'));
       console.log(mapdata);
       var wellList = [];
-      if(mapdata !==null){
-      mapdata.forEach(well => {
-        wellList.push(well.UWI);
-      })
-      var wellString = wellList.join(',');
-      this.createCrossSectionService.CreateCrossSection(wellString).subscribe(data => {
-        console.log(data)
-        var dataSet = {
-          data: JSON.stringify(data),
-          flag: "CREATE"
-        }
-        this.CreateCross.emit(dataSet);
-      })
-    }
+      if (mapdata !== null) {
+        mapdata.forEach(well => {
+          wellList.push(well.UWI);
+        })
+        var wellString = wellList.join(',');
+        this.createCrossSectionService.CreateCrossSection(wellString).subscribe(data => {
+          console.log(data)
+          var dataSet = {
+            data: JSON.stringify(data),
+            flag: "CREATE"
+          }
+          this.CreateCross.emit(dataSet);
+        })
+      }
       document.getElementById('map-section').style.display = "none";
       document.getElementById('csv-section').style.display = "block";
       d3.select('#csvbtn').attr('class', 'btn btn-secondary activebtn')

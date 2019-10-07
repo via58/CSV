@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, ElementRef } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ElementRef, Input } from '@angular/core';
 import { GetcrosssectionsService } from '../../services/getcrosssections.service';
 import * as d3 from 'd3';
 import * as $ from 'jquery';
@@ -12,14 +12,18 @@ import * as $ from 'jquery';
 export class CsvtoolsComponent implements OnInit {
   selectedCrossSectionId: any;
   selectedCrossSectionName: any;
-
+  disableSaveButton: any;
   disableLoadButton = "disabled"; //initially button is enabled
   CrossSectionList = [];
+  @Input() SelectedCurveList: any;
   @Output() LoadCross = new EventEmitter();
   constructor(private crossSectionDetails: GetcrosssectionsService) { }
 
   ngOnInit() {
     this.createCrossSection();
+    const main = document.querySelectorAll('.maingroup')
+    this.disableSaveButton = "";
+
   }
 
   enableLoadButton() {
@@ -49,6 +53,7 @@ export class CsvtoolsComponent implements OnInit {
               data: JSON.stringify(data),
               flag: "LOAD"
             }
+            this.disableSaveButton = "";
             this.LoadCross.emit(dataSet);
 
           }
@@ -137,20 +142,32 @@ export class CsvtoolsComponent implements OnInit {
 
     var dataObject = {
       "crossSectionId": 0,
-      "crossSectionName": this.selectedCrossSectionName == undefined ? `crossSection10${Math.floor((Math.random() * 10) + 1)}` : this.selectedCrossSectionName,
+      "crossSectionName": d3.select('#crossSectionName').property('value') == "" ? Date.now().toString() : d3.select('#crossSectionName').property('value') + Date.now().toString(),
       "wellCount": main.length,
-      "crossSectionDetails": _crossSectionDetails
+      "crossSectionDetails": _crossSectionDetails,
+      "selectedProductList": this.SelectedCurveList,
+
     }
 
     console.log(dataObject)
 
-    this.crossSectionDetails.saveCrossSection(dataObject).subscribe(data => {
-      console.log(data)
-      $('#openModalSaveCrossSection').click();
+    this.crossSectionDetails.saveCrossSection(dataObject).subscribe(response => {
+      console.log(response)
+      if (response == "") {
+        $('#openModalSaveCrossSection').click();
+
+      }
     })
 
 
   }
 
+  DeleteCrossSection() {
+    this.selectedCrossSectionId = d3.select('input[name=CrossSection]:checked').property('value');
+    this.crossSectionDetails.DeleteCrossSection(this.selectedCrossSectionId)
+      .subscribe(data => {
+        //console.log(data);
+      });
 
+  }
 }

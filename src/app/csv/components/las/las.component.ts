@@ -22,65 +22,11 @@ export class LasComponent implements OnInit {
    // var curvename = selectedTrack;
 
 
-
-    // if (this.lasCurveData.curveInformation == "") {
-    //   //console.log(this.lasCurveData.curveInformation[1]);
-    //   curvename = this.lasCurveData.curveInformation;
-    //   // d3.select(`.lasdropdown${trackorder}`).append('option')
-    //   // .attr('value', 'Select Curve')
-    //   // .text('Select Curve')
-    //   if (curvename == "") {
-    //     d3.select(`.lasdropdown${trackorder}`).append('option')
-    //       .attr("value", "Select Curve")
-    //       .text("Select Curve");
-    //   }
-    //   d3.select(`.lasdropdown${trackorder}`).selectAll("option")
-
-    //     .data(this.lasCurveData.curveInformation)
-    //     .enter()
-    //     .append("option")
-    //     .attr("value", function (d, i) { return d })
-    //     .text(function (d, i) { return d });
-    //   //d3.selectAll(`.lasdropdown${trackorder}`+ ' > option[value *= "LAS_STD"').attr('selected', true);
-    // }
-
-
-
     //this._dataService.getLasData(selectedTrack.uwi, selectedTrack.selectedCurve).subscribe(data => {
 
       
     this._dataService.getLasData(uwi,productType,selectedTrack).subscribe(data => {
       this.lasCurveData = data;
-      // console.log(this.lasCurveData.curves);
-      // var doption = [];
-      // doption.push("Select Curve");
-      // for (var i = 0; i < this.lasCurveData.curveInformation.length; i++) {
-      //   doption.push(this.lasCurveData.curveInformation[i]);
-      // }
-
-      // console.log(this.lasCurveData.curveInformation)
-      // // d3.select(`.lasdropdown${trackorder}`).append('option')
-      // // .attr('value', 'Select Curve')
-      // // .text('Select Curve')
-      // var doption = [];
-      // doption.push("Select Curve");
-      // for (var i = 0; i < this.lasCurveData.curveInformation.length; i++) {
-      //   doption.push(this.lasCurveData.curveInformation[i]);
-      // }
-
-     // console.log(doption)
-
-      // if (curvename == "") {
-      //   d3.select(`.lasdropdown${trackorder}`).append('option')
-      //     .attr("value", "Select Curve")
-      //     .text("Select Curve");
-      // }
-      // d3.select(`.lasdropdown${trackorder}`).selectAll("option")
-      //   .data(doption)
-      //   .enter()
-      //   .append("option")
-      //   .attr("value", function (d, i) { return d })
-      //   .text(function (d, i) { return d });
 
       var lasHeight = (d3.select('svg').attr('height') - d3.select('.wellgroup').attr('height')) - 20;
       if (selectedTrack != "") {
@@ -122,7 +68,7 @@ export class LasComponent implements OnInit {
             .attr('class', 'lasgrp')
             .attr('fill', 'none')
             .attr('stroke-width', 1)
-            .attr('stroke', "pink")
+            .attr('stroke', "blue")
           //console.log(document.querySelector('.wellgroup').getBoundingClientRect().height);
 
         }

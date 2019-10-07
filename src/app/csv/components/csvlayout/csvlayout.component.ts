@@ -77,7 +77,7 @@ export class CsvlayoutComponent implements OnInit {
         _productTypeList.push(cs.productTypeList);
 
         if (cs.selectedProductType == null) {
-          lasRaster.push("SMART_RASTER");
+          lasRaster.push(cs.productTypeList[0]);
 
         } else {
           lasRaster.push(cs.selectedProductType);
@@ -127,6 +127,7 @@ export class CsvlayoutComponent implements OnInit {
         wellnumberGrp.push(cs.wellNumber);
         uwiGrp.push(cs.uwi);//
         wellOrder.push(cs.wellOrder);
+        _productTypeList.push(cs.productTypes);
         trackOrder.push(cs.crossSectionInformations.length);
         TrackCount1 = TrackCount1 + cs.crossSectionInformations.length;
         cs.crossSectionInformations.forEach(function (st: any) {
@@ -145,9 +146,9 @@ export class CsvlayoutComponent implements OnInit {
       this.trackCount = trackOrder;
       this.curveList1 = curveList;
       this.lasRasterFlag = lasRaster;
-     // this.SelectedCurveList = _selectedCurveList;
+    // this.SelectedCurveList = this.Getcsvdetails.selectedProductList;
       this.trackAndSelectedCurve = _trackAndSelectedCurve;
-
+      this.ProductTypeList = _productTypeList;
     }
   }
 

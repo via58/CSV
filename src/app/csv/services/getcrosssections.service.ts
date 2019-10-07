@@ -16,6 +16,7 @@ export class GetcrosssectionsService {
    rasterUrl = "getRaster/getRasterData?uwid=";
    saveCrossSectionUrl = "getCrossSection/saveCrossSection";
    createCrossSectionUrl = "getCrossSection/openCrossSection?uwis=";
+   deleteCrossSectionUrl = "getCrossSection/deleteCrossSection?crossSectionId=";
    getDataUrl = "getCrossSection/getWellDetails?uwis=";
    selectedProductType = "&selectedProductType=";
    curveName = "&selectedCurveName=";
@@ -53,6 +54,10 @@ export class GetcrosssectionsService {
    CreateCrossSection(wells) {
       return this.http.get(this.localhost + this.createCrossSectionUrl + wells)
    }
+   DeleteCrossSection(_crossSectionId) {
+      localStorage.clear();
 
+      return this.http.post(this.localhost + this.deleteCrossSectionUrl+_crossSectionId, {})
+   }
 
 }
