@@ -134,8 +134,12 @@ export class CsvlayoutComponent implements OnInit {
           curveList.push(st.curveList);//
           lasRaster.push(st.productType);
           //_selectedCurveList.push(st.curveName);
+          
           _trackAndSelectedCurve.push({ uwi: cs.uwi, trackOrder: st.trackOrder, selectedCurve: st.curveName, productType: st.productType, curveList: st.curveList })
         })
+       
+
+
       })
       this.SVGWidth = (TrackCount1 * 250) + (((TrackCount1) * 30));
       console.log('SVG Width' + this.SVGWidth)

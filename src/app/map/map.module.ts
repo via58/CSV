@@ -2,6 +2,7 @@ import { NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CsvmapComponent } from './csvmap/csvmap.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MessageService } from "../services/data-service.service";
 
 
 @NgModule({
@@ -9,9 +10,10 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
   CsvmapComponent],
   imports: [
     CommonModule, 
-     DragDropModule 
+     DragDropModule,
+     
   ],
-  providers: [],
+  providers: [MessageService],
   exports:[
     CsvmapComponent
   ]

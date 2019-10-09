@@ -159,6 +159,8 @@ export class CsvtoolsComponent implements OnInit {
       }
     })
 
+     
+     //localStorage.setItem('savedcs',"true");
 
   }
 

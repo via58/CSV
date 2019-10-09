@@ -15,6 +15,7 @@ import { CsvlayoutComponent } from './components/csvlayout/csvlayout.component'
 import { MapModule } from '../map/map.module';
 import { GetcrosssectionsService } from './services/getcrosssections.service';
 import { CsvmapComponent } from '../map/csvmap/csvmap.component';
+import { MessageService } from "../services/data-service.service";
 
 
 
@@ -34,7 +35,7 @@ import { CsvmapComponent } from '../map/csvmap/csvmap.component';
     CommonModule,
     MapModule
   ],
-  providers: [GetCrossSectionDetailsService,GetcrosssectionsService,CsvmapComponent],
+  providers: [GetCrossSectionDetailsService,GetcrosssectionsService,CsvmapComponent,MessageService],
   exports:[
     CsvheaderComponent, 
     WellmetadataComponent, 
