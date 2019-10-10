@@ -66,6 +66,7 @@ export class CsvheaderComponent implements OnInit{
       //this.mapreference.wellList;
       //var mapdata = JSON.parse(localStorage.getItem('welllist'));
       var mapdata = this.message;
+      console.log(mapdata)
      
       //this.messageService.sendMessage(this.messages[0]);
       //this.dataService.currentMessage.subscribe(message => this.message = message);
@@ -77,7 +78,7 @@ export class CsvheaderComponent implements OnInit{
       //CsvmapComponent.
       // console.log(mapdata);
        var wellList = [];
-      if (mapdata !== undefined) {
+      if (mapdata !=="") {
         mapdata.forEach(well => {
           wellList.push(well.UWI);
         })
