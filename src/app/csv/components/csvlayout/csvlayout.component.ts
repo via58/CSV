@@ -152,8 +152,6 @@ export class CsvlayoutComponent implements OnInit {
 
       })
       this.SVGWidth = (TrackCount1 * 250) + (((TrackCount1) * 30));
-      d3.select('svg').attr('width', this.SVGWidth)
-      console.log('SVG Width' + this.SVGWidth)
       this.wellnames = wellnamesGrp;
       this.wellnumber = wellnumberGrp;
       this.UWI = uwiGrp;
@@ -164,6 +162,8 @@ export class CsvlayoutComponent implements OnInit {
       // this.SelectedCurveList = this.Getcsvdetails.selectedProductList;
       this.trackAndSelectedCurve = _trackAndSelectedCurve;
       this.ProductTypeList = _productTypeList;
+     // d3.select('svg').attr('width', this.SVGWidth)
+
     }
   }
 

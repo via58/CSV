@@ -83,7 +83,7 @@ export class CsvtoolsComponent implements OnInit {
         var _trackOrder = j + 1;
         var _productType = d3.select(`.${track} foreignObject .well-info-product select`).property('value');
         var _curveName = "";
-        var _curveColor = d3.select(`.${track} .chartGrp`).attr('data-curveColor');
+        var _curveColor = _productType !== "SMART_RASTER"?d3.select(`.${track} .chartGrp`).attr('data-curveColor'):null;
         var _curveThickness = 0;
         var _curveScale = 0;
         var _curveList = [];

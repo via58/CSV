@@ -22,7 +22,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
   @ViewChild(RasterComponent, { static: true }) rastercomp;
   @ViewChild(LasComponent, { static: true }) lascomp;
   @ViewChild(CsvloaderComponent, { static: true }) loadercomp;
-message: any;
+  message: any;
   @Input() wellCount2: Number;
   @Input() csvflag: String;
   @Input() wellinfo: any;
@@ -57,26 +57,26 @@ message: any;
     private _dataService: GetcrosssectionsService,
     private messageService: MessageService
 
-  ) { 
-   
+  ) {
+
   }
-  
+
   ngOnInit() {
     this.messageService.currentmessageService.subscribe(msg => this.message = msg);
-    
+
     //  this.buildSVG();
 
   }
 
   ngOnChanges() {
     //   $('[data-toggle="tooltip"]').tooltip();
-    
+
     this.buildSVG();
   }
 
   ngAfterViewInit() {
     // $('[data-toggle="tooltip"]').tooltip();
-    
+
 
   }
 
@@ -498,7 +498,7 @@ message: any;
   //   }.bind(this))
   // }
 
-   wellproduct(trackorder, uwi, productType, productList, curveList, defaultCurve) {
+  wellproduct(trackorder, uwi, productType, productList, curveList, defaultCurve) {
 
     const WellInfoproductDiv = d3.select('#foreignObject' + trackorder).append('xhtml:div')
       .attr('class', 'well-info-product')
@@ -939,7 +939,12 @@ message: any;
   }
   delewell() {
     this.SVGWidth = this.SVGWidth - document.querySelector('.' + this.wellId).getBoundingClientRect().width
-    d3.select('svg').attr('width', this.SVGWidth)
+    if (this.SVGWidth < 200) {
+      d3.select('svg').remove();
+    } else {
+      d3.select('svg').attr('width', this.SVGWidth)
+
+    }
 
     var _id = this.wellId;
     var _uwi = this.UWI;
@@ -949,15 +954,15 @@ message: any;
     this.translateGenerator();
     // console.log( _uwi);
     console.log(_trackorder);
-   
+
     let obj = this.message.find(o => o.UWI === _trackorder);
     console.log(this.message);
     console.log(obj);
     var newwell = this.message.filter(item => item !== obj)
     this.messageService.sendnewMessage(newwell)
-     console.log(newwell)
+    console.log(newwell)
 
-    
+
   }
   translateGenerator() {
     var listItem = document.querySelectorAll(".maingroup ");
@@ -991,6 +996,7 @@ message: any;
 
 
   Onresize(e) {
+
     d3.select('svg').remove();
     this.buildSVG();
     d3.select('svg').attr('width', this.SVGWidth)
