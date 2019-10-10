@@ -27,6 +27,7 @@ export class CsvlayoutComponent implements OnInit {
   trackAndSelectedCurve: any = [];
   ProductTypeList: any = [];
   SVGWidth: any = 0;
+  defaultSelectedCurve: any = [];
 
   constructor(private getcsvdetails: GetCrossSectionDetailsService) {
   }
@@ -47,6 +48,8 @@ export class CsvlayoutComponent implements OnInit {
 
     const wellnamesGrp = [];
     const uwiGrp = [];
+    const selectedCurveGrp = [];
+    const defaultCurveColor = [];
     const wellnumberGrp = [];
     var wellOrder = [];
     const trackOrder = [];
@@ -57,11 +60,11 @@ export class CsvlayoutComponent implements OnInit {
     var TrackCount1: number = 0;
 
     if (dataset.flag == "CREATE") {
-      this.wellCount = this.Getcsvdetails.length;
+      this.wellCount = this.Getcsvdetails.uwiObjectDtos.length;
       var _wellcount: any = this.wellCount;
       this.csvflag = dataset.flag;
 
-      this.Getcsvdetails.forEach(function (cs: any, $index) {
+      this.Getcsvdetails.uwiObjectDtos.forEach(function (cs: any, $index) {
 
         if (cs.wellName == null) {
           wellnamesGrp.push(cs.uwi);
@@ -69,6 +72,7 @@ export class CsvlayoutComponent implements OnInit {
           wellnamesGrp.push(cs.wellName);
         }
         //curveList.push(cs.curveList);
+        selectedCurveGrp.push(cs.selectedCurve);
         uwiGrp.push(cs.uwi);
         wellnumberGrp.push(cs.uwi);
         trackOrder.push(1);
@@ -89,12 +93,17 @@ export class CsvlayoutComponent implements OnInit {
 
 
         for (let i = 0; i < Curves.length; i++) {
-          var _curveList = cs.selectedCurve == null ? ["--Select Curve--"] : [];
+          if (Curves[i] == cs.selectedProductType) {
+            var _curveList = cs.selectedCurve == null ? ["--Select Curve--"] : [];
+          } else {
+            var _curveList = ["--Select Curve--"];
+          }
+
           cs.curveLists[Curves[i]].forEach(products => {
 
             _curveList.push(products.name);
           });
-          _selectedCurveList[Curves[i]]= _curveList;
+          _selectedCurveList[Curves[i]] = _curveList;
         }
 
         _trackAndSelectedCurve.push({ uwi: cs.uwi, trackOrder: trackOrder, selectedCurve: cs.selectedCurve, productType: lasRaster, curveList: _selectedCurveList })
@@ -113,6 +122,7 @@ export class CsvlayoutComponent implements OnInit {
       this.lasRasterFlag = lasRaster;
       this.SelectedCurveList = curveList;
       this.trackAndSelectedCurve = _trackAndSelectedCurve;
+      this.defaultSelectedCurve = selectedCurveGrp;
       this.ProductTypeList = _productTypeList;
 
 
@@ -122,7 +132,7 @@ export class CsvlayoutComponent implements OnInit {
       this.wellCount = this.Getcsvdetails.wellCount;
 
       this.Getcsvdetails.crossSectionDetails.forEach(function (cs: any) {
-        
+
         wellnamesGrp.push(cs.wellName);//
         wellnumberGrp.push(cs.wellNumber);
         uwiGrp.push(cs.uwi);//
@@ -134,14 +144,15 @@ export class CsvlayoutComponent implements OnInit {
           curveList.push(st.curveList);//
           lasRaster.push(st.productType);
           //_selectedCurveList.push(st.curveName);
-          
+
           _trackAndSelectedCurve.push({ uwi: cs.uwi, trackOrder: st.trackOrder, selectedCurve: st.curveName, productType: st.productType, curveList: st.curveList })
         })
-       
+
 
 
       })
       this.SVGWidth = (TrackCount1 * 250) + (((TrackCount1) * 30));
+      d3.select('svg').attr('width', this.SVGWidth)
       console.log('SVG Width' + this.SVGWidth)
       this.wellnames = wellnamesGrp;
       this.wellnumber = wellnumberGrp;
@@ -150,7 +161,7 @@ export class CsvlayoutComponent implements OnInit {
       this.trackCount = trackOrder;
       this.curveList1 = curveList;
       this.lasRasterFlag = lasRaster;
-    // this.SelectedCurveList = this.Getcsvdetails.selectedProductList;
+      // this.SelectedCurveList = this.Getcsvdetails.selectedProductList;
       this.trackAndSelectedCurve = _trackAndSelectedCurve;
       this.ProductTypeList = _productTypeList;
     }
