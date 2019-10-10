@@ -1,4 +1,17 @@
-@import url("https://js.arcgis.com/4.7/esri/css/main.css");
+//@import url("https://js.arcgis.com/4.7/esri/css/main.css");
+@import url("https://js.arcgis.com/3.28/esri/css/esri.css");
+#map {
+  position: absolute;
+  padding:0;
+  margin:0;
+  height:100%;         
+}
+#HomeButton {
+  position: absolute;
+  top: 95px;
+  left: 20px;
+  z-index: 50;
+}
 
 .map {
   height: calc(100vh - 85px);
