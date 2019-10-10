@@ -61,6 +61,8 @@ export class CsvlayoutComponent implements OnInit {
 
     if (dataset.flag == "CREATE") {
       this.wellCount = this.Getcsvdetails.uwiObjectDtos.length;
+      d3.select('.cst-card-header-badge').text(this.wellCount);
+
       var _wellcount: any = this.wellCount;
       this.csvflag = dataset.flag;
 
@@ -131,6 +133,7 @@ export class CsvlayoutComponent implements OnInit {
       this.csvflag = dataset.flag;
       this.wellCount = this.Getcsvdetails.wellCount;
 
+      d3.select('.cst-card-header-badge').text(this.wellCount);
       this.Getcsvdetails.crossSectionDetails.forEach(function (cs: any) {
 
         wellnamesGrp.push(cs.wellName);//
@@ -162,7 +165,7 @@ export class CsvlayoutComponent implements OnInit {
       // this.SelectedCurveList = this.Getcsvdetails.selectedProductList;
       this.trackAndSelectedCurve = _trackAndSelectedCurve;
       this.ProductTypeList = _productTypeList;
-     // d3.select('svg').attr('width', this.SVGWidth)
+       //d3.select('svg').attr('width', this.SVGWidth)
 
     }
   }

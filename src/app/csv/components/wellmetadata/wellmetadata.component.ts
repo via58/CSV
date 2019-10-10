@@ -85,6 +85,8 @@ export class WellmetadataComponent implements OnInit, OnChanges {
     const gutter = 20;
     this.width = element.offsetWidth - this.margin.left - this.margin.right;
     this.height = element.offsetHeight - this.margin.top - this.margin.bottom;
+
+
     const svg = d3.select(element).append('svg')
       .attr('width', this.SVGWidth)
       .attr('height', element.offsetHeight);
@@ -155,6 +157,12 @@ export class WellmetadataComponent implements OnInit, OnChanges {
       startpnt = startpnt + this.trackCount[i];
       xcounter = 0;
     }
+    //if (d3.selectAll('.maingroup').length > 0) {
+      this.SVGWidth = (d3.selectAll('.maingroup').length * 250) + (((d3.select('.maingroup').length) * 30));
+      d3.select('svg').attr('width', this.SVGWidth)
+    
+
+
   }
 
   trackaction(trackId, drop1, drop2, TrackInformation) {

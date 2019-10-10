@@ -151,7 +151,9 @@ export class CsvtoolsComponent implements OnInit {
 
     console.log(dataObject)
 
-    this.crossSectionDetails.saveCrossSection(dataObject).subscribe(response => {
+    this.crossSectionDetails.saveCrossSection(dataObject)
+    .subscribe(
+      response => {
       console.log(response)
       if (response == null) {
         $('#openModalSaveCrossSection').click();
@@ -159,7 +161,7 @@ export class CsvtoolsComponent implements OnInit {
       }
     })
 
-     
+    $('#openModalSaveCrossSection').click();
      //localStorage.setItem('savedcs',"true");
 
   }

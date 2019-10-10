@@ -77,7 +77,7 @@ export class CsvheaderComponent implements OnInit{
       //CsvmapComponent.
       // console.log(mapdata);
        var wellList = [];
-      if (mapdata !== undefined) {
+      if (mapdata !=="") {
         mapdata.forEach(well => {
           wellList.push(well.UWI);
         })
