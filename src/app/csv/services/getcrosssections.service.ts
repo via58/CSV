@@ -46,8 +46,8 @@ export class GetcrosssectionsService {
       return this.http.get(this.localhost + 'getCrossSection/getProductTypes')
    }
 
-   saveCrossSection(data) {
-      return this.http.post(this.localhost + this.saveCrossSectionUrl, data)
+   saveCrossSection(data):Observable<any> {
+      return this.http.post<any>(this.localhost + this.saveCrossSectionUrl, data)
 
    }
 

@@ -83,7 +83,7 @@ export class CsvtoolsComponent implements OnInit {
         var _trackOrder = j + 1;
         var _productType = d3.select(`.${track} foreignObject .well-info-product select`).property('value');
         var _curveName = "";
-        var curveColor = null;
+        var _curveColor = _productType !== "SMART_RASTER"?d3.select(`.${track} .chartGrp`).attr('data-curveColor'):null;
         var _curveThickness = 0;
         var _curveScale = 0;
         var _curveList = [];
@@ -112,11 +112,11 @@ export class CsvtoolsComponent implements OnInit {
           "trackOrder": _trackOrder,
           "productType": _productType,
           "curveName": _curveName,
-          "curveColor": null,
+          "curveColor": _curveColor,
           "curveThickness": _productType == "SMART_RASTER" ? 0 : 1,
           "curveScale": null,
           "curveList": _curveList,
-          "segmentNumber": segmentNumber
+          "segmentNumber": segmentNumber,
         })
       }
       _crossSectionDetails.push({
@@ -138,11 +138,11 @@ export class CsvtoolsComponent implements OnInit {
     //   "crossSectionName": this.selectedCrossSectionName == undefined ? `crossSection10${Math.floor((Math.random() * 10) + 1)}` : this.selectedCrossSectionName,
     //   "wellCount": main.length,
     //   "crossSectionDetails": _crossSectionDetails
-    // }
+    // } d3.select('#crossSectionName').property('value')
 
     var dataObject = {
       "crossSectionId": 0,
-      "crossSectionName": d3.select('#crossSectionName').property('value') == "" ? Date.now().toString() : d3.select('#crossSectionName').property('value') + Date.now().toString(),
+      "crossSectionName":  d3.select('#crossSectionName').property('value')== "" ? Date.now().toString() :  d3.select('#crossSectionName').property('value') + Date.now().toString(),
       "wellCount": main.length,
       "crossSectionDetails": _crossSectionDetails,
       "selectedProductList": this.SelectedCurveList,
@@ -151,15 +151,17 @@ export class CsvtoolsComponent implements OnInit {
 
     console.log(dataObject)
 
-    this.crossSectionDetails.saveCrossSection(dataObject).subscribe(response => {
+    this.crossSectionDetails.saveCrossSection(dataObject)
+    .subscribe(
+      response => {
       console.log(response)
-      if (response == "") {
+      if (response == null) {
         $('#openModalSaveCrossSection').click();
 
       }
     })
 
-     
+    $('#openModalSaveCrossSection').click();
      //localStorage.setItem('savedcs',"true");
 
   }

@@ -22,7 +22,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
   @ViewChild(RasterComponent, { static: true }) rastercomp;
   @ViewChild(LasComponent, { static: true }) lascomp;
   @ViewChild(CsvloaderComponent, { static: true }) loadercomp;
-message: any;
+  message: any;
   @Input() wellCount2: Number;
   @Input() csvflag: String;
   @Input() wellinfo: any;
@@ -36,7 +36,7 @@ message: any;
   @Input() trackAndSelectedCurve: any;
   @Input() SVGWidth: any;
   @Input() ProductTypeList: any;
-
+  @Input() defaultSelectedCurve: any;
   private chart: any;
   private margin: any = { top: 20, bottom: 20, left: 20, right: 20 };
   private width: number;
@@ -57,26 +57,26 @@ message: any;
     private _dataService: GetcrosssectionsService,
     private messageService: MessageService
 
-  ) { 
-   
+  ) {
+
   }
-  
+
   ngOnInit() {
     this.messageService.currentmessageService.subscribe(msg => this.message = msg);
-    
+
     //  this.buildSVG();
 
   }
 
   ngOnChanges() {
     //   $('[data-toggle="tooltip"]').tooltip();
-    
+
     this.buildSVG();
   }
 
   ngAfterViewInit() {
     // $('[data-toggle="tooltip"]').tooltip();
-    
+
 
   }
 
@@ -85,6 +85,8 @@ message: any;
     const gutter = 20;
     this.width = element.offsetWidth - this.margin.left - this.margin.right;
     this.height = element.offsetHeight - this.margin.top - this.margin.bottom;
+
+
     const svg = d3.select(element).append('svg')
       .attr('width', this.SVGWidth)
       .attr('height', element.offsetHeight);
@@ -125,14 +127,14 @@ message: any;
           //   this.ProductTypeList[i] = ['SMART_RASTER', "LAS_STD"];
           // }
           this.wellmetainfo(this.wellinfo[i], this.wellOrder[i].toString(), this.wellOrder[i].toString() + j, this.UWI[i], this.trackAndSelectedCurve[j]);
-          this.wellproduct(this.wellOrder[i].toString() + j, this.UWI[i], this.lasRasterFlag[i], this.ProductTypeList[i], this.trackAndSelectedCurve[j]);
+          this.wellproduct(this.wellOrder[i].toString() + j, this.UWI[i], this.lasRasterFlag[i], this.ProductTypeList[i], this.trackAndSelectedCurve[j], '');
           // this.wellmetainfo(this.wellinfo[i], this.wellOrder[i].toString(), this.wellOrder[i].toString() + j, this.UWI[i], this.SelectedCurveList[j]);
           // this.wellproduct(this.wellOrder[i].toString() + j, this.UWI[i], this.lasRasterFlag[i], this.ProductTypeList[i], this.SelectedCurveList[j]);
         }
         else {
           this.wellmetainfo(this.wellinfo[i], this.wellOrder[i].toString(), this.wellOrder[i].toString() + j, this.UWI[i], '');
           this.wellproduct(this.wellOrder[i].toString() + j, this.UWI[i],
-            this.lasRasterFlag[i], this.ProductTypeList[i], this.SelectedCurveList[i]);
+            this.lasRasterFlag[i], this.ProductTypeList[i], this.SelectedCurveList[i], this.defaultSelectedCurve[i]);
         }
         //this.wellproduct(this.wellOrder[i].toString() + j, this.UWI[i], this.trackAndSelectedCurve[j]);
         // this.wellproduct(this.wellOrder[i].toString() + j, this.UWI[i],
@@ -155,6 +157,12 @@ message: any;
       startpnt = startpnt + this.trackCount[i];
       xcounter = 0;
     }
+    //if (d3.selectAll('.maingroup').length > 0) {
+      this.SVGWidth = (d3.selectAll('.maingroup').length * 250) + (((d3.select('.maingroup').length) * 30));
+      d3.select('svg').attr('width', this.SVGWidth)
+    
+
+
   }
 
   trackaction(trackId, drop1, drop2, TrackInformation) {
@@ -204,10 +212,10 @@ message: any;
         //        wellmetainfo(wellname, wellorder, trackorder, uwi) {
         //wellproduct(trackorder, uwi, productType, productList, curveList)this
         if (this.csvflag == "CREATE") {
-          this.wellproduct(newTrackNumber, currentUwId, productType, this.ProductTypeList[consolidateWellOrder], this.SelectedCurveList[consolidateWellOrder]);
+          this.wellproduct(newTrackNumber, currentUwId, productType, this.ProductTypeList[consolidateWellOrder], this.SelectedCurveList[consolidateWellOrder], '');
         }
         else if (this.csvflag == "LOAD") {
-          this.wellproduct(newTrackNumber, currentUwId, productType, this.ProductTypeList[consolidateWellOrder], TrackInformation);
+          this.wellproduct(newTrackNumber, currentUwId, productType, this.ProductTypeList[consolidateWellOrder], TrackInformation, '');
         }
         // this.wellproject(newTrackNumber, currentUwId, TrackInformation, TrackInformation.productType, "ADD");
         //Add Space for New Incoming  Track
@@ -341,60 +349,94 @@ message: any;
 
   }
 
-  // wellproduct(trackorder, uwi, TrackInformation) {
+  // wellproduct(trackorder, uwi, productType, productList, curveList) {
 
-  //   console.log(TrackInformation);
   //   const WellInfoproductDiv = d3.select('#foreignObject' + trackorder).append('xhtml:div')
   //     .attr('class', 'well-info-product')
   //     .attr('id', 'well-info-product' + trackorder);
   //   const productTypeDrp = WellInfoproductDiv.append('div')
   //     .attr('class', 'form-group')
   //     .append('select')
-  //     .attr('data-id', TrackInformation.productType)
-  //     .attr('class', 'form-control productType productType' + uwi + trackorder + " " + TrackInformation.productType)
-  //   this._dataService.getProductTypes(uwi).subscribe(data => {
-  //     if (data) {
-  //       productTypeDrp.selectAll('option')
-  //         .data(data)
-  //         .enter()
-  //         .append("option")
+  //     .attr('data-id', productType)
+  //     .attr('class', 'form-control productType productType' + uwi + trackorder + " " + productType)
 
-  //         .attr("value", function (d) { return d })
-  //         .text(function (d) { return d })
-  //       if (TrackInformation.productType == "SMART_RASTER") {
-  //         d3.selectAll('.SMART_RASTER > option[value *= "SMART_RASTER"').attr('selected', true);
-  //         d3.select(`.rasterdropdown${trackorder}`).style('display', 'block');
-  //         d3.select(`.lasdropdown${trackorder}`).style('display', 'none');
-  //         d3.select(`.chartGrp${trackorder}`).style('display', 'none');
-  //         d3.select(`.rasterGrp${trackorder}`).style('display', 'block');
-  //         d3.select(`#foreignObject${trackorder} .well-info-product`).attr('class', 'well-info-product ' + TrackInformation.productType)
-  //       }
-  //       else if (TrackInformation.productType == "LAS_STD") {
-  //         d3.selectAll('.LAS_STD > option[value *= "LAS_STD"').attr('selected', true);
-  //         d3.select(`.lasdropdown${trackorder}`).style('display', 'block');
-  //         d3.select(`.rasterdropdown${trackorder}`).style('display', 'none');
-  //         d3.selectAll(`.lasdropdown${trackorder}` + ' > option[value *= "' + TrackInformation.selectedCurve + '"').attr('selected', true);
-  //         d3.select(`.chartGrp${trackorder}`).style('display', 'block');
-  //         d3.select(`.rasterGrp${trackorder}`).style('display', 'none');
-  //         d3.select(`#foreignObject${trackorder} .well-info-product`).attr('class', 'well-info-product ' + TrackInformation.productType)
-
-  //       }
-  //       else if (TrackInformation.productType == "LAS_PLUS") {
-  //         d3.selectAll('.LAS_PLUS > option[value *= "LAS_PLUS"').attr('selected', true);
-  //         d3.select(`.lasdropdown${trackorder}`).style('display', 'none');
-  //         d3.select(`.rasterdropdown${trackorder}`).style('display', 'none');
-  //         d3.select(` #foreignObject${trackorder} .well-info-product`).attr('class', 'well-info-product ' + TrackInformation.productType)
+  //   const wellProjectDiv = d3.select('#foreignObject' + trackorder).append('xhtml:div')
+  //     .attr('class', 'well-info-project')
+  //     .attr('id', 'well-info-project' + trackorder);
+  //   for (let i = 0; i < productList.length; i++) {
+  //     const element = productList[i];
+  //     const LasDropDown = wellProjectDiv.append('div')
+  //       .attr('class', 'form-group')
+  //       .append('select')
+  //       .attr('class', `form-control ${element}_dropdown ${element}_dropdown${trackorder}`)
+  //       .style('display','none')
+  //   }
 
 
-  //       }
-  //       else {
-  //         d3.select(`.lasdropdown${trackorder}`).style('display', 'none');
-  //         d3.select(`.rasterdropdown${trackorder}`).style('display', 'none');
-  //       }
+  //   // const RasterDropDown = wellProjectDiv.append('div')
+  //   //   .attr('class', 'form-group')
+  //   //   .append('select')
+  //   //   .attr('class', 'form-control rasterdropdown rasterdropdown' + trackorder)
 
 
+  //   productTypeDrp.selectAll('option')
+  //     .data(productList)
+  //     .enter()
+  //     .append("option")
+  //     .attr("value", function (d) { return d })
+  //     .text(function (d) { return d })
+  //   if (productType == "SMART_RASTER") {
+  //     d3.selectAll('.SMART_RASTER > option[value *= "SMART_RASTER"').attr('selected', true);
+  //     d3.select(`.rasterdropdown${trackorder}`).style('display', 'block');
+  //     d3.select(`.lasdropdown${trackorder}`).style('display', 'none');
+  //     d3.select(`.chartGrp${trackorder}`).style('display', 'none');
+  //     d3.select(`.rasterGrp${trackorder}`).style('display', 'block');
+  //     d3.select(`.rastersegment${trackorder}`).style('display', 'block');
+  //     if (this.csvflag == "CREATE") {
+  //       this.wellproject(trackorder, uwi, curveList[productType], productType, "OPEN")
   //     }
-  //   })
+  //     else {
+  //       this.wellproject(trackorder, uwi, curveList, productType, "OPEN")
+  //     }
+  //     //d3.select(`#foreignObject${trackorder} .well-info-product`).attr('class', 'well-info-product ' + TrackInformation.productType)
+  //   }
+  //   else if (productType == "LAS_STD") {
+  //     d3.selectAll('.LAS_STD > option[value *= "LAS_STD"').attr('selected', true);
+  //     d3.select(`.lasdropdown${trackorder}`).style('display', 'block');
+  //     d3.select(`.rasterdropdown${trackorder}`).style('display', 'none');
+  //     d3.select(`.rastersegment${trackorder}`).style('display', 'none');
+
+  //     // d3.selectAll(`.lasdropdown${trackorder}` + ' > option[value *= "' + TrackInformation.selectedCurve + '"').attr('selected', true);
+  //     d3.select(`.chartGrp${trackorder}`).style('display', 'block');
+  //     d3.select(`.rasterGrp${trackorder}`).style('display', 'none');
+  //     //this.wellproject(trackorder, uwi, curveList[productType], productType, "OPEN")
+  //     if (this.csvflag == "CREATE") {
+  //       this.wellproject(trackorder, uwi, curveList[productType], productType, "OPEN")
+  //     }
+  //     else {
+  //       this.wellproject(trackorder, uwi, curveList, productType, "OPEN")
+  //     }
+  //     // d3.select(`#foreignObject${trackorder} .well-info-product`).attr('class', 'well-info-product ' + TrackInformation.productType)
+
+  //   }
+  //   else if (productType == "LAS_PLUS") {
+  //     d3.selectAll('.LAS_PLUS > option[value *= "LAS_PLUS"').attr('selected', true);
+  //     d3.select(`.lasdropdown${trackorder}`).style('display', 'none');
+  //     d3.select(`.rasterdropdown${trackorder}`).style('display', 'none');
+  //     d3.select(`.rastersegment${trackorder}`).style('display', 'none');
+
+  //     // d3.select(` #foreignObject${trackorder} .well-info-product`).attr('class', 'well-info-product ' + TrackInformation.productType)
+  //     this.wellproject(trackorder, uwi, curveList[productType], productType, "OPEN")
+
+  //   }
+  //   else {
+  //     d3.select(`.lasdropdown${trackorder}`).style('display', 'none');
+  //     d3.select(`.rasterdropdown${trackorder}`).style('display', 'none');
+  //   }
+
+
+
+
 
   //   productTypeDrp.on('change', function () {
   //     console.log(d3.select(`.productType${uwi}${trackorder}`).node().value);
@@ -402,37 +444,69 @@ message: any;
   //     if (dropval == "SMART_RASTER") {
   //       d3.select(`.chartGrp${trackorder}`).remove();
   //       d3.select(`.rasterGrp${trackorder}`).remove();
-  //       this.rastercomp.createRasterChartOnLoad(uwi, TrackInformation.selectedCurve, trackorder);
+  //       //this.rastercomp.createRasterChartOnLoad(uwi, TrackInformation.selectedCurve, trackorder);
   //       d3.select(`.rasterdropdown${trackorder}`).style('display', 'block');
   //       d3.select(`.lasdropdown${trackorder}`).style('display', 'none');
   //       d3.select(`.chartGrp${trackorder}`).style('display', 'none');
   //       d3.select(`.rasterGrp${trackorder}`).style('display', 'block');
+  //       if (this.csvflag == 'LOAD') {
+  //         this.wellproject(trackorder, uwi, curveList, dropval, "OPEN")
+  //       }
+  //       else {
+  //         this.wellproject(trackorder, uwi, curveList[dropval], dropval, "OPEN")
+  //       }
+  //       const selectedCurve = d3.select('.rasterdropdown' + trackorder).node().value;
+
+  //       if (selectedCurve !== "") {
+  //         this.loadercomp.getcsvLoader(trackorder)
+  //         this.rastercomp.createRasterChartOnLoad(trackorder, uwi, dropval, selectedCurve, "2")
+  //         d3.select(`.rastersegment${trackorder}`).style('display', 'block');
+  //       } else {
+  //         d3.select(`.chartGrp${trackorder}`).remove();
+  //         d3.select(`.uniq${trackorder} .loader`).remove();
+  //         d3.select(`.rastersegment${trackorder}`).style('display', 'none');
+  //       }
+
   //     } else if (dropval == "LAS_STD") {
   //       const tracknum = `${trackorder}`;
-  //       const trackcurveval = { "selectedCurve": "" };
-
-  //       trackcurveval.selectedCurve = "";
   //       d3.select(`.chartGrp${tracknum}`).remove();
   //       d3.select(`.rasterGrp${tracknum}`).remove();
+  //       const selectedCurve = d3.select('.lasdropdown' + trackorder).node().value;
+  //       if (this.csvflag == 'LOAD') {
 
+  //         this.wellproject(trackorder, uwi, curveList, dropval, "OPEN")
+  //       }
+  //       else {
+  //         this.wellproject(trackorder, uwi, curveList[dropval], dropval, "OPEN")
+  //       }
+
+  //       if (selectedCurve !== "") {
+  //         d3.select(`.chartGrp${tracknum}`).remove();
+  //         this.loadercomp.getcsvLoader(tracknum)
+  //         this.lascomp.createLasChartOnLoad(tracknum, uwi, dropval, selectedCurve)
+  //       } else {
+  //         d3.select(`.chartGrp${tracknum}`).remove();
+  //       }
 
   //       console.log($(`.lasdropdown${trackorder} option:first`).text());
-  //       trackcurveval.selectedCurve = $(`.lasdropdown${trackorder} option:first`).text();
-  //       console.log(trackcurveval)
+  //       // trackcurveval.selectedCurve = $(`.lasdropdown${trackorder} option:first`).text();
+  //       //console.log(trackcurveval)
   //       // d3.selectAll(`.lasdropdown${trackorder}` + '> option[value *= "'+sIndex+'"').attr('selected', true);
   //       d3.select(`.lasdropdown${trackorder}`).style('display', 'block');
   //       d3.select(`.rasterdropdown${trackorder}`).style('display', 'none');
+  //       d3.select(`.rastersegment${trackorder}`).style('display', 'none');
 
-  //       this.lascomp.createLasChartOnLoad(tracknum, trackcurveval, uwi);
+  //       // this.lascomp.createLasChartOnLoad(tracknum, trackcurveval, uwi);
 
   //       d3.select(`.chartGrp${trackorder}`).style('display', 'block');
   //       d3.select(`.rasterGrp${trackorder}`).style('display', 'none');
+
 
   //     }
   //   }.bind(this))
   // }
 
-  wellproduct(trackorder, uwi, productType, productList, curveList) {
+  wellproduct(trackorder, uwi, productType, productList, curveList, defaultCurve) {
 
     const WellInfoproductDiv = d3.select('#foreignObject' + trackorder).append('xhtml:div')
       .attr('class', 'well-info-product')
@@ -463,6 +537,7 @@ message: any;
       .append("option")
       .attr("value", function (d) { return d })
       .text(function (d) { return d })
+
     if (productType == "SMART_RASTER") {
       d3.selectAll('.SMART_RASTER > option[value *= "SMART_RASTER"').attr('selected', true);
       d3.select(`.rasterdropdown${trackorder}`).style('display', 'block');
@@ -472,6 +547,12 @@ message: any;
       d3.select(`.rastersegment${trackorder}`).style('display', 'block');
       if (this.csvflag == "CREATE") {
         this.wellproject(trackorder, uwi, curveList[productType], productType, "OPEN")
+
+        if (defaultCurve !== null) {
+          d3.select('.rasterdropdown' + trackorder).property('selectedIndex', curveList[productType].indexOf(defaultCurve))
+          this.loadercomp.getcsvLoader(trackorder);
+          this.rastercomp.createRasterChartOnLoad(trackorder, uwi, productType, defaultCurve, "2")
+        }
       }
       else {
         this.wellproject(trackorder, uwi, curveList, productType, "OPEN")
@@ -490,6 +571,11 @@ message: any;
       //this.wellproject(trackorder, uwi, curveList[productType], productType, "OPEN")
       if (this.csvflag == "CREATE") {
         this.wellproject(trackorder, uwi, curveList[productType], productType, "OPEN")
+        if (defaultCurve !== null) {
+          d3.select('.lasdropdown' + trackorder).property('selectedIndex', curveList[productType].indexOf(defaultCurve))
+          this.loadercomp.getcsvLoader(trackorder);
+          this.lascomp.createLasChartOnLoad(trackorder, uwi, productType, defaultCurve);
+        }
       }
       else {
         this.wellproject(trackorder, uwi, curveList, productType, "OPEN")
@@ -511,10 +597,6 @@ message: any;
       d3.select(`.lasdropdown${trackorder}`).style('display', 'none');
       d3.select(`.rasterdropdown${trackorder}`).style('display', 'none');
     }
-
-
-
-
 
     productTypeDrp.on('change', function () {
       console.log(d3.select(`.productType${uwi}${trackorder}`).node().value);
@@ -865,7 +947,12 @@ message: any;
   }
   delewell() {
     this.SVGWidth = this.SVGWidth - document.querySelector('.' + this.wellId).getBoundingClientRect().width
-    d3.select('svg').attr('width', this.SVGWidth)
+    if (this.SVGWidth < 200) {
+      d3.select('svg').remove();
+    } else {
+      d3.select('svg').attr('width', this.SVGWidth)
+
+    }
 
     var _id = this.wellId;
     var _uwi = this.UWI;
@@ -875,15 +962,15 @@ message: any;
     this.translateGenerator();
     // console.log( _uwi);
     console.log(_trackorder);
-   
+
     let obj = this.message.find(o => o.UWI === _trackorder);
     console.log(this.message);
     console.log(obj);
     var newwell = this.message.filter(item => item !== obj)
     this.messageService.sendnewMessage(newwell)
-     console.log(newwell)
+    console.log(newwell)
 
-    
+
   }
   translateGenerator() {
     var listItem = document.querySelectorAll(".maingroup ");
@@ -917,6 +1004,7 @@ message: any;
 
 
   Onresize(e) {
+
     d3.select('svg').remove();
     this.buildSVG();
     d3.select('svg').attr('width', this.SVGWidth)
