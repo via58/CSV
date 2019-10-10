@@ -57,11 +57,11 @@ export class CsvlayoutComponent implements OnInit {
     var TrackCount1: number = 0;
 
     if (dataset.flag == "CREATE") {
-      this.wellCount = this.Getcsvdetails.length;
+      this.wellCount = this.Getcsvdetails.uwiObjectDtos.length;
       var _wellcount: any = this.wellCount;
       this.csvflag = dataset.flag;
 
-      this.Getcsvdetails.forEach(function (cs: any, $index) {
+      this.Getcsvdetails.uwiObjectDtos.forEach(function (cs: any, $index) {
 
         if (cs.wellName == null) {
           wellnamesGrp.push(cs.uwi);

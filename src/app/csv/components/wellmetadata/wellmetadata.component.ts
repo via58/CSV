@@ -6,6 +6,8 @@ import { GetcrosssectionsService } from '../../services/getcrosssections.service
 import { RasterComponent } from '../raster/raster.component';
 import { LasComponent } from '../las/las.component';
 import { CsvloaderComponent } from '../csvloader/csvloader.component';
+import { MessageService } from "../../../services/data-service.service";
+import { Subscription } from 'rxjs';
 
 
 
@@ -20,7 +22,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
   @ViewChild(RasterComponent, { static: true }) rastercomp;
   @ViewChild(LasComponent, { static: true }) lascomp;
   @ViewChild(CsvloaderComponent, { static: true }) loadercomp;
-
+message: any;
   @Input() wellCount2: Number;
   @Input() csvflag: String;
   @Input() wellinfo: any;
@@ -48,25 +50,33 @@ export class WellmetadataComponent implements OnInit, OnChanges {
   private trackId: any;
   private wellId: any;
   private addTrack: any;
+  messages: any[] = [];
+  subscription: Subscription;
 
+  constructor(
+    private _dataService: GetcrosssectionsService,
+    private messageService: MessageService
 
-  constructor(private _dataService: GetcrosssectionsService
-  ) { }
-  message: any;
+  ) { 
+   
+  }
+  
   ngOnInit() {
-
+    this.messageService.currentmessageService.subscribe(msg => this.message = msg);
+    
     //  this.buildSVG();
 
   }
 
   ngOnChanges() {
     //   $('[data-toggle="tooltip"]').tooltip();
-
+    
     this.buildSVG();
   }
 
   ngAfterViewInit() {
     // $('[data-toggle="tooltip"]').tooltip();
+    
 
   }
 
@@ -858,9 +868,22 @@ export class WellmetadataComponent implements OnInit, OnChanges {
     d3.select('svg').attr('width', this.SVGWidth)
 
     var _id = this.wellId;
+    var _uwi = this.UWI;
+    var _trackorder = d3.select('.' + this.wellId).attr('data-uwi');
     d3.select(`.${_id}`).remove();
     d3.select('.cst-card-header-badge').text(document.querySelectorAll('.maingroup').length);
     this.translateGenerator();
+    // console.log( _uwi);
+    console.log(_trackorder);
+   
+    let obj = this.message.find(o => o.UWI === _trackorder);
+    console.log(this.message);
+    console.log(obj);
+    var newwell = this.message.filter(item => item !== obj)
+    this.messageService.sendnewMessage(newwell)
+     console.log(newwell)
+
+    
   }
   translateGenerator() {
     var listItem = document.querySelectorAll(".maingroup ");

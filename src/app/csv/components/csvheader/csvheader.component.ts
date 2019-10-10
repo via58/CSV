@@ -14,7 +14,7 @@ import { CsvlayoutComponent } from '../csvlayout/csvlayout.component';
 export class CsvheaderComponent implements OnInit{
   
   messages: any[] = [];
-
+  message: any;
   @ViewChild(CsvmapComponent , { static: true }) mapreference;
   @Output() CreateCross = new EventEmitter();
   wellCount: any = 0;
@@ -26,18 +26,19 @@ export class CsvheaderComponent implements OnInit{
     private mapComponent: CsvmapComponent,
     private messageService: MessageService
   ) { 
-    this.subscription = this.messageService.getMessage().subscribe(message => {
-      if (message) {
-        this.messages.push(message);
-      } else {
-        // clear messages when empty message received
-        this.messages = [];
-      }
-    });
+    // this.subscription = this.messageService.getMessage().subscribe(message => {
+    //   if (message) {
+    //     this.messages.push(message);
+    //   } else {
+    //     // clear messages when empty message received
+    //     this.messages = [];
+    //   }
+    // });
 
   }
   @Input() wellCount1: Number;
   ngOnInit() {
+    this.messageService.currentmessageService.subscribe(msg => this.message = msg);
     //var data =this.dataService.currentMessage.subscribe(message => this.message = message);
     //console.log("get", this.message);
     
@@ -51,6 +52,12 @@ export class CsvheaderComponent implements OnInit{
       d3.select('#mapbtn').attr('class', 'btn btn-secondary activebtn')
       d3.select('#csvbtn').attr('class', 'btn btn-secondary ')
        d3.select('svg').remove();
+       var mapdata = this.message;
+       console.log(mapdata);
+       //document.getElementById("wellmappane").style.display = "none";
+       document.getElementById("wellpanelupdate").click();
+       document.getElementById("btnUpdateWellOrder").click();
+       //
        
       // localStorage.clear();
     }
@@ -58,7 +65,9 @@ export class CsvheaderComponent implements OnInit{
       //this.mapreference.wellList;
       //this.mapreference.wellList;
       //var mapdata = JSON.parse(localStorage.getItem('welllist'));
-      var mapdata = this.messages[0];
+      var mapdata = this.message;
+     
+      //this.messageService.sendMessage(this.messages[0]);
       //this.dataService.currentMessage.subscribe(message => this.message = message);
       //console.log(this.message)
      // var mapdata = this.mapreference.wellList;
@@ -69,12 +78,13 @@ export class CsvheaderComponent implements OnInit{
       // console.log(mapdata);
        var wellList = [];
       if (mapdata !== undefined) {
-        mapdata.message.forEach(well => {
+        mapdata.forEach(well => {
           wellList.push(well.UWI);
         })
         var wellString = wellList.join(',');
         this.createCrossSectionService.CreateCrossSection(wellString).subscribe(data => {
           console.log(data)
+         
           var dataSet = {
             data: JSON.stringify(data),
             flag: "CREATE"
@@ -86,8 +96,10 @@ export class CsvheaderComponent implements OnInit{
       document.getElementById('csv-section').style.display = "block";
       d3.select('#csvbtn').attr('class', 'btn btn-secondary activebtn')
       d3.select('#mapbtn').attr('class', 'btn btn-secondary ')
+      // this.messageService.sendnewMessage("hello");
 
 
     }
   }
+  
 }
