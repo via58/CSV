@@ -16,9 +16,9 @@ export class LasComponent implements OnInit {
   createLasChartOnLoad(trackorder, uwi, productType, selectedTrack) {
 
     //    const formgrp = d3.select('.uniq' + trackorder).append('g').append('rect');
-    console.log(this.lasCurveData.curveInformation);
-    console.log(this.lasCurveData);
-    console.log(selectedTrack.selectedCurve)
+    // console.log(this.lasCurveData.curveInformation);
+    // console.log(this.lasCurveData);
+    // console.log(selectedTrack.selectedCurve)
     // var curvename = selectedTrack;
 
     //this._dataService.getLasData(selectedTrack.uwi, selectedTrack.selectedCurve).subscribe(data => {
@@ -35,7 +35,7 @@ export class LasComponent implements OnInit {
 
         var lasHeight = (d3.select('svg').attr('height') - d3.select('.wellgroup').attr('height')) - 20;
         if (selectedTrack != "") {
-          if (Object.keys(data).length !== 0) {
+          if (data) {
             this.lasCurveData = data;
             const xScale = d3.scaleLinear().domain(d3.extent(this.lasCurveData[0].selectedProductData, function (d) { return d[0] })).nice().range([0, 200]); // Xaxis Scale
             const yScale = d3.scaleLinear().domain([d3.max(this.lasCurveData[0].selectedProductData, function (d) { return d[1] }), d3.min(this.lasCurveData[0].selectedProductData, function (d) { return d[1] })]).range([lasHeight - 10, 0]); // Yaxis Scale

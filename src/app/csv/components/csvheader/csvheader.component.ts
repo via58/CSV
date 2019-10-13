@@ -11,21 +11,22 @@ import { CsvlayoutComponent } from '../csvlayout/csvlayout.component';
   templateUrl: './csvheader.component.html',
   styleUrls: ['./csvheader.component.scss']
 })
-export class CsvheaderComponent implements OnInit{
-  
+export class CsvheaderComponent implements OnInit {
+
   messages: any[] = [];
   message: any;
-  @ViewChild(CsvmapComponent , { static: true }) mapreference;
+  @ViewChild(CsvmapComponent, { static: true }) mapreference;
   @Output() CreateCross = new EventEmitter();
+
   wellCount: any = 0;
-  
+
   subscription: Subscription;
 
   constructor(
     private createCrossSectionService: GetcrosssectionsService,
     private mapComponent: CsvmapComponent,
     private messageService: MessageService
-  ) { 
+  ) {
     // this.subscription = this.messageService.getMessage().subscribe(message => {
     //   if (message) {
     //     this.messages.push(message);
@@ -41,9 +42,9 @@ export class CsvheaderComponent implements OnInit{
     this.messageService.currentmessageService.subscribe(msg => this.message = msg);
     //var data =this.dataService.currentMessage.subscribe(message => this.message = message);
     //console.log("get", this.message);
-    
+
   }
-  
+
   onChooseview($event) {
     const viewSection = $event.srcElement.innerHTML;
     if (viewSection == "MAP") {
@@ -51,14 +52,14 @@ export class CsvheaderComponent implements OnInit{
       document.getElementById('csv-section').style.display = "none";
       d3.select('#mapbtn').attr('class', 'btn btn-secondary activebtn')
       d3.select('#csvbtn').attr('class', 'btn btn-secondary ')
-       d3.select('svg').remove();
-       var mapdata = this.message;
-       console.log(mapdata);
-       //document.getElementById("wellmappane").style.display = "none";
-       document.getElementById("wellpanelupdate").click();
-       document.getElementById("btnUpdateWellOrder").click();
-       //
-       
+      d3.select('svg').remove();
+      var mapdata = this.message;
+      console.log(mapdata);
+      //document.getElementById("wellmappane").style.display = "none";
+      document.getElementById("wellpanelupdate").click();
+      document.getElementById("btnUpdateWellOrder").click();
+      //
+
       // localStorage.clear();
     }
     else {
@@ -66,29 +67,33 @@ export class CsvheaderComponent implements OnInit{
       //this.mapreference.wellList;
       //var mapdata = JSON.parse(localStorage.getItem('welllist'));
       var mapdata = this.message;
-     
+
       //this.messageService.sendMessage(this.messages[0]);
       //this.dataService.currentMessage.subscribe(message => this.message = message);
       //console.log(this.message)
-     // var mapdata = this.mapreference.wellList;
-    //  var data =this.dataService.currentMessage.subscribe(message => this.message = message);
-    //  console.log("get", this.message);
-    //  console.log(data);
+      // var mapdata = this.mapreference.wellList;
+      //  var data =this.dataService.currentMessage.subscribe(message => this.message = message);
+      //  console.log("get", this.message);
+      //  console.log(data);
       //CsvmapComponent.
       // console.log(mapdata);
-       var wellList = [];
-      if (mapdata !=="") {
+      var wellList = [];
+      if (mapdata !== "") {
         mapdata.forEach(well => {
           wellList.push(well.UWI);
         })
         var wellString = wellList.join(',');
         this.createCrossSectionService.CreateCrossSection(wellString).subscribe(data => {
-          console.log(data)
-         
+          var coredata=data;
+          var svgwidth = coredata['uwiObjectDtos'].length;
+          svgwidth = (svgwidth * 250) + (((svgwidth) * 30));
+          // this.SVGWidth = ( * 250) + (((TrackCount1) * 30));
           var dataSet = {
             data: JSON.stringify(data),
-            flag: "CREATE"
+            flag: "CREATE",
+            SVGWidth: svgwidth
           }
+          d3.select('svg').attr('width', svgwidth)
           this.CreateCross.emit(dataSet);
         })
       }
@@ -101,5 +106,5 @@ export class CsvheaderComponent implements OnInit{
 
     }
   }
-  
+
 }
