@@ -3,6 +3,8 @@ import { GetcrosssectionsService } from '../../services/getcrosssections.service
 import * as d3 from 'd3';
 import * as $ from 'jquery';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MessageService } from "../../../services/data-service.service";
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -16,12 +18,19 @@ export class CsvtoolsComponent implements OnInit {
   disableSaveButton: any;
   disableLoadButton = "disabled"; //initially button is enabled
   CrossSectionList = [];
+  message: any;
+  messages: any[] = [];
+  subscription: Subscription;
   @Input() SelectedCurveList: any;
   @Output() LoadCross = new EventEmitter();
-  constructor(private crossSectionDetails: GetcrosssectionsService) { }
+  constructor(
+    private crossSectionDetails: GetcrosssectionsService,
+    private messageService: MessageService
+    ) { }
 
   ngOnInit() {
     this.createCrossSection();
+    this.messageService.currentmessageService.subscribe(msg => this.message = msg);
     const main = document.querySelectorAll('.maingroup')
     this.disableSaveButton = "";
 
@@ -60,7 +69,10 @@ export class CsvtoolsComponent implements OnInit {
           }
         }
       )
-
+      
+      this.message = [];
+      var newwell = this.message;
+      this.messageService.sendnewMessage(newwell);
     }
     console.log("Selected CrossSection " + this.selectedCrossSectionName)
   }
@@ -167,7 +179,9 @@ export class CsvtoolsComponent implements OnInit {
 
         }
       )
-
+      this.message = [];
+      var newwell = this.message;
+      this.messageService.sendnewMessage(newwell);
     $('#openModalSaveCrossSection').click();
     //localStorage.setItem('savedcs',"true");
 

@@ -95,7 +95,9 @@ export class WellmetadataComponent implements OnInit, OnChanges {
     var trackcnt = 1;
     var startpnt = 0;
     var xcounter = 0;
+   
     for (var i = 0; i < this.wellCount2; i++) {
+     
       this.chart = svg.append('g')
         .attr('class', 'maingroup maingroup' + this.wellOrder[i])
         .attr('data-uwi', this.UWI[i])
@@ -132,6 +134,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
           // this.wellproduct(this.wellOrder[i].toString() + j, this.UWI[i], this.lasRasterFlag[i], this.ProductTypeList[i], this.SelectedCurveList[j]);
         }
         else {
+        
           this.wellmetainfo(this.wellinfo[i], this.wellOrder[i].toString(), this.wellOrder[i].toString() + j, this.UWI[i], '');
           this.wellproduct(this.wellOrder[i].toString() + j, this.UWI[i],
             this.lasRasterFlag[i], this.ProductTypeList[i], this.SelectedCurveList[i], this.DefaultSelectedCurveGrp[this.lasRasterFlag[i]]);
@@ -235,6 +238,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
 
   //wellmetainfo(wellname, wellorder, trackorder, uwi, Curve) {
   wellmetainfo(wellname, wellorder, trackorder, uwi, Curve) {
+    
     // well meta information
     const element = this.chartContainer.nativeElement;
     this.width = element.offsetWidth - this.margin.left - this.margin.right;

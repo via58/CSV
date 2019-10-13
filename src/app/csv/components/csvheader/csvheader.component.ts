@@ -77,8 +77,10 @@ export class CsvheaderComponent implements OnInit{
     //  console.log(data);
       //CsvmapComponent.
       // console.log(mapdata);
+     
        var wellList = [];
       if (mapdata !=="") {
+        d3.select('.csvspinner').style('display','block');
         mapdata.forEach(well => {
           wellList.push(well.UWI);
         })
@@ -98,6 +100,7 @@ export class CsvheaderComponent implements OnInit{
       d3.select('#csvbtn').attr('class', 'btn btn-secondary activebtn')
       d3.select('#mapbtn').attr('class', 'btn btn-secondary ')
       // this.messageService.sendnewMessage("hello");
+     
 
 
     }

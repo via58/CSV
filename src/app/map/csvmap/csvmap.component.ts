@@ -68,6 +68,8 @@ export class CsvmapComponent implements OnInit, OnChanges {
     document.getElementById("btnUpdateWellOrder").click();
   }
   panelupdate() {
+    this.wellList = [];
+    welllistarry = [];
     if (this.message != "" || this.message.length == 0) {
       this.Wells = this.message;
       console.log(this.Wells)
@@ -106,6 +108,8 @@ export class CsvmapComponent implements OnInit, OnChanges {
   removeAllWells() {
     selectedWellsGraphicLayer.clear();
     wellLinesGraphicLayer.clear();
+    this.Wells = [];
+    //document.getElementById("wellpanelupdate").click();
   }
   t = loadModules(['esri', 'esri/map', "esri/geometry/geometryEngine", "esri/geometry/Polygon", "esri/geometry/webMercatorUtils", "esri/graphic", "esri/symbols/Font", "esri/symbols/TextSymbol", "esri/SpatialReference", "esri/geometry/Polyline", "esri/toolbars/draw", "esri/InfoTemplate", "esri/geometry/Point", "esri/layers/GraphicsLayer", "esri/dijit/HomeButton", "dojo/domReady!"], options)
     .then(([esri, Map, geometryEngine, Polygon, webMercatorUtils, Graphic, Font, TextSymbol, SpatialReference, Polyline, Draw, InfoTemplate, Point, GraphicsLayer, HomeButton]) => {
@@ -161,17 +165,21 @@ export class CsvmapComponent implements OnInit, OnChanges {
         // drawTool.finishDrawing();
         var uwi = evt.graphic.attributes["uwi"];
         var WellGeomery = evt.graphic.geometry;
+      
         addWellToSelection(uwi, WellGeomery);
-        
-
         selectedWells = selectedWells + 1;
         // lastWell = evt.graphic;
         var mapwellobj = { SeqNo: selectedWells, Name: 'Well - ' + selectedWells, UWI: uwi }
         this.Wells.push(mapwellobj);
         welllistarry = this.Wells;
         this.wellList = this.Wells;
+        for (var i = 0; i < this.Wells.length; i++) {
+          this.Wells[i].SeqNo = i + 1;
+        }
         //this.messageService.sendMessage(this.wellList);
         this.messageService.sendnewMessage(this.wellList)
+        document.getElementById("wellpanelupdate").click();
+       
 
         //{SeqNo: 1, Name: 'Well - A', UWI: 17109238520000 },
         // drawTool.activate(Draw.POLYLINE);
@@ -294,6 +302,7 @@ var coords = "17724406670000;wid;-93.22126007080078,30.80624885559082|6081740114
         // textSymbol.setAngle(45);
         var labelPointGraphic = new Graphic(WellGeomery, textSymbol);
         selectedWellsGraphicLayer.add(labelPointGraphic);
+       
         if (selectedWells > 0) {
           var cLine = new Polyline(new SpatialReference({ wkid: 4326 }));
           cLine.addPath([new Point(lastWell.geometry.x, lastWell.geometry.y), new Point(WellGeomery.x, WellGeomery.y)]);

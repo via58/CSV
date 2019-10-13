@@ -127,7 +127,7 @@ export class CsvlayoutComponent implements OnInit {
       this.trackAndSelectedCurve = _trackAndSelectedCurve;
       this.DefaultSelectedCurveGrp = _defaultCurveColorGrp;
       this.ProductTypeList = _productTypeList;
-
+      
 
 
     } else if (dataset.flag == "LOAD") {
@@ -167,7 +167,7 @@ export class CsvlayoutComponent implements OnInit {
       this.trackAndSelectedCurve = _trackAndSelectedCurve;
       this.ProductTypeList = _productTypeList;
       d3.select('svg').attr('width', this.SVGWidth)
-
+    
     }
   }
 

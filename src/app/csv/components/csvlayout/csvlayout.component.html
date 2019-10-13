@@ -3,7 +3,11 @@
         <div class="card-body cst-card-body"  id="csv-section" style="display:none">
                       
                 <div class="cst-card-body-container csv-section" >
-                                
+                        <!-- <div class="d-flex justify-content-center csvspinner" style="height: 100%" style="display:none !important;">
+                                <div class="spinner-border" role="status" style="width:70px;height:70px;color:#00AAAB">
+                                  <span class="sr-only">Loading...</span>
+                                </div>
+                              </div> -->
                         <app-wellmetadata *ngIf="loadDataTag" [csvflag]=csvflag [wellCount2]=wellCount [wellinfo]=wellnames
                                 [wellnumber]=wellnumber [UWI]=UWI [trackCount]=trackCount [wellOrder]=wellOrder
                                 [curveListData]=curveList1 [lasRasterFlag]=lasRasterFlag
