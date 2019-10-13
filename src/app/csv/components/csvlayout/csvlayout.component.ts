@@ -27,7 +27,7 @@ export class CsvlayoutComponent implements OnInit {
   trackAndSelectedCurve: any = [];
   ProductTypeList: any = [];
   SVGWidth: any = 0;
-  defaultSelectedCurve: any = [];
+  DefaultSelectedCurveGrp: any = [];
 
   constructor(private getcsvdetails: GetCrossSectionDetailsService) {
   }
@@ -49,7 +49,7 @@ export class CsvlayoutComponent implements OnInit {
     const wellnamesGrp = [];
     const uwiGrp = [];
     const selectedCurveGrp = [];
-    const defaultCurveColor = [];
+    var _defaultCurveColorGrp = [];
     const wellnumberGrp = [];
     var wellOrder = [];
     const trackOrder = [];
@@ -81,25 +81,26 @@ export class CsvlayoutComponent implements OnInit {
         TrackCount1 = _wellcount;
         wellOrder.push($index + 1)
         _productTypeList.push(cs.productTypeList);
+        _defaultCurveColorGrp = cs.defaultCurve;
 
-        if (cs.selectedProductType == null) {
-          lasRaster.push(cs.productTypeList[0]);
+        // if (cs.selectedProductType == null) {
+        //   lasRaster.push(cs.productTypeList[0]);
 
-        } else {
-          lasRaster.push(cs.selectedProductType);
+        // } else {
+        lasRaster.push(cs.selectedProductType);
 
-        }
+        // }
 
         var Curves = Object.keys(cs.curveLists);
         const _selectedCurveList = {};
 
 
         for (let i = 0; i < Curves.length; i++) {
-          if (Curves[i] == cs.selectedProductType) {
-            var _curveList = cs.selectedCurve == null ? ["--Select Curve--"] : [];
-          } else {
+          // if (Curves[i] == cs.selectedProductType) {
+          //   var _curveList = cs.selectedCurve == null ? ["--Select Curve--"] : [];
+          // } else {
             var _curveList = ["--Select Curve--"];
-          }
+          //}
 
           cs.curveLists[Curves[i]].forEach(products => {
 
@@ -124,7 +125,7 @@ export class CsvlayoutComponent implements OnInit {
       this.lasRasterFlag = lasRaster;
       this.SelectedCurveList = curveList;
       this.trackAndSelectedCurve = _trackAndSelectedCurve;
-      this.defaultSelectedCurve = selectedCurveGrp;
+      this.DefaultSelectedCurveGrp = _defaultCurveColorGrp;
       this.ProductTypeList = _productTypeList;
 
 
@@ -165,7 +166,7 @@ export class CsvlayoutComponent implements OnInit {
       // this.SelectedCurveList = this.Getcsvdetails.selectedProductList;
       this.trackAndSelectedCurve = _trackAndSelectedCurve;
       this.ProductTypeList = _productTypeList;
-       //d3.select('svg').attr('width', this.SVGWidth)
+      d3.select('svg').attr('width', this.SVGWidth)
 
     }
   }

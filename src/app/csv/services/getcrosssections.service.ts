@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ICrossSection } from '../interfaces/crosssection';
+import { CATCH_ERROR_VAR } from '@angular/compiler/src/output/abstract_emitter';
 
 
 @Injectable()
@@ -46,8 +47,12 @@ export class GetcrosssectionsService {
       return this.http.get(this.localhost + 'getCrossSection/getProductTypes')
    }
 
-   saveCrossSection(data):Observable<any> {
-      return this.http.post<any>(this.localhost + this.saveCrossSectionUrl, data)
+   saveCrossSection(data): Observable<any> {
+      return this.http.post<any>(this.localhost + this.saveCrossSectionUrl, data, {
+         headers: new HttpHeaders({
+            'Content-Type': 'text/plain'
+         })
+      })
 
    }
 
@@ -57,7 +62,11 @@ export class GetcrosssectionsService {
    DeleteCrossSection(_crossSectionId) {
       localStorage.clear();
 
-      return this.http.post(this.localhost + this.deleteCrossSectionUrl+_crossSectionId, {})
+      return this.http.post(this.localhost + this.deleteCrossSectionUrl + _crossSectionId, {}, {
+         headers: new HttpHeaders({
+            'Content-Type': 'text/plain'
+         })
+      })
    }
 
 }
