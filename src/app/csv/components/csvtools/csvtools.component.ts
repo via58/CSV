@@ -156,7 +156,7 @@ export class CsvtoolsComponent implements OnInit {
       .subscribe(
         (response: any) => {
           console.log(response)
-
+          $('#openModalSaveCrossSection').click();
         },
         (error: HttpErrorResponse) => {
           console.log();

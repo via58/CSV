@@ -70,13 +70,16 @@ export class WellmetadataComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     //   $('[data-toggle="tooltip"]').tooltip();
-
-    this.buildSVG();
+    this.SVGWidth = (d3.selectAll('.maingroup').length * 250) + (((d3.select('.maingroup').length) * 30));
+   this.buildSVG();
   }
 
   ngAfterViewInit() {
     // $('[data-toggle="tooltip"]').tooltip();
 
+   
+    //this.buildSVG();
+   
 
   }
 
@@ -86,7 +89,8 @@ export class WellmetadataComponent implements OnInit, OnChanges {
     this.width = element.offsetWidth - this.margin.left - this.margin.right;
     this.height = element.offsetHeight - this.margin.top - this.margin.bottom;
 
-
+    this.translateGenerator();
+    
     const svg = d3.select(element).append('svg')
       .attr('width', this.SVGWidth)
       .attr('height', element.offsetHeight);
@@ -179,6 +183,8 @@ export class WellmetadataComponent implements OnInit, OnChanges {
         for (var i = 0; i < TotalTracks.length; i++) {
           translateX = parseInt((TotalTracks[i].getBoundingClientRect().width.toString()), 10) + translateX;
         }
+        this.SVGWidth = this.SVGWidth + 270;
+        d3.select('svg').attr('width', this.SVGWidth)
 
         d3.select('.' + currentMainGroup).append('g')
           .attr('class', 'uniq uniq' + newTrackNumber)
@@ -198,12 +204,14 @@ export class WellmetadataComponent implements OnInit, OnChanges {
           this.wellproduct(newTrackNumber, currentUwId, productType, this.ProductTypeList[consolidateWellOrder], this.SelectedCurveList[consolidateWellOrder], '');
         }
         else if (this.csvflag == "LOAD") {
-          this.wellproduct(newTrackNumber, currentUwId, productType, this.ProductTypeList[consolidateWellOrder], TrackInformation, '');
+          this.wellproduct(newTrackNumber, currentUwId, productType, this.ProductTypeList[consolidateWellOrder], this.SelectedCurveList[consolidateWellOrder], '');
         }
+
+        // this.wellproduct(this.wellOrder[i].toString() + j, this.UWI[i],
+        //this.lasRasterFlag[i], this.ProductTypeList[i], this.SelectedCurveList[i], this.DefaultSelectedCurveGrp[i][this.lasRasterFlag[i]]);
         // this.wellproject(newTrackNumber, currentUwId, TrackInformation, TrackInformation.productType, "ADD");
         //Add Space for New Incoming  Track
-        this.SVGWidth = this.SVGWidth + 270;
-        d3.select('svg').attr('width', this.SVGWidth)
+
 
         this.translateGenerator();
 
@@ -532,7 +540,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
         }
       }
       else {
-        this.wellproject(trackorder, uwi, curveList[productType], productType, "OPEN",defaultCurve)
+        this.wellproject(trackorder, uwi, curveList[productType], productType, "OPEN", defaultCurve)
       }
       //d3.select(`#foreignObject${trackorder} .well-info-product`).attr('class', 'well-info-product ' + TrackInformation.productType)
     }
@@ -717,7 +725,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
       }
       else if (Flag == "LAS_STD") {
         const tracknum = `${trackorder}`;
-        d3.selectAll(`.lasdropdown${trackorder}` + ' > option[value *= "' +defaultCurve + '"').attr('selected', true);
+        d3.selectAll(`.lasdropdown${trackorder}` + ' > option[value *= "' + defaultCurve + '"').attr('selected', true);
         //const selectedCurve = TrackInformation.selectedCurve;
         this.loadercomp.getcsvLoader(tracknum)
         this.lascomp.createLasChartOnLoad(tracknum, uwi, Flag, defaultCurve)
@@ -941,10 +949,8 @@ export class WellmetadataComponent implements OnInit, OnChanges {
     this.translateGenerator();
     // console.log( _uwi);
     console.log(_trackorder);
-
+    d3.select('svg').attr('width', this.SVGWidth)
     let obj = this.message.find(o => o.UWI === _trackorder);
-    console.log(this.message);
-    console.log(obj);
     var newwell = this.message.filter(item => item !== obj)
     this.messageService.sendnewMessage(newwell)
     d3.select('.cst-card-header-badge').text(document.querySelectorAll('.maingroup').length);
@@ -982,12 +988,14 @@ export class WellmetadataComponent implements OnInit, OnChanges {
 
 
   Onresize(e) {
+    if (this.csvflag != "OPEN") {
 
-    d3.select('svg').remove();
-    this.buildSVG();
-    d3.select('svg').attr('width', this.SVGWidth)
+
+      d3.select('svg').remove();
+      this.buildSVG();
+      d3.select('svg').attr('width', this.SVGWidth)
+    }
   }
-
 
 
 
