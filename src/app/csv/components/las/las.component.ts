@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as d3 from 'd3';
 import { GetcrosssectionsService } from '../../services/getcrosssections.service';
+import { YscaleService } from "../../../services/data-scale.service";
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-las',
   templateUrl: './las.component.html',
@@ -8,17 +10,22 @@ import { GetcrosssectionsService } from '../../services/getcrosssections.service
 })
 export class LasComponent implements OnInit {
   private lasCurveData: any = [];
+  yscale : any;
+  @Input() bdepth: Number;
+  @Input() tdepth: Number;
   //trackHeight: any = document.querySelector('.chartGrp').getBoundingClientRect().height +document.querySelector('.wellgroup').getBoundingClientRect().height;
-  constructor(private _dataService: GetcrosssectionsService) { }
+  constructor(private _dataService: GetcrosssectionsService,  private yscaleService: YscaleService) { }
 
   ngOnInit() {
+    this.yscaleService.currentyscaleService.subscribe(msg => this.yscale = msg);
+    console.log(this.yscale);
   }
   createLasChartOnLoad(trackorder, uwi, productType, selectedTrack) {
 
     //    const formgrp = d3.select('.uniq' + trackorder).append('g').append('rect');
-    console.log(this.lasCurveData.curveInformation);
-    console.log(this.lasCurveData);
-    console.log(selectedTrack.selectedCurve)
+    // console.log(this.lasCurveData.curveInformation);
+    // console.log(this.lasCurveData);
+    // console.log(selectedTrack.selectedCurve)
     // var curvename = selectedTrack;
 
     //this._dataService.getLasData(selectedTrack.uwi, selectedTrack.selectedCurve).subscribe(data => {
@@ -30,15 +37,16 @@ export class LasComponent implements OnInit {
     } else {
       this._dataService.getLasData(uwi, productType, selectedTrack).subscribe(data => {
         this.lasCurveData = data;
+        
         //Check curve Color 
         const curveColor = this.getCurveColor(selectedTrack);
 
         var lasHeight = (d3.select('svg').attr('height') - d3.select('.wellgroup').attr('height')) - 20;
         if (selectedTrack != "") {
-          if (Object.keys(data).length !== 0) {
+          if (data) {
             this.lasCurveData = data;
             const xScale = d3.scaleLinear().domain(d3.extent(this.lasCurveData[0].selectedProductData, function (d) { return d[0] })).nice().range([0, 200]); // Xaxis Scale
-            const yScale = d3.scaleLinear().domain([d3.max(this.lasCurveData[0].selectedProductData, function (d) { return d[1] }), d3.min(this.lasCurveData[0].selectedProductData, function (d) { return d[1] })]).range([lasHeight - 10, 0]); // Yaxis Scale
+            const yScale = d3.scaleLinear().domain([this.yscale[1], this.yscale[0]]).range([lasHeight - 10, 0]); // Yaxis Scale
 
             const xAxis = d3.axisTop(xScale).tickSize(-(lasHeight - 10)).ticks(6); // Xaxis 
             const yAxis = d3.axisLeft(yScale).tickSize(-200).ticks(6); // Y axis 

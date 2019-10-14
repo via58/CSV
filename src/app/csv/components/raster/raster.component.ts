@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import * as d3 from 'd3';
 import { GetcrosssectionsService } from '../../services/getcrosssections.service';
 import { CsvloaderComponent } from '../csvloader/csvloader.component';
+import { YscaleService } from "../../../services/data-scale.service";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-raster',
@@ -10,10 +12,13 @@ import { CsvloaderComponent } from '../csvloader/csvloader.component';
 })
 export class RasterComponent implements OnInit {
   private rasterimgData: any = [];
+  yscale : any;
   @ViewChild(CsvloaderComponent, { static: true }) loadercomp;
-  constructor(private _dataService: GetcrosssectionsService) { }
+  constructor(private _dataService: GetcrosssectionsService, private yscaleService: YscaleService) { }
 
   ngOnInit() {
+    this.yscaleService.currentyscaleService.subscribe(msg => this.yscale = msg);
+    console.log(this.yscale);
   }
 
 
@@ -42,10 +47,12 @@ export class RasterComponent implements OnInit {
             .enter()
             .append("option")
             .attr("value", function (d, i) { return d.segmentNumber })
-            .text(function (d, i) { return d.displayText });
+            .text(function (d, i) { return d.displayText + " " +  d.topDepth + " " +  d.baseDepth});
           d3.select(`.rastersegment${trackorder}`).property('selectedIndex', '1')
           rasterSegment.on('change', function () {
             const dropval = d3.select(`.rastersegment${trackorder}`).node().value;
+            const dropmaxval = d3.select(`.rastersegment${trackorder}`).node().value;
+            const dropminval = d3.select(`.rastersegment${trackorder}`).node().value;
 
             this.rasterLoader(trackorder)
 
@@ -76,7 +83,7 @@ export class RasterComponent implements OnInit {
 
                 //Yscale for raster Image start
                 var data = [seg.topDepth, seg.baseDepth];
-                const yscale = d3.scaleLinear().domain([d3.min(data), d3.max(data)]).range([0, rasterHeight]);
+                const yscale = d3.scaleLinear().domain([this.yscale[0], this.yscale[1]]).range([0, rasterHeight]);
                 const yAxis = d3.axisLeft(yscale).ticks(10); // Y axis    
                 rasterGroup.append('g')
                   .attr('transform', 'translate(45,0)')
@@ -115,7 +122,7 @@ export class RasterComponent implements OnInit {
 
             //Yscale for raster Image start
             var data = [seg.topDepth, seg.baseDepth];
-            const yscale = d3.scaleLinear().domain([d3.min(data), d3.max(data)]).range([0, rasterHeight]);
+            const yscale = d3.scaleLinear().domain([this.yscale[0],this.yscale[1]]).range([0, rasterHeight]);
             const yAxis = d3.axisLeft(yscale).ticks(10); // Y axis    
             rasterGroup.append('g')
               .attr('transform', 'translate(45,0)')

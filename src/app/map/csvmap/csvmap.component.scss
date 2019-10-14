@@ -36,7 +36,7 @@
 
   display: block;
 
-  background: white;
+  /*background: white;*/
 
   border-radius: 4px;
 
@@ -44,6 +44,9 @@
 
   td {
     border: none;
+  }
+  tr:last-child {
+    border-bottom:solid 1px #ccc !important;
   }
 }
 
@@ -86,6 +89,14 @@
   background: white;
 
   font-size: 14px;
+  td{
+    border-right:solid 1px #ccc;
+  }
+  td:last-child{
+    border-right:none;
+  
+  }
+  
 }
 
 .cdk-drag-preview {

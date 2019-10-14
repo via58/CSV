@@ -10,6 +10,9 @@ export class MessageService {
     sendnewMessage(message: any) {
       this.messageService.next(message)
     }
+    yscaleMessage(yscale: any) {
+        this.messageService.next(yscale)
+    }
     sendMessage(message: any) {
         this.subject.next({ message });
     }
