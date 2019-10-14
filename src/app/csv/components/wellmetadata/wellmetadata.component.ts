@@ -760,7 +760,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
     RasterDropDown.on('change', function () {
       const tracknum = `${trackorder}`;
       const selectedCurve = d3.select('.rasterdropdown' + trackorder).node().value;
-
+      $(`.rastersegment${tracknum}`).parent('.form-group').remove();
       if (selectedCurve !== "--Select Curve--") {
         console.log(`.rasterdropdown${trackorder}   ` + (d3.select('.rasterdropdown' + trackorder).node().value))
 
