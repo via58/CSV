@@ -41,7 +41,7 @@ export class LasComponent implements OnInit {
         //Check curve Color 
         const curveColor = this.getCurveColor(selectedTrack);
 
-        var lasHeight = (d3.select('svg').attr('height') - d3.select('.wellgroup').attr('height')) - 20;
+        var lasHeight = (d3.select('svg').attr('height') - d3.select('.wellgroup').attr('height')) - 22;
         if (selectedTrack != "") {
           if (data) {
             this.lasCurveData = data;
@@ -57,14 +57,14 @@ export class LasComponent implements OnInit {
             const grp = d3.select('.uniq' + trackorder + ' g');
             //console.log(`.mainGrp${trackorder}`);
             const chartGroup1 = grp.append('rect')
-              .attr('height', lasHeight + 32)
+              .attr('height', lasHeight - 10)
               .attr('width', '250')
               .style('fill', 'white')
-              .attr('transform', 'translate(0 ,150)');
+              .attr('transform', 'translate(0 ,130)');
             const chartGroup = grp.append('g').attr('class', 'chartGrp chartGrp' + trackorder)
               .attr('height', lasHeight - 10)
               .style('background-color', '#fff')
-              .attr('transform', 'translate(30 ,150)')
+              .attr('transform', 'translate(30 ,130)')
               .attr('data-curveColor', curveColor);
             // const cgrp = d3.select('chartGrp' +uwid + curveName);
             const grpXAxis = chartGroup.append('g').attr('class', 'axisred').attr('transform', 'translate(6,0)').transition()

@@ -236,7 +236,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
       .attr('id', 'foreignObject' + trackorder)
       //.style('height', this.lascomp.trackHeight)
       //      .style('height', element.offsetHeight - 70)
-      .attr('height', '200')
+      .attr('height', '130')
       .attr('width', '250');
     const tooltipwn = `WellName : ${wellname}`;
     const tooltipuwi = ` UwId : ${uwi}`;

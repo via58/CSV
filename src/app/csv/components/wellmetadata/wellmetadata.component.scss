@@ -30,7 +30,9 @@
                     float: left;
                     display: block;
                     i{
-                      margin-top: 15px;
+                      margin-top: 0px;
+                      position: relative;
+                      top:4px;
                     }
                 }
                 .two{
@@ -43,7 +45,8 @@
     }
         .uniq{
             .well-info-name{
-                height: 40px;
+                height: 30px;
+                line-height: 30px;
                 .well-title{
                     display: none;
                     float: left;
@@ -65,7 +68,14 @@
         margin-top: 5px !important;
         padding-left: 10px;
         padding-right: 10px;
+        select{
+            height: 24px;
+            font-size: 14px;
+            font-family: "DINOT-Light";
+            padding-bottom: 0px;
+        }
         .form-group{
+            margin-bottom: 8px;
             select{
                 padding-top: 0px;
             }
@@ -75,7 +85,14 @@
         margin-top: 5px !important;
         padding-left: 10px;
         padding-right: 10px;
+        select{
+            height: 24px;
+            font-size: 14px;
+            padding-bottom: 0px;
+            font-family: "DINOT-Light";
+        }
         .form-group{
+            margin-bottom: 8px;
             select{
                 padding-top: 0px;
             }
@@ -88,7 +105,7 @@
         border-radius: 5px;
     }
     .well-info-name{
-        font-size: 16px;
+        font-size: 13px;
         font-weight: bold;
         border-bottom: solid 1px #cecaca;
         line-height: 40px;

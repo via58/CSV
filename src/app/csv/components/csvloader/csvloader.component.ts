@@ -14,7 +14,7 @@ export class CsvloaderComponent implements OnInit {
   getcsvLoader(trackorder){
     var loaderHeight = (d3.select('svg').attr('height') - d3.select('.wellgroup').attr('height')) - 50;
     const loaderGrp = d3.select('.uniq'+ trackorder + ' g').append('g')
-    .attr('class', 'loader').attr('transform', 'translate(0 ,200)');
+    .attr('class', 'loader').attr('transform', 'translate(0 ,130)');
     loaderGrp.append('foreignObject').attr('width', '250')
       .attr('height', loaderHeight)
       .append('xhtml:div')

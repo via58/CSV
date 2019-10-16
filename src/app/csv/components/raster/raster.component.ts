@@ -60,11 +60,11 @@ export class RasterComponent implements OnInit {
             this._dataService.getRasterData(uwi, productType, curveName, dropval).subscribe(rasterData => {
 
 
-              const rasterGroup = d3.select('.uniq' + trackorder + ' g').append('g').attr('class', 'rasterGrp rasterGrp' + trackorder).attr('transform', 'translate(0,200)');
+              const rasterGroup = d3.select('.uniq' + trackorder + ' g').append('g').attr('class', 'rasterGrp rasterGrp' + trackorder).attr('transform', 'translate(0,130)');
 
               console.log(d3.select('svg').attr('height'))
               console.log(d3.select('.wellgroup').attr('height'))
-              var rasterHeight = (d3.select('svg').attr('height') - d3.select('.wellgroup').attr('height')) - 50;
+              var rasterHeight = (d3.select('svg').attr('height') - d3.select('.wellgroup').attr('height')) - 32;
               var yimgg = d3.scaleLinear().domain([this.yscale[0],this.yscale[1]]).range([0, rasterHeight]);
               var leftH  = rasterHeight - yimgg(seg.segmentList[1].baseDepth);
               var rightH  = rasterHeight - yimgg(seg.segmentList[1].topDepth);
@@ -112,11 +112,11 @@ export class RasterComponent implements OnInit {
           }.bind(this))
 
 
-          const rasterGroup = d3.select('.uniq' + trackorder + ' g').append('g').attr('class', 'rasterGrp rasterGrp' + trackorder).attr('transform', 'translate(0,200)');
+          const rasterGroup = d3.select('.uniq' + trackorder + ' g').append('g').attr('class', 'rasterGrp rasterGrp' + trackorder).attr('transform', 'translate(0,130)');
 
           console.log(d3.select('svg').attr('height'))
           console.log(d3.select('.wellgroup').attr('height'))
-          var rasterHeight = (d3.select('svg').attr('height') - d3.select('.wellgroup').attr('height')) - 50;
+          var rasterHeight = (d3.select('svg').attr('height') - d3.select('.wellgroup').attr('height')) - 32;
           var yimgg = d3.scaleLinear().domain([this.yscale[0],this.yscale[1]]).range([0, rasterHeight]);
           var leftH  = rasterHeight - yimgg(seg.segmentList[1].baseDepth);
           var rightH  = rasterHeight - yimgg(seg.segmentList[1].topDepth);
