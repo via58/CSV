@@ -18,6 +18,28 @@
   src: url(assets/fonts/SourceSansPro-Bold.ttf);
 }
 
+@font-face {
+  font-family: "DINOT";
+  src: url(assets/fonts/DINOT.otf);
+}
+@font-face {
+  font-family: "DINOT-Black";
+  src: url(assets/fonts/DINOT-Black.otf);
+}
+@font-face {
+  font-family: "DINOT-Bold";
+  src: url(assets/fonts/DINOT-Bold.otf);
+}
+@font-face {
+  font-family: "DINOT-Light";
+  src: url(assets/fonts/DINOT-Light.otf);
+}
+@font-face {
+  font-family: "DINOT-Medium";
+  src: url(assets/fonts/DINOT-Medium.otf);
+}
+
+
 body {
   font-family: "SourceSansPro-Regular" !important;
 }

@@ -1,17 +1,21 @@
 <div class="card-header cst-card-header">
- 
-    Cross Section
-    <span class="badge badge-light cst-card-header-badge">{{wellCount1}}</span>
-   
-    <div class="float-right ">
-        <i class="fa fa-repeat" aria-hidden="true"></i>
-        <i class="fa fa-external-link" aria-hidden="true"></i>
-        <i class="fa fa-times" aria-hidden="true"></i>
+    <div class="float-left card-header-title">
+            <img src="assets/images/TGS_logo_white_vector_1.svg" >Cross Section Tool
     </div>
-    <div class="float-right header-toggle">
+    <div class="header-toggle">
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" id ="mapbtn" class="btn btn-secondary activebtn" (click)="onChooseview($event)">MAP</button>
-                <button type="button" id ="csvbtn" class="btn btn-secondary" (click)="onChooseview($event)">CSV</button>
+                <button type="button" id ="mapbtn" class="btn btn-secondary activebtn" (click)="onChooseview($event)">
+                 <img src="assets/icons/Map_View_White_Icon.svg" >
+                 <img src="assets/icons/Map_View_Blue_Icon.svg"> Map View                    
+                </button>
+                <button type="button" id ="csvbtn" class="btn btn-secondary" (click)="onChooseview($event)">
+                  <img src="assets/icons/Cross_Section_View_White_Icon.svg">
+                  <img src="assets/icons/Cross_Section_View_Blue_Icon.svg"> Cross Section View
+                </button>
             </div>
         </div>
+    <div class="float-right card-header-title">
+      Added {{wellCount1}} Wells to cross section table
+    </div>
+   
 </div>

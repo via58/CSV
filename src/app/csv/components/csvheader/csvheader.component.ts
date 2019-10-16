@@ -14,7 +14,7 @@ import { CsvlayoutComponent } from '../csvlayout/csvlayout.component';
 export class CsvheaderComponent implements OnInit {
 
   messages: any[] = [];
-  message: any;
+  message: any = [];
   @ViewChild(CsvmapComponent, { static: true }) mapreference;
   @Output() CreateCross = new EventEmitter();
 
@@ -48,18 +48,22 @@ export class CsvheaderComponent implements OnInit {
 
   onChooseview($event) {
     this.IncomingData = sessionStorage.getItem('currentData');
-    const viewSection = $event.srcElement.innerHTML;
-    if (viewSection == "MAP") {
+    const viewSection = $event.srcElement.innerText;
+    if (viewSection == " Map View") {
       document.getElementById('map-section').style.display = "block";
       document.getElementById('csv-section').style.display = "none";
       d3.select('#mapbtn').attr('class', 'btn btn-secondary activebtn')
       d3.select('#csvbtn').attr('class', 'btn btn-secondary ')
+     
       //d3.select('svg').remove();
       var mapdata = this.message;
       console.log(mapdata);
       //document.getElementById("wellmappane").style.display = "none";
+      if(mapdata!==""){
       document.getElementById("wellpanelupdate").click();
       document.getElementById("btnUpdateWellOrder").click();
+      }
+      
       //
 
       // localStorage.clear();

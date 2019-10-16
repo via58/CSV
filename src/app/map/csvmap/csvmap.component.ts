@@ -22,8 +22,8 @@ var wellSelectionState = false;
   // host:{'window:beforeunload':'localStorage.clear()'}
 })
 export class CsvmapComponent implements OnInit, OnChanges {
-  wellList = [];
-  Wells = [];
+  wellList:any = [];
+  Wells:any = [];
   message: any;
   // Wells = [
   //   //17109238520000,17019218710000

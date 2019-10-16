@@ -76,11 +76,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
 
   ngAfterViewInit() {
     // $('[data-toggle="tooltip"]').tooltip();
-
-   
     //this.buildSVG();
-   
-
   }
 
   buildSVG() {
