@@ -48,6 +48,11 @@ export class CsvmapComponent implements OnInit, OnChanges {
       this.Wells = this.message;
     }
     console.log(welllistarry);
+
+
+
+
+
   }
   ngOnChanges() {
     //   $('[data-toggle="tooltip"]').tooltip();
@@ -70,9 +75,9 @@ export class CsvmapComponent implements OnInit, OnChanges {
   panelupdate() {
     this.wellList = [];
     welllistarry = [];
-  
+
     if (this.message != "" || this.message.length == 0) {
-      selectedWells =0
+      selectedWells = 0
 
       this.Wells = this.message;
       console.log(this.Wells)
@@ -168,7 +173,7 @@ export class CsvmapComponent implements OnInit, OnChanges {
         // drawTool.finishDrawing();
         var uwi = evt.graphic.attributes["uwi"];
         var WellGeomery = evt.graphic.geometry;
-      
+
         addWellToSelection(uwi, WellGeomery);
         selectedWells = selectedWells + 1;
         // lastWell = evt.graphic;
@@ -176,13 +181,18 @@ export class CsvmapComponent implements OnInit, OnChanges {
         this.Wells.push(mapwellobj);
         welllistarry = this.Wells;
         this.wellList = this.Wells;
+        var wellNames = "";
         for (var i = 0; i < this.Wells.length; i++) {
           this.Wells[i].SeqNo = i + 1;
+          wellNames = wellNames + this.Wells[i].UWI;
         }
         //this.messageService.sendMessage(this.wellList);
         this.messageService.sendnewMessage(this.wellList)
+        console.log(this.wellList)
+        sessionStorage.setItem('currentData', wellNames);
+
         document.getElementById("wellpanelupdate").click();
-       
+
 
         //{SeqNo: 1, Name: 'Well - A', UWI: 17109238520000 },
         // drawTool.activate(Draw.POLYLINE);
@@ -306,7 +316,7 @@ export class CsvmapComponent implements OnInit, OnChanges {
         // textSymbol.setAngle(45);
         var labelPointGraphic = new Graphic(WellGeomery, textSymbol);
         selectedWellsGraphicLayer.add(labelPointGraphic);
-       
+
         if (selectedWells > 0) {
           var cLine = new Polyline(new SpatialReference({ wkid: 4326 }));
           cLine.addPath([new Point(lastWell.geometry.x, lastWell.geometry.y), new Point(WellGeomery.x, WellGeomery.y)]);

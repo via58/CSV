@@ -70,7 +70,7 @@ export class WellmetadataComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     //   $('[data-toggle="tooltip"]').tooltip();
-    this.SVGWidth = (d3.selectAll('.maingroup').length * 250) + (((d3.select('.maingroup').length) * 30));
+    //this.SVGWidth = (d3.selectAll('.maingroup').length * 250) + (((d3.select('.maingroup').length) * 30));
    this.buildSVG();
   }
 
