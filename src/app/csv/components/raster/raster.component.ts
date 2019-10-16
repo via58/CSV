@@ -65,12 +65,24 @@ export class RasterComponent implements OnInit {
               console.log(d3.select('svg').attr('height'))
               console.log(d3.select('.wellgroup').attr('height'))
               var rasterHeight = (d3.select('svg').attr('height') - d3.select('.wellgroup').attr('height')) - 50;
+              var yimgg = d3.scaleLinear().domain([this.yscale[0],this.yscale[1]]).range([0, rasterHeight]);
+              var leftH  = rasterHeight - yimgg(seg.segmentList[1].baseDepth);
+              var rightH  = rasterHeight - yimgg(seg.segmentList[1].topDepth);
+              var aheight = rightH - leftH;
+              var rasterrect = rasterGroup.append('rect')
+              .attr('x', '0')
+              .attr('height',rasterHeight)
+              .attr('width','250')
+              .attr('fill','white')
+    
               var rasterImg = rasterGroup.append('foreignObject')
                 .attr('width', '250')
-                .attr('height', rasterHeight + 10)
+                .attr('height', aheight)
                 .style('background-color', '#fff')
+                .attr('y', yimgg(seg.segmentList[1].topDepth))
               const rasterDiv = rasterImg.append('xhtml:div')
                 .attr('class', 'rastergrp imggrp')
+                .style('height', aheight)
               // .attr('title', tooltipInfo)
               d3.select(`.uniq${trackorder} .loader`).remove();
               if (rasterData[0].selectedProductFiles != "") {
@@ -78,7 +90,8 @@ export class RasterComponent implements OnInit {
                 rasterDiv.append('img')
                   .attr('src', `data:image/jpeg;base64,${rasterData[0].selectedProductFiles}`)
                   .attr('class', 'imgsize')
-                  .attr('height', rasterHeight)
+                  .attr('height', aheight)
+                 
                 //console.log('data:image/jpeg;base64,' + rasterData[0].selectedProductFiles);
 
                 //Yscale for raster Image start
@@ -104,19 +117,30 @@ export class RasterComponent implements OnInit {
           console.log(d3.select('svg').attr('height'))
           console.log(d3.select('.wellgroup').attr('height'))
           var rasterHeight = (d3.select('svg').attr('height') - d3.select('.wellgroup').attr('height')) - 50;
+          var yimgg = d3.scaleLinear().domain([this.yscale[0],this.yscale[1]]).range([0, rasterHeight]);
+          var leftH  = rasterHeight - yimgg(seg.segmentList[1].baseDepth);
+          var rightH  = rasterHeight - yimgg(seg.segmentList[1].topDepth);
+          var aheight = rightH - leftH;
+          var rasterrect = rasterGroup.append('rect')
+          .attr('x', '0')
+          .attr('height',rasterHeight)
+          .attr('width','250')
+          .attr('fill','white')
           var rasterImg = rasterGroup.append('foreignObject')
             .attr('width', '250')
-            .attr('height', rasterHeight + 10)
+            .attr('height', aheight)
             .style('background-color', '#fff')
+            .attr('y', yimgg(seg.segmentList[1].topDepth))
           const rasterDiv = rasterImg.append('xhtml:div')
             .attr('class', 'rastergrp imggrp')
+            .style('height', aheight)
           // .attr('title', tooltipInfo)
           if (this.rasterimgData[0].selectedProductFiles != "") {
 
             rasterDiv.append('img')
               .attr('src', `data:image/jpeg;base64,${this.rasterimgData[0].selectedProductFiles}`)
               .attr('class', 'imgsize')
-              .attr('height', rasterHeight)
+              .attr('height', aheight)
             //console.log('data:image/jpeg;base64,' + this.rasterimgData[0].selectedProductFiles);
             //.attr('')
 

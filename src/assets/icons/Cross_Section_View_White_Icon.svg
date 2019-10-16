@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" viewBox="0 0 30 30">
+  <defs>
+    <clipPath id="clip-path">
+      <path id="Path_1000" data-name="Path 1000" d="M0,0H30V30H0Z" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="Cross_Section_View_White_Icon" clip-path="url(#clip-path)">
+    <g id="Group_7714" data-name="Group 7714" transform="translate(1 3)">
+      <g id="Group_7712" data-name="Group 7712" transform="translate(7.218)">
+        <g id="Group_7711" data-name="Group 7711">
+          <g id="Group_7709" data-name="Group 7709" transform="translate(0 3.526)">
+            <path id="Path_998" data-name="Path 998" d="M1047.823,627.25h-5.073v-5.111L1053,611.778l5.041,5.11Zm-2.573-2.5h1.528l7.753-7.862L1053,615.335l-7.75,7.831Z" transform="translate(-1042.75 -611.778)" fill="#fff"/>
+          </g>
+          <g id="Group_7710" data-name="Group 7710" transform="translate(10.632)">
+            <path id="Path_999" data-name="Path 999" d="M1058.438,616.512l-5.056-5.128,2.521-2.551a2.121,2.121,0,0,1,2.971.053l2.061,2.093a2.143,2.143,0,0,1,0,3.011Zm-1.544-5.126,1.545,1.567.467-.472-1.545-1.569Zm2.261,1.348,0,0Zm0-.505,0,0Z" transform="translate(-1053.382 -608.252)" fill="#fff"/>
+          </g>
+        </g>
+      </g>
+      <g id="Group_7713" data-name="Group 7713" transform="translate(0 24.83) rotate(-90)">
+        <rect id="Rectangle_258" data-name="Rectangle 258" width="5.239" height="5.239" rx="2.619" transform="translate(0)" fill="#fff"/>
+        <rect id="Rectangle_259" data-name="Rectangle 259" width="5.239" height="5.239" rx="2.619" transform="translate(0 23.311)" fill="#fff"/>
+        <rect id="Rectangle_260" data-name="Rectangle 260" width="21.845" height="2.619" transform="translate(3.929 3.93) rotate(90)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

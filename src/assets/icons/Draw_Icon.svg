@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="62" height="62" viewBox="0 0 62 62">
+  <defs>
+    <filter id="Draw_Icon" x="0" y="0" width="62" height="62" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.38"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Draw_Icon)">
+    <path id="Draw_Icon-2" data-name="Draw_Icon" d="M3,35.132v6.755A1.1,1.1,0,0,0,4.111,43h6.755a1.042,1.042,0,0,0,.778-.333L35.907,18.423l-8.332-8.332L3.333,34.332a1.091,1.091,0,0,0-.333.8ZM42.35,11.98a2.213,2.213,0,0,0,0-3.133l-5.2-5.2a2.213,2.213,0,0,0-3.133,0L29.952,7.714l8.332,8.332L42.35,11.98Z" transform="translate(8 5)" fill="#fff" stroke="#f9a01b" stroke-width="4"/>
+  </g>
+</svg>

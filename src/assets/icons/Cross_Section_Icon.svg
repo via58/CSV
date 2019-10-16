@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" viewBox="0 0 30 30">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_246" data-name="Rectangle 246" width="30" height="30" transform="translate(-15706 -10008)" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="Cross_Section_Icon" transform="translate(15706 10008)" clip-path="url(#clip-path)">
+    <g id="Group_7591" data-name="Group 7591" transform="translate(-15699.645 -10019.641) rotate(27)">
+      <path id="Path_943" data-name="Path 943" d="M19.8,5.812a14,14,0,1,1-14.005,14,14.007,14.007,0,0,1,14.005-14Zm.653,1.277h-.02v2.9a9.838,9.838,0,0,1,0,19.634v2.911a12.739,12.739,0,0,0,.02-25.445Zm-.02,4.178v3.465a5.114,5.114,0,0,1,0,10.148v3.475a8.569,8.569,0,0,0,0-17.089Zm0,4.752v7.574a3.838,3.838,0,0,0,0-7.574Z" transform="translate(0 0)" fill="#fff" stroke="#fff" stroke-width="1.5" fill-rule="evenodd"/>
+    </g>
+  </g>
+</svg>
